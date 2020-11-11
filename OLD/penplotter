@@ -1,0 +1,228 @@
+<!doctype html>
+<!--
+  Projects Blog
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A blog of my Projects.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Projects Blog</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.svg">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Projects Blog">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.svg">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Projects Blog</span>
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" id="search">
+              <label class="mdl-textfield__label" for="search">Enter your query...</label>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+            <div class="demo-crumbs mdl-color-text--grey-500">
+              A project made by Rahul and Yaseen
+            </div>
+          <h2> Pen Plotter</h2>
+          <p> As a child I always hated writing and always dreamed about a machine that could write for me, after I got my 3D printer in 2019 I learned about things called pen plotter
+            and discovered that at colleges I have to write too much for the sake of dumb marks. In December 2019 I finished modifying the designing of H-Bot originally made by Dr  Windell Oskay from <a href="https://www.evilmadscientist.com/">https://www.evilmadscientist.com/</a>
+            I tested the concept of the gcode on my 3d printer by mounting a pen on it and surprisingly it worked very well. I wrote one of my lab observation experiments with this and went unnoticed.
+            <p>Later I wanted make my dedicated pen plotter so I could start writing Lab records with it. I gathered all the parts from Koti. There are several guides on internet for free to build your own pen plotter.</p>
+            <p></p>
+            <p> Here are some example images of drawings and writing done by my plotter. The first lettce is <a href="https://en.wikipedia.org/wiki/E8_(mathematics)">E8 is any of several closely related exceptional simple Lie groups, linear algebraic groups or Lie algebras of dimension 248</a>
+            </p>
+          <style>
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+            </style>
+            </head>
+            <body>
+
+            <img src="plotter/compressed/E8.jpg" >
+            <p></p>
+            <style>
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+            </style>
+            </head>
+            <body>
+
+            <img src="plotter/compressed/E8B.jpg" >
+            <p></p>
+            <style>
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+            </style>
+            </head>
+            <body>
+
+            <img src="plotter/compressed/E8C.jpg" >
+            <p></p>
+            <style>
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+            </style>
+            </head>
+            <body>
+
+              <img src="plotter/compressed/honker.jpg" >
+                 <p></p>
+                 <p> An internet meme called pepe the frog also called honker</p>
+                 <p></p>
+                 <h4> Exciting part </h4>
+            <p> Having a homework writing machine is every childs dream which I could accomplish thanks to 3D printers and generous people on internet who upload and maintian the software of these.
+            </p>
+            <p> But this software had one major flaw that I had to fix on my own and could do it during the 2020 covid pandemic, I had digitize my own that looks like my handwriting. The available fonts that could
+              be used for this looked like they came straight out of a printer.
+              <style>
+              img {
+                max-width: 100%;
+                height: auto;
+              }
+              </style>
+              </head>
+              <body>
+
+              <img src="plotter/compressed/assignment.jpg" >
+              <p></p>
+              <style>
+              img {
+                max-width: 100%;
+                height: auto;
+              }
+              </style>
+              </head>
+              <body>
+              <img src="plotter/compressed/assignment2.jpg" >
+              <p></p>
+              <p></p>
+              <img src="plotter/customfont.jpg" >
+                           <p></p>
+                           <p> I do not consider this as cheating, as I built my own tool to fix my problem. There is a massive loophole in the system, which needs to be fixed rather than calling me a cheater for cracking a loophole. </p>
+                           <p></p>
+                           <p></p>
+                           <h4>Toolchanger</h4>
+                           <p>Being able to use only one tool is boring so one day I was looking at other people's CNCs and found something called a drag knife during the pandemic, later after looking more I figured I could
+                           design it myself on SolidWorks. I started gathering screws, blades and an ordinary ball bearing so i could start designing it on SolidWorks. </p>
+                           <p></p>
+                           <style>
+                           img {
+                             max-width: 100%;
+                             height: auto;
+                           }
+                           </style>
+                           </head>
+                           <body>
+                           <img src="plotter/dragknife-sw.jpg" >
+                           <p></p>
+                           <p></p>
+                           <style>
+                           img {
+                             max-width: 100%;
+                             height: auto;
+                           }
+                           </style>
+                           </head>
+                           <body>
+                           <img src="plotter/dragknife.jpg" >
+              <p></p>
+              <iframe width="720" height="576" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <p></p>
+              <p> The gcode needs refinment for this drag to function as intended which I will solve later in future. </p>
+              <p></p>
+              <p></p>
+              <p><a href="https://vortexgello.github.io/kart/">Also view my other page about go kart built during pandemic</a></p>
+
+
+
+
+
+
+
+          </div>
+        </div>
+        <footer class="demo-footer mdl-mini-footer">
+          <div class="mdl-mini-footer--left-section">
+            <ul class="mdl-mini-footer--link-list">
+              <li><a href=""></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#">This blog is like a log book that we can use in the future.</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
+    </div>
+<!--  <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+  </body>0
+</html>
