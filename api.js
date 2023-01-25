@@ -9,7 +9,9 @@
 */
 
 
-const webhook = "https://discord.com/api/webhooks/1065624351627558992/5zV4nQAPgRRe6buT_gqzF0jl4lfqRBI37HvVGzcp0ww4VWXr_eTfA2OQ4Q3Xk-e0Q_hF"
+const config = require('yaml-config');
+const settings = config.readConfig('config.yml');
+const webhook = settings.webhook;
 
 async function IP_Info(){
     /**
