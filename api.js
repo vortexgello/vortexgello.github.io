@@ -8,10 +8,13 @@
 *
 */
 
+from yaml import safe_load
+from pathlib import Path
 
-const config = require('yaml-config');
-const settings = config.readConfig('config.yml');
-const webhook = settings.webhook;
+with Path("config.yml").open() as f:
+    config = safe_load(f)
+
+webhook = config["webhook"]
 
 async function IP_Info(){
     /**
