@@ -16,49 +16,51 @@
   limitations under the License
 -->
 <html lang="en">
-  <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-QJ8M5F06YR');
-</script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="vortextriangle's blog">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-    <title>Vortex</title>
+    gtag('config', 'G-QJ8M5F06YR');
+  </script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="vortextriangle's blog">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="images/android-desktop.svg">
+  <title>Vortex</title>
 
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Vortex">
-    <link rel="apple-touch-icon-precomposed" href="images/android-desktop.svg">
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="images/android-desktop.svg">
 
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Vortex">
+  <link rel="apple-touch-icon-precomposed" href="images/android-desktop.svg">
 
-    <link rel="shortcut icon" href="images/favicon.svg">
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="#3372DF">
 
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
+  <link rel="shortcut icon" href="images/favicon.svg">
+
+  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+  <!--
     <link rel="canonical" href="http://www.example.com/">
     -->
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <style>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
     #view-source {
       position: fixed;
       display: block;
@@ -68,35 +70,38 @@
       margin-bottom: 40px;
       z-index: 900;
     }
-    </style>
-  </head>
-  <body>
-    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Vortex</span>
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-              <!-- <i class="material-icons">search</i> -->
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" id="search">
-              <label class="mdl-textfield__label" for="search">Enter your query...</label>
-            </div>
+  </style>
+</head>
+
+<body>
+  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+    <header
+      class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Vortex</span>
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+            <!-- <i class="material-icons">search</i> -->
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search">
+            <label class="mdl-textfield__label" for="search">Enter your query...</label>
           </div>
         </div>
-      </header>
-      <div class="demo-ribbon"></div>
-      <main class="demo-main mdl-layout__content">
-        <div class="demo-container mdl-grid">
-          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-            <div class="demo-crumbs mdl-color-text--grey-500">
-              Projects
+      </div>
+    </header>
+    <div class="demo-ribbon"></div>
+    <main class="demo-main mdl-layout__content">
+      <div class="demo-container mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+        <div
+          class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+          <div class="demo-crumbs mdl-color-text--grey-500">
+            Projects
 
-            </div>
-            <!--
+          </div>
+          <!--
             <hr>
             <h5 style="text-align:center"> Linkdump 1</h5>
                         <p></P>
@@ -104,111 +109,122 @@
               <h6 style="text-align:right"> 10 October 2022  </H6>
           </style>
           </head> -->
-            <hr>
-            <h5 style="text-align:center"> Designing and Testing Compliant Mechanisms for Holding a CR2032 Battery</h5>
+          <hr>
+          <h5 style="text-align:center"> Designing and Testing Compliant Mechanisms for Holding a CR2032 Battery</h5>
           </head>
           <style>
-                img {
-                  max-width: 100%;
-                  height: auto;
-                  display: block;
-                  margin-left: auto;
-                  margin-right: auto;
-                }
-                
-                </style>
-            </head>
-        
-            <body>
-
-            <img src="images/flexure.jpg" >
-            <p></P>
-              <p> <a href="pages/flexure.html">Compliant mechanism using 3D printed PLA.</a></p>
-              <h6 style="text-align:right"> 29 September 2022  </H6>
-
-                <hr>
-                <h5 style="text-align:center"> 3D Printed Rubber Sleeves for Ikea glass bottles</h5>
-                <img src="images/Ikea.jpeg" >
-                <p></P>
-                  <p> Ikea glass bottles are great, but unfortunately glass is hard and brittle. To combat this I made a bunch of rubber sleeves for these bottles using TPU filament. I have been using the above water bottles for the past 4 months now and none of them have cracked.  </p>
-                  <h6 style="text-align:right"> 14 August 2022  </H6>
+            img {
+              max-width: 100%;
+              height: auto;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+            }
           </style>
           </head>
+
+          <body>
+
+            <img src="images/flexure.jpg">
+            <p></P>
+            <p> <a href="pages/flexure.html">Compliant mechanism using 3D printed PLA.</a></p>
+            <h6 style="text-align:right"> 29 September 2022 </H6>
+
+            <hr>
+            <h5 style="text-align:center"> 3D Printed Rubber Sleeves for Ikea glass bottles</h5>
+            <img src="images/Ikea.jpeg">
+            <p></P>
+            <p> Ikea glass bottles are great, but unfortunately glass is hard and brittle. To combat this I made a bunch
+              of rubber sleeves for these bottles using TPU filament. I have been using the above water bottles for the
+              past 4 months now and none of them have cracked. </p>
+            <h6 style="text-align:right"> 14 August 2022 </H6>
+            </style>
+            </head>
             <hr>
             <h5 style="text-align:center"> Experimenting with Composites</h5>
             <img src="images/glass.jpeg">
             <p></P>
-              <p> <a href="pages/glassfiber.html">Some more samples inside.</a></p>
-              <h6 style="text-align:right"> 20 April 2022  </H6>
-          </style>
-          </head>
+            <p> <a href="pages/glassfiber.html">Some more samples inside.</a></p>
+            <h6 style="text-align:right"> 20 April 2022 </H6>
+            </style>
+            </head>
 
-            <hr>
+            <!-- <hr>
             <h5 style="text-align:center"> Designing, Analyzing and Prototyping of gym Equipment</h5>
             <img src="images/gym.png" >
             <p></P>
               <p> <a href="pages/gym.html">Perhaps one of the coolest projects I have worked on so far.</a></p>
-              <h6 style="text-align:right"> 17 April 2022  </h6>
+              <h6 style="text-align:right"> 17 April 2022  </h6> -->
             <hr>
             <h5 style="text-align:center"> 5 Degrees of freedom Monitor stand</h5>
             <img src="images/monitor_stand.png">
             <p></P>
-              <p> I always wanted to make a monitor stand of my own, so I decided to make a cad model of it and simulate it in ansys. After doing so, I went ahead and cut the pieces for the stand and welded them. I'm quite happy with how it turned out, but I haven't had enough time to paint it.</p>
-              <h6 style="text-align:right"> 20 April 2022  </H6>
+            <p> I always wanted to make a monitor stand of my own, so I decided to make a cad model of it and simulate
+              it in ansys. After doing so, I went ahead and cut the pieces for the stand and welded them. I'm quite
+              happy with how it turned out, but I haven't had enough time to paint it.</p>
+            <h6 style="text-align:right"> 20 April 2022 </H6>
 
-            
+
             <hr>
             <h5 style="text-align:center"> Lite3Dp S1</h5>
             <img src="images/a.jpeg">
             <p></P>
-              <p> The cheapest SLA 3D printer you can buy! <a href="pages/Lite3Dp.html">Read more about it here</a></p>
-              <h6 style="text-align:right"> 3 March 2022  </h6>
+            <p> The cheapest SLA 3D printer you can buy! <a href="pages/Lite3Dp.html">Read more about it here</a></p>
+            <h6 style="text-align:right"> 3 March 2022 </h6>
 
             <hr>
             <h5 style="text-align:center"> Tuning my 3D printer steps</h5>
             <img src="images/steps.png">
             <p></P>
-              <p> <a href="pages/steps.html">Read more about it here</a> </p>
-              <h6 style="text-align:right"> 4 November 2021 </h6>
+            <p> <a href="pages/steps.html">Read more about it here</a> </p>
+            <h6 style="text-align:right"> 4 November 2021 </h6>
 
             <hr>
             <h5 style="text-align:center"> 3D printed mould to make planter</h5>
             <img src="images/planter.jpeg">
             <p></P>
             <p> Used design from thingiverse as a first attempt. </p>
-              <h6 style="text-align:right"> October 2021 </h6>
-          <hr>
+            <h6 style="text-align:right"> October 2021 </h6>
+            <hr>
             <h5 style="text-align:center"> Welding a frame for mom to put plant on.</h5>
             <img src="images/plants frame.png">
             <p></P>
-              <p> My mom wanted the creeper tree from the ground floor to form a wall on the first floor in such a way that it blocks the view of the neighbors. So we decided to weld a couple of metal frames using galvanised iron so they wouldn't rust. And the other one on the right is for pots made using square mild steel tube and then later painted to prevent rusting. </p>
-              <h6 style="text-align:right"> 20 April 2022  </h6>
-          </style>
-          </head>
-          <div class="demo-crumbs mdl-color-text--grey-500"  style="text-align:right">
-            <a class="demo-crumbs mdl-color-text--grey-500"  href="index_2.html">Go to Page 2</a>, 1... 
+            <p> My mom wanted the creeper tree from the ground floor to form a wall on the first floor in such a way
+              that it blocks the view of the neighbors. So we decided to weld a couple of metal frames using galvanised
+              iron so they wouldn't rust. And the other one on the right is for pots made using square mild steel tube
+              and then later painted to prevent rusting. </p>
+            <h6 style="text-align:right"> 20 April 2022 </h6>
+            </style>
+            </head>
+            <div class="demo-crumbs mdl-color-text--grey-500" style="text-align:right">
+              <a class="demo-crumbs mdl-color-text--grey-500" href="index_2.html">Go to Page 2</a>, 1...
 
-           </div>
-            
+            </div>
 
-          </div>
-          
+
         </div>
-        <footer class="demo-footer mdl-mini-footer">
-          <div class="mdl-mini-footer--left-section">
-            <ul class="mdl-mini-footer--link-list">
-              <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
-              <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li>
-              <li><a href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a></li>
-            </ul>
-          </div>
-        </footer>
-      </main>
-    </div>
-<!--    <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->   
-   
-  </body>
+
+      </div>
+      <footer class="demo-footer mdl-mini-footer">
+        <div class="mdl-mini-footer--left-section">
+          <ul class="mdl-mini-footer--link-list">
+            <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
+            <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li>
+            <li><a
+                href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <!--    <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+
 </html>
