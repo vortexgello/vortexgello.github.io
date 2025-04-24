@@ -1,0 +1,394 @@
+<!doctype html>
+<!--
+  Vortex
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+  <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QJ8M5F06YR');
+</script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="vortextriangle's blog">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Vortex</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="penpenplotter/android-desktop.svg">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Vortex">
+    <link rel="apple-touch-icon-precomposed" href="penpenplotter/ios-desktop.svg">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="penpenplotter/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="shortcut icon" href="penpenplotter/favicon.png">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+    <style>
+.boom-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
+}
+.boom-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+.boom-card h4 {
+  margin-top: 0;
+  color: #00796B;
+  font-weight: bold;
+}
+.boom-card label {
+  display: block;
+  margin: 8px 0 4px;
+}
+.boom-card input, .boom-card select {
+  width: 100%;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.boom-card button {
+  background-color: #00796B;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.boom-card button:hover {
+  background-color: #005f56;
+}
+</style>
+
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Vortex</span>
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" id="search">
+              <label class="mdl-textfield__label" for="search">Enter your query...</label>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+            <div class="demo-crumbs mdl-color-text--grey-500">
+             <a class="demo-crumbs mdl-color-text--grey-500"  href="/index.html">Home page</a>
+            </div>
+            <h2>Design and Manual Fabrication of a Bistable Carbon Fiber Composite Boom</h2>
+            <p>This project documents the hands-on development of a <strong>bistable composite boom</strong> — a structure capable of holding two stable configurations without external force — using <strong>BhorForce® UC160C</strong> (160 gsm UD carbon fiber) and <strong>LY556 epoxy resin</strong>. Achieving bistability involved numerous iterations, with careful adjustment of layup strategy and curing consistency to tune the internal strain and geometry of the composite.</p>
+            
+            <h3>Material System</h3>
+            <ul>
+              <li><strong>Carbon Fiber:</strong> BhorForce® UC160C, 160 g/m² UD weave</li>
+              <li><strong>Resin System:</strong> LY556 epoxy with recommended hardener (e.g., HY951)</li>
+            </ul>
+            
+            <h3>Design Objective</h3>
+            <p>To design a deployable boom with two mechanically stable positions — one stowed and one deployed — using material anisotropy and laminate architecture to create stored elastic strain energy and snap-through behavior.</p>
+            
+            <h3>Fabrication Steps</h3>
+            <ol>
+              <li><strong>Mandrel Preparation:</strong> Smooth cylindrical mandrel treated with release agent</li>
+              <li><strong>Layup Strategy:</strong> Manual wrapping of UD carbon fiber in layers designed to induce bistability</li>
+              <li><strong>Resin Application:</strong> Brushed-on LY556 resin ensuring even saturation</li>
+              <li><strong>Manual Compaction:</strong> Layer pressing without vacuum tools, focusing on minimizing voids</li>
+              <li><strong>Curing:</strong> Ambient air curing over several hours, followed by trimming and observation</li>
+              <li><strong>Iteration Process:</strong> Several failed attempts were analyzed and refined until bistability was achieved</li>
+            </ol>
+            
+            <h3>Outcome & Observations</h3>
+            <p>The final boom successfully holds both a <strong>coiled (stowed)</strong> and <strong>extended (deployed)</strong> shape — without requiring hinges or actuation. This result demonstrates a deep understanding of composite behavior and structural bistability, a hallmark of modern aerospace structures.</p>
+            
+            <h3>Challenges Overcome</h3>
+            <ul>
+              <li>Maintaining fiber alignment without slippage</li>
+              <li>Controlling layup curvature to induce bistability</li>
+              <li>Repeated failure analysis and incremental design improvement</li>
+            </ul>
+            <h3>Image Gallery</h3>
+
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="images/boom_step_01.jpeg" width="100%" alt="Boom Step 1">
+  <p style="font-style: italic; color: #555;">Cutting and laying up the first carbon fiber ply</p>
+</div>
+
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="images/boom_step_02.jpeg" width="100%" alt="Boom Step 2">
+  <p style="font-style: italic; color: #555;">Aligning fibers and resin saturation on mandrel</p>
+</div>
+
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="images/boom_step_03.jpeg" width="100%" alt="Boom Step 3">
+  <p style="font-style: italic; color: #555;">Tools and materials ready for layup</p>
+</div>
+
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="images/boom_step_04.jpeg" width="100%" alt="Boom Step 4">
+  <p style="font-style: italic; color: #555;">Wrapping and curing on mandrel</p>
+</div>
+
+<div style="text-align: center; margin-bottom: 20px;">
+  <img src="images/boom_step_05.jpeg" width="100%" alt="Boom Step 5">
+  <p style="font-style: italic; color: #555;">Final cured boom before trimming</p>
+</div>
+              <b></b>
+              <img src="images/boom_step_05.jpeg" width="100%">
+              <b></b>
+               <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+                <div class="boom-card"> 
+                  <h4 title="Estimates the force needed to produce a user-defined tip deflection.">Required Force for Tip Deflection</h4>
+                  <p>Enter your boom dimensions and desired tip deflection. This calculator will compute the force needed to bend the boom that much.</p>
+                  <label>Width (mm): <input type="number" id="w_force" value="30" step="0.1"></label><br>
+                  <label>Thickness (mm): <input type="number" id="t_force" value="0.34" step="0.01"></label><br>
+                  <label>Effective Modulus E (GPa): <input type="number" id="E_force" value="9.07" step="0.1"></label><br>
+                  <label>Length of Boom (cm): <input type="number" id="L_force" value="45" step="1"></label><br>
+                  <label>Desired Tip Deflection (mm): <input type="number" id="d_force" value="1" step="0.01"></label><br><br>
+                  <button onclick="calculateRequiredForce()">Calculate</button>
+                  <div id="forceResult" style="margin-top: 12px;"></div>
+                
+                <script>
+                function calculateRequiredForce() {
+                  const w = parseFloat(document.getElementById('w_force').value) / 1000;
+                  const t = parseFloat(document.getElementById('t_force').value) / 1000;
+                  const E = parseFloat(document.getElementById('E_force').value) * 1e9;
+                  const L = parseFloat(document.getElementById('L_force').value) / 100;
+                  const d = parseFloat(document.getElementById('d_force').value) / 1000;
+                
+                  const I = (w * Math.pow(t, 3)) / 12;
+                  const EI = E * I;
+                  const F = (d * 3 * EI) / Math.pow(L, 3);
+                
+                  document.getElementById('forceResult').innerHTML = `
+                    <strong>Results:</strong><br>
+                    Moment of Inertia (I): ${I.toExponential(3)} m⁴<br>
+                    Bending Stiffness (EI): ${EI.toExponential(3)} Nm²<br>
+                    Required Force for ${d * 1000} mm Tip Deflection: ${F.toExponential(3)} N
+                  `;
+                }
+                </script>
+              </div>
+            </div>
+              <b></b>
+              
+                
+                <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+                  <div class="boom-card">
+                    <h4 title="Estimates the critical snap moment based on shell curvature and stiffness.">Snap-Through Moment Calculator (Curved Bistable Boom)</h4>
+                    <p>Estimate the snap-through moment for a bistable composite boom using bending mode and thin-shell theory.</p>
+                    <label>Arc Width b (mm): <input type="number" id="b" value="30" step="0.1"></label><br>
+                    <label>Radius R (mm): <input type="number" id="R" value="20" step="0.1"></label><br>
+                    <label>Thickness t (mm): <input type="number" id="t" value="0.34" step="0.01"></label><br>
+                    <label>Modulus E (GPa): <input type="number" id="E" value="9.07" step="0.1"></label><br>
+                    <label>Poisson’s Ratio ν: <input type="number" id="nu" value="0.3" step="0.01"></label><br>
+                    <label>Bending Mode:
+                      <select id="bendingMode">
+                        <option value="opposite">Opposite-Sense</option>
+                        <option value="equal">Equal-Sense</option>
+                      </select>
+                    </label><br><br>
+                    <button onclick="calculateSnap()">Calculate</button>
+                    <div id="snapResults" style="margin-top: 12px;"></div>
+                  </div>
+                </div>
+                
+                <script>
+                function calculateSnap() {
+                  const b = parseFloat(document.getElementById('b').value) / 1000;  // m
+                  const R = parseFloat(document.getElementById('R').value) / 1000;  // m
+                  const t = parseFloat(document.getElementById('t').value) / 1000;  // m
+                  const E = parseFloat(document.getElementById('E').value) * 1e9;   // Pa
+                  const nu = parseFloat(document.getElementById('nu').value);
+                  const mode = document.getElementById('bendingMode').value;
+                
+                  const D = (E * Math.pow(t, 3)) / (12 * (1 - Math.pow(nu, 2)));    // Bending stiffness per unit width
+                  let Mcrit = (D * Math.PI * Math.PI * b) / (2 * R);                // Snap-through moment
+                
+                  if (mode === "equal") {
+                    Mcrit *= 0.2; // Assume 20% of the opposite-sense moment
+                  }
+                
+                  document.getElementById('snapResults').innerHTML = `
+                    <strong>Results:</strong><br>
+                    Longitudinal Curvature (Kₓ): ${(1/R).toFixed(2)} m⁻¹<br>
+                    Bending Stiffness (D): ${D.toExponential(3)} Nm<br>
+                    Critical Snap-Through Moment (M₍crit₎) [${mode.replace('-', ' ')}]: ${Mcrit.toFixed(3)} Nm
+                  `;
+                }
+                </script>
+                
+                <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+                  <div class="boom-card">
+                    <h4>Effective Modulus Calculator (Rule of Mixtures)</h4>
+                    <p>Estimate the effective modulus E for a unidirectional composite lamina using fiber and matrix properties.</p>
+                    <label>Fiber Modulus E<sub>f</sub> (GPa): <input type="number" id="Ef" value="240" step="1"></label><br>
+                    <label>Matrix Modulus E<sub>m</sub> (GPa): <input type="number" id="Em" value="3.2" step="0.1"></label><br>
+                    <label>Fiber Volume Fraction V<sub>f</sub> (0–1): <input type="number" id="Vf" value="0.6" step="0.01" min="0" max="1"></label><br>
+                    <label>Fiber Shear Modulus G<sub>f</sub> (GPa): <input type="number" id="Gf" value="4.5" step="0.1"></label><br>
+                    <label>Matrix Shear Modulus G<sub>m</sub> (GPa): <input type="number" id="Gm" value="1.3" step="0.1"></label><br><br>
+                    <button onclick="calculateEffectiveModulus()">Calculate</button>
+                    <div id="modulusResults" style="margin-top: 12px;"></div>
+                  </div>
+                </div>
+                
+                <script>
+                function calculateEffectiveModulus() {
+                  const Ef = parseFloat(document.getElementById('Ef').value) * 1e9;
+                  const Em = parseFloat(document.getElementById('Em').value) * 1e9;
+                  const Vf = parseFloat(document.getElementById('Vf').value);
+                  const Vm = 1 - Vf;
+                  const Gf = parseFloat(document.getElementById('Gf').value) * 1e9;
+                  const Gm = parseFloat(document.getElementById('Gm').value) * 1e9;
+                
+                  const E_parallel = Ef * Vf + Em * Vm;
+                  const G12 = 1 / (Vf / Gf + Vm / Gm);
+                  const E_45 = 4 * G12;
+                
+                  document.getElementById('modulusResults').innerHTML = `
+                    <strong>Results:</strong><br>
+                    Longitudinal Modulus (0° layup): ${ (E_parallel / 1e9).toFixed(2) } GPa<br>
+                    In-plane Shear Modulus (G₁₂): ${ (G12 / 1e9).toFixed(2) } GPa<br>
+                    Approx. Modulus for ±45° Layup: ${ (E_45 / 1e9).toFixed(2) } GPa
+                  `;
+                }
+                </script>
+                
+                <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+                  <div class="boom-card">
+                    <h4>Composite Boom Stiffness Calculator</h4>
+                    <p>Enter your boom dimensions and select a layup type:</p>
+                    <label>Width (mm): <input type="number" id="width" value="3" step="0.1"></label><br>
+                    <label>Thickness (mm): <input type="number" id="thickness" value="0.34" step="0.01"></label><br>
+                    <label>Layup Type:
+                      <select id="layup" onchange="setModulus()">
+                        <option value="240">0° UD (Max Stiffness)</option>
+                        <option value="60">Quasi-Isotropic</option>
+                        <option value="9.07" selected>±45° Symmetric</option>
+                        <option value="custom">Custom</option>
+                      </select>
+                    </label><br>
+                    <label>Effective Modulus E (GPa): <input type="number" id="Eeff" value="9.07" step="0.1"></label><br>
+                    <label>Length (cm): <input type="number" id="length" value="45" step="1"></label><br><br>
+                    <button onclick="calculateBoom()">Calculate</button>
+                    <div id="results" style="margin-top: 12px;"></div>
+                  </div>
+                </div>
+                
+                <script>
+                function setModulus() {
+                  const layup = document.getElementById("layup").value;
+                  const EInput = document.getElementById("Eeff");
+                  if (layup !== "custom") {
+                    EInput.value = layup;
+                    EInput.readOnly = true;
+                  } else {
+                    EInput.readOnly = false;
+                  }
+                }
+                
+                function calculateBoom() {
+                  const width = parseFloat(document.getElementById('width').value) / 1000; // m
+                  const thickness = parseFloat(document.getElementById('thickness').value) / 1000; // m
+                  const E = parseFloat(document.getElementById('Eeff').value) * 1e9; // Pa
+                  const length = parseFloat(document.getElementById('length').value) / 100; // m
+                
+                  const A = width * thickness;
+                  const I = (width * Math.pow(thickness, 3)) / 12;
+                
+                  const EA = E * A;
+                  const EI = E * I;
+                  const deflection = (1 * Math.pow(length, 3)) / (3 * EI);
+                
+                  document.getElementById('results').innerHTML = `
+                    <strong>Results:</strong><br>
+                    Axial Stiffness (EA): ${EA.toFixed(2)} N<br>
+                    Bending Stiffness (EI): ${EI.toExponential(3)} Nm²<br>
+                    Tip Deflection under 1N Load: ${deflection.toFixed(2)} m
+                  `;
+                }
+                </script>
+                </div>
+              </div> 
+              </div>
+            </div>
+        </div>
+        <footer class="demo-footer mdl-mini-footer">
+          <div class="mdl-mini-footer--left-section">
+            <ul class="mdl-mini-footer--link-list">
+              <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
+                <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li>
+                <li><a href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
+    </div>
+<!--  <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->   
+  </body>
+  
+</html>
