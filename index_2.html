@@ -4,17 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Older Projects - Vortex">
-  <title>Older Projects - Vortex</title>
-
-  <link rel="icon" href="images/favicon.svg">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
+  <title>Older Projects | Vortex</title>
+  <meta name="description" content="Archive of older engineering and maker projects by Vortex.">
   <link rel="stylesheet" href="styles.css">
 
   <!-- Analytics -->
@@ -29,63 +20,82 @@
 
 <body>
 
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-content">
       <a href="index.html" class="site-title">Vortex</a>
       <nav class="site-nav">
         <ul>
-          <li><a href="index.html">Projects</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="index.html#experience">Experience</a></li>
+          <li><a href="index.html#skills">Skills</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section id="projects">
-      <header class="section-title">Older Projects</header>
+    <section id="older-projects">
+      <h2 class="section-title">Older Projects</h2>
       <div class="projects-grid">
 
         <!-- Plotter V2 -->
         <article class="project-card">
-          <a href="pages/plotter_v2.html" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/plotter_v2.png" alt="Plotter V2">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="pages/plotter_v2.html">Plotter V2</a></h3>
+            <h3 class="project-title">Plotter V2</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">CNC</span>
+              <span class="tech-tag">Hardware</span>
+            </div>
             <p class="project-description">2nd version of the pen plotter. A refined design for better performance.</p>
-            <div class="project-meta">
-              <span>Oct 2021</span>
-              <a href="pages/plotter_v2.html" class="read-more">Read More &rarr;</a>
+            <div class="project-links">
+              <a href="pages/plotter_v2.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Oct
+                2021</span>
             </div>
           </div>
         </article>
 
         <!-- CNC Mill -->
         <article class="project-card">
-          <a href="pages/CNC.html" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/CNC.png" alt="CNC Mill">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="pages/CNC.html">3-Axis CNC Mill</a></h3>
+            <h3 class="project-title">3-Axis CNC Mill</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">CNC</span>
+              <span class="tech-tag">Fabrication</span>
+            </div>
             <p class="project-description">Building a 3-axis CNC mill from scratch.</p>
-            <div class="project-meta">
-              <span>Jul 2021</span>
-              <a href="pages/CNC.html" class="read-more">Read More &rarr;</a>
+            <div class="project-links">
+              <a href="pages/CNC.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Jul
+                2021</span>
             </div>
           </div>
         </article>
 
         <!-- Pen Plotter Art -->
         <article class="project-card">
-          <a href="pages/plotter_art.html" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/black2.jpg" alt="Plotter Art">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="pages/plotter_art.html">Pen Plotter Art</a></h3>
+            <h3 class="project-title">Pen Plotter Art</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Generative Art</span>
+              <span class="tech-tag">Plotter</span>
+            </div>
             <p class="project-description">A collection of generative art created with my pen plotters.</p>
-            <div class="project-meta">
-              <span>Jun 2021</span>
-              <a href="pages/plotter_art.html" class="read-more">Read More &rarr;</a>
+            <div class="project-links">
+              <a href="pages/plotter_art.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Jun
+                2021</span>
             </div>
           </div>
         </article>
@@ -97,9 +107,14 @@
           </div>
           <div class="project-content">
             <h3 class="project-title">Welded Desk</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Welding</span>
+              <span class="tech-tag">Furniture</span>
+            </div>
             <p class="project-description">Building a custom desk for my 3D printer and workspace.</p>
-            <div class="project-meta">
-              <span>May 2021</span>
+            <div class="project-links">
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">May
+                2021</span>
             </div>
           </div>
         </article>
@@ -111,9 +126,14 @@
           </div>
           <div class="project-content">
             <h3 class="project-title">Barbell Holder</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">3D Printing</span>
+              <span class="tech-tag">Functional</span>
+            </div>
             <p class="project-description">DIY gym equipment when COVID closed the gyms.</p>
-            <div class="project-meta">
-              <span>May 2021</span>
+            <div class="project-links">
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">May
+                2021</span>
             </div>
           </div>
         </article>
@@ -125,25 +145,35 @@
           </div>
           <div class="project-content">
             <h3 class="project-title">Hackathon Prototyping</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Prototyping</span>
+              <span class="tech-tag">Design</span>
+            </div>
             <p class="project-description">Toothbrush holder and monitor stand made with free prototyping services.</p>
-            <div class="project-meta">
-              <span>Dec 2020</span>
+            <div class="project-links">
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Dec
+                2020</span>
             </div>
           </div>
         </article>
 
         <!-- Covid Watch -->
         <article class="project-card">
-          <a href="pages/covid-distance-alarm.html" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/chronicle.jpg" alt="Covid Watch">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="pages/covid-distance-alarm.html">Distance Alarm Watch</a></h3>
+            <h3 class="project-title">Distance Alarm Watch</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Electronics</span>
+              <span class="tech-tag">C++</span>
+            </div>
             <p class="project-description">A wearable device to help maintain social distancing, featured in the news.
             </p>
-            <div class="project-meta">
-              <span>Nov 2020</span>
-              <a href="pages/covid-distance-alarm.html" class="read-more">Read More &rarr;</a>
+            <div class="project-links">
+              <a href="pages/covid-distance-alarm.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Nov
+                2020</span>
             </div>
           </div>
         </article>
@@ -155,111 +185,133 @@
           </div>
           <div class="project-content">
             <h3 class="project-title">3D Scan</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">3D Scanning</span>
+              <span class="tech-tag">Printing</span>
+            </div>
             <p class="project-description">Scanning myself using a Kinect sensor and printing it.</p>
-            <div class="project-meta">
-              <span>Sep 2020</span>
+            <div class="project-links">
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Sep
+                2020</span>
             </div>
           </div>
         </article>
 
         <!-- Go Kart -->
         <article class="project-card">
-          <a href="pages/kart.html" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/kart.jpg" alt="Go Kart">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="pages/kart.html">Homemade Go Kart</a></h3>
+            <h3 class="project-title">Homemade Go Kart</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Fabrication</span>
+              <span class="tech-tag">Mechanical</span>
+            </div>
             <p class="project-description">Built with a friend using a 2-stroke engine during the pandemic.</p>
-            <div class="project-meta">
-              <span>Aug 2020</span>
-              <a href="pages/kart.html" class="read-more">Read More &rarr;</a>
+            <div class="project-links">
+              <a href="pages/kart.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Aug
+                2020</span>
             </div>
           </div>
         </article>
 
         <!-- Brushless Fan -->
         <article class="project-card">
-          <a href="https://www.thingiverse.com/thing:4474555" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/fan.jpg" alt="Brushless Fan">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="https://www.thingiverse.com/thing:4474555">Brushless Fan</a></h3>
+            <h3 class="project-title">Brushless Fan</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">3D Printing</span>
+              <span class="tech-tag">Electronics</span>
+            </div>
             <p class="project-description">A 3D printed brushless fan project.</p>
-            <div class="project-meta">
-              <span>Jul 2020</span>
-              <a href="https://www.thingiverse.com/thing:4474555" class="read-more">View on Thingiverse &rarr;</a>
+            <div class="project-links">
+              <a href="https://www.thingiverse.com/thing:4474555" class="icon-link">Thingiverse &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Jul
+                2020</span>
             </div>
           </div>
         </article>
 
         <!-- Key Holder -->
         <article class="project-card">
-          <a href="https://www.thingiverse.com/thing:4283694" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/keychain.jpg" alt="Key Holder">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="https://www.thingiverse.com/thing:4283694">Better Key Holder</a></h3>
+            <h3 class="project-title">Better Key Holder</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">3D Printing</span>
+              <span class="tech-tag">Design</span>
+            </div>
             <p class="project-description">A functional everyday print.</p>
-            <div class="project-meta">
-              <span>Apr 2020</span>
-              <a href="https://www.thingiverse.com/thing:4283694" class="read-more">View on Thingiverse &rarr;</a>
+            <div class="project-links">
+              <a href="https://www.thingiverse.com/thing:4283694" class="icon-link">Thingiverse &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Apr
+                2020</span>
             </div>
           </div>
         </article>
 
         <!-- Pen Plotter V1 -->
         <article class="project-card">
-          <a href="pages/penplotter.html" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/honker.jpg" alt="Pen Plotter V1">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="pages/penplotter.html">3D Printed Pen Plotter</a></h3>
+            <h3 class="project-title">3D Printed Pen Plotter</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">3D Printing</span>
+              <span class="tech-tag">CNC</span>
+            </div>
             <p class="project-description">My first pen plotter built to write lab notes.</p>
-            <div class="project-meta">
-              <span>Mar 2020</span>
-              <a href="pages/penplotter.html" class="read-more">Read More &rarr;</a>
+            <div class="project-links">
+              <a href="pages/penplotter.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Mar
+                2020</span>
             </div>
           </div>
         </article>
 
         <!-- Benelli Keychain -->
         <article class="project-card">
-          <a href="https://www.thingiverse.com/thing:4229713" class="project-image-container">
+          <div class="project-image-container">
             <img src="images/bike.jpg" alt="Benelli Keychain">
-          </a>
+          </div>
           <div class="project-content">
-            <h3 class="project-title"><a href="https://www.thingiverse.com/thing:4229713">Benelli Lion Keychain</a></h3>
+            <h3 class="project-title">Benelli Lion Keychain</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">3D Printing</span>
+              <span class="tech-tag">CAD</span>
+            </div>
             <p class="project-description">Modeled and printed keychain.</p>
-            <div class="project-meta">
-              <span>Mar 2020</span>
-              <a href="https://www.thingiverse.com/thing:4229713" class="read-more">View on Thingiverse &rarr;</a>
+            <div class="project-links">
+              <a href="https://www.thingiverse.com/thing:4229713" class="icon-link">Thingiverse &rarr;</a>
+              <span class="project-date" style="margin-left: auto; color: var(--text-muted); font-size: 0.85rem;">Mar
+                2020</span>
             </div>
           </div>
         </article>
 
       </div>
 
-      <div style="text-align: center; margin-top: 2rem;">
-        <a href="index.html" class="read-more" style="font-size: 1.1rem;">&larr; Back to Recent Projects</a>
+      <div style="text-align: center; margin: var(--space-xl) 0;">
+        <a href="index.html" class="btn">&larr; Back to Recent Projects</a>
       </div>
 
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-content">
-      <div class="copyright">
-        &copy; Vortex 2025. All rights reserved.
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/vortexgello/triangle.pages.dev">Source</a>
-      </div>
+    <div class="container">
+      <p>&copy; 2026 Vortex. Built with modern web technologies.</p>
     </div>
   </footer>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
 </body>
 
 </html>

@@ -4,10 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Boom 2 Build Log - Vortex">
-  <title>Boom 2 Build Log - Vortex</title>
-
-  <!-- Styles -->
+  <title>Roll-Out Solar Array | Vortex</title>
+  <meta name="description"
+    content="Development of a deployable composite boom system for solar arrays, inspired by the ISS iROSA.">
   <link rel="stylesheet" href="../styles.css">
 
   <!-- Analytics -->
@@ -16,74 +15,117 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-QJ8M5F06YR');
   </script>
 </head>
 
 <body>
+
   <header class="site-header">
     <div class="container header-content">
       <a href="../index.html" class="site-title">Vortex</a>
       <nav class="site-nav">
         <ul>
           <li><a href="../index.html">Projects</a></li>
-          <li><a
-              href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
-          </li>
+          <li><a href="../index.html#experience">Experience</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main class="container content-wrapper">
-    <section>
-      <header class="section-title">Boom 2 Build Log</header>
-
-      <p>This is a collection of my latest booms and a simple mechanism that's inspired by ISS iROSA as seen <a
-          href="https://youtu.be/Q8kXZm-U-z4?list=LL&t=135">here</a>.</p>
-
-      <div style="display: grid; gap: 2rem; margin-top: 2rem;">
-        <img src="boom2-img/65cm-mechanism.jpeg" alt="Mechanism">
-        <hr style="border: 0; border-top: 1px solid var(--border-light);">
-        <img src="boom2-img/mechanism.jpeg" alt="Mechanism">
-        <hr style="border: 0; border-top: 1px solid var(--border-light);">
-
-        <div style="display: flex; flex-direction: column; gap: 2rem; align-items: center;">
-          <iframe width="100%" height="450" style="max-width: 600px;" src="https://www.youtube.com/embed/9fKSwI2cJSc"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
-
-          <iframe width="100%" height="450" style="max-width: 600px;"
-            src="https://www.youtube.com/embed/FCsuLYd_ojA?si=USQFhc-wd4lgpDDQ" title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
-
-          <iframe width="100%" height="450" style="max-width: 600px;"
-            src="https://www.youtube.com/embed/sLQ1yiBxTDs?si=czxhOzjTYPc6vF_u" title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
+    <article class="project-detail">
+      <header class="project-header">
+        <div style="margin-bottom: 1rem;">
+          <a href="../index.html" class="icon-link">&larr; Back to Projects</a>
         </div>
-      </div>
+        <h1 class="project-title-large">Roll-Out Solar Array</h1>
+        <div class="project-meta-large">
+          <span>June 2025</span>
+          <span class="separator">•</span>
+          <span>Space Mechanisms</span>
+          <span class="separator">•</span>
+          <span>Prototyping</span>
+        </div>
+      </header>
 
-    </section>
+      <section class="project-section">
+        <p class="lead-text">
+          A development log of deployable boom mechanisms and a roll-out solar array system inspired by the
+          International Space Station's iROSA (Roll-Out Solar Array) technology.
+        </p>
+
+        <figure class="full-width-image">
+          <img src="boom2-img/65cm-mechanism.jpeg" alt="Roll-Out Solar Array Mechanism"
+            style="border-radius: var(--radius-lg); width: 100%;">
+          <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">The 65cm prototype
+            mechanism in its deployed state.</figcaption>
+        </figure>
+
+        <h2>Mechanism Overview</h2>
+        <p>
+          The core of this project focuses on using bistable composite booms to deploy a flexible solar blanket. This
+          compact storage method allows for significant power generation capability in small satellites without the
+          volume constraints of rigid panels.
+        </p>
+        <p>
+          The design was heavily influenced by the <a href="https://youtu.be/Q8kXZm-U-z4?list=LL&t=135" target="_blank"
+            class="text-link">ISS iROSA deployment mechanism</a>, adapting those large-scale principles for smaller,
+          cost-effective applications.
+        </p>
+
+        <figure class="full-width-image">
+          <img src="boom2-img/mechanism.jpeg" alt="Mechanism Detail"
+            style="border-radius: var(--radius-lg); width: 100%;">
+          <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Close-up of the
+            deployment root.</figcaption>
+        </figure>
+
+        <h2>Deployment Testing</h2>
+        <p>
+          Iterative testing was crucial to ensure smooth deployment without jamming or damaging the simulated solar
+          blanket.
+        </p>
+
+        <div class="video-grid" style="display: grid; gap: 2rem; margin: 2rem 0;">
+          <!-- Primary Solar Array Deployment Video -->
+          <div class="video-container"
+            style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/sLQ1yiBxTDs"
+              title="Solar Array Deployment" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+
+          <h3 style="margin-top: 1rem;">Early Boom Tests</h3>
+          <div class="video-container"
+            style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/9fKSwI2cJSc" title="Boom Test"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+
+          <div class="note-box"
+            style="background: var(--surface-card); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--accent-primary); margin-top: 2rem;">
+            <p style="margin: 0; color: var(--text-secondary);">
+              <strong>Note:</strong> The "CubeSat Selfie Camera" concept (formerly featured here) has graduated to its
+              own dedicated project page. <a href="cubesat_selfie.html" class="text-link">View it here &rarr;</a>
+            </p>
+          </div>
+        </div>
+
+      </section>
+    </article>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-content">
-      <div class="footer-links">
-        <a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a>
-      </div>
-      <div>&copy; 2024 Vortex</div>
+    <div class="container">
+      <p>&copy; 2026 Vortex. Built with modern web technologies.</p>
     </div>
   </footer>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
 </body>
 
 </html>
