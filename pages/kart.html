@@ -1,344 +1,237 @@
 <!doctype html>
-<!--
-  Vortex
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
 <html lang="en">
-  <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-QJ8M5F06YR');
-</script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="vortextriangle's blog">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Vortex</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A pandemic project made by Rahul and Yaseen - Building a Go Kart - Vortex">
+  <title>Building a Go Kart - Vortex</title>
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="kart/android-desktop.svg">
+  <!-- Styles -->
+  <link rel="stylesheet" href="../styles.css">
 
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Vortex">
-    <link rel="apple-touch-icon-precomposed" href="kart/android-desktop.svg">
+  <!-- Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-QJ8M5F06YR');
+  </script>
+</head>
 
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="kart/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
+<body>
 
-    <link rel="shortcut icon" href="kart/favicon.svg">
-
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
-    </style>
-  </head>
-  <body>
-    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Vortex</span>
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-              <!-- <i class="material-icons">search</i> -->
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" id="search">
-              <label class="mdl-textfield__label" for="search">Enter your query...</label>
-            </div>
-          </div>
-        </div>
-      </header>
-      <div class="demo-ribbon"></div>
-      <main class="demo-main mdl-layout__content">
-        <div class="demo-container mdl-grid">
-          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-            <div class="demo-crumbs mdl-color-text--grey-500">
-              A pandemic project made by Rahul and Yaseen
-            </div>
-            <h3>How we built a go kart during a global pandemic</h3>
-
-
-            <h4>Why we built this go kart</h4>
-            <p>Everyone has driven go karts at race tracks but has always wanted to build their own. Since the early days of college, Yaseen and I have always talked about a cool project we could try to do together, as we both wanted to learn practically rather than just reading for an exam. He had already helped me build my Penplotter before, as he knew all about finding the right parts and places. On a random day during lockdown, one came across a YouTube video of a person making their own go karts. I shared it with Yaseen. We then discussed if this kind of project is feasible, though. He knew where we could get the engine, estimated the cost of everything, and I have been trying to learn how to use it. I have had SolidWorks for the past year so that I could use it with my 3D printer. I got Last year With this knowledge of SolidWorks, I could make a basic design of the go kart.</p>
-              <p></p>
-              <p></p>
-            <style>
-              img {
-                max-width: auto;
-                height: auto;
-              }
-              </style>
-              </head>
-              <body>
-
-              <img src="kart/header.jpg">
-              <p></p>
-              <p></p>
-              <iframe width="576" height="720" src="https://www.youtube.com/embed/cWas50LT5Tk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              <p></p>
-              <p></p>
-            <style>
-              img {
-                max-width: auto;
-                height: auto;
-              }
-              </style>
-              </head>
-              <body>
-
-              <img src="kart/kart.jpg">
-
-
-              <p></p>
-              <h4>Sourching the engine</h4>
-              <style>
-                img {
-                  max-width: 100%;
-                  height: auto;
-                }
-                </style>
-                </head>
-                <body>
-
-                <img src="kart/engine.jpg" >
-                <p>The first engine we were supposed to get got damaged later, so we had to buy another engine from the used traders who refurbished old engines.</p>
-                <p>
-                </p>
-                <style>
-                  img {
-                    max-width: auto;
-                    height: auto;
-                  }
-                  </style>
-                  </head>
-                  <body>
-
-                  <img src="kart/chetak.jpg" >
-
-              <p>
-                A used second-hand chetak was stripped down for us as we only wanted the engine out of it which had to be washed several times to remove years' worth of dirt resting on it.
-              </p>
-
-              <h4>Designing the frame of the go kart</h4>
-              <p>This part is the most important for making anything. Using SolidWorks, we started designing the frame with the minimum knowledge and referring to other
-                frames from the official racing organizations' go karting manual and homemade builds made by random internet users.</p>
-              <p>We spent a few days designing a bare bone frame but couldn't figure out what dimensions we had to use as we didn't have parts for the go kart.</p>
-              <style>
-                img {
-                  max-width: 100%;
-                  height: auto;
-                }
-                </style>
-                </head>
-                <body>
-
-                <img src="kart/solidworks.jpg" >
-                <p>A rough sketch of out go kart model made in SolidWorks.</p>
-                <p></p>
-              <p>Next day we went to several markets for search of used parts such
-                 as tyres, steering pedals for the accelerator, clutch and brake. </p>
-              <p></p>
-              <h4>Looking for used parts in markets</h4>
-              <style>
-                img {
-                  max-width: 100%;
-                  height: auto;
-                }
-                </style>
-                </head>
-                <body>
-
-                <img src="kart/market_1.jpg">
-
-              <p></p>
-              <p>We mainly found our steering, pedals, and axle in the Afzal Gunj market. Other parts were sourced from the scrap yards of Malakpet and Karmanghat. Although we couldn't find a few parts for our specifications, we had to adapt in unconventional ways.
-
-
-              </p>
-              <p>Once we had almost all the parts we wanted, we had the biggest challenge. We had to cut our metal rods to our dimensions using the equipment we had and get them welded as we didn't own an arc welding machine.</p>
-                <style>
-                  img {
-                    max-width: 100%;
-                    height: auto;
-                  }
-                  </style>
-                  </head>
-                  <body>
-
-                  <img src="kart/cut.jpg">
-                  <p>Both of us taking turns to cut metal plates and rods.</p>
-                <p></p>
-
-              <style>
-                img {
-                  max-width: 100%;
-                  height: auto;
-                }
-                </style>
-                </head>
-                <body>
-
-                <img src="kart/circles.jpg">
-                <p> Circles being cut using gas welding equipment for mounts of sprocket and disk brakes.</p>
-                <p></p>
-                <iframe width="576" height="720" src="https://www.youtube.com/embed/mbmun_rrxvQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              <p> Boring operation being done for the axle and the hubs of the tyres.</p>
-              <p></p>
-              <p>Once we had all the parts ready to assemble, we had to cut our rods to the specific dimensions as the chassis is the most important part of any moving vehicle.</p>
-              <p></p>
-              <h4> Getting the frame Welded.</h4>
-              <style>
-                img {
-                  max-width: 100%;
-                  height: auto;
-                }
-                </style>
-                </head>
-            <!--    <body>
-
-                <img src="kart/weld.jpg" width="1080" height="1920">
-                <p>The rear part of the frame being welded using arc welding</p>
-                <p></p> -->
-                <style>
-                  img {
-                    max-width: 100%;
-                    height: auto;
-                  }
-                  </style>
-                  </head>
-                  <body>
-
-                  <img src="kart/3dmodel.jpg" >
-                  <p>A 3D model was printed so the welder could understand what we wanted.</p>
-                <p></p>
-                <p>It was day 15 by this point, and we had finished the majority of our work. All we had to do was arrange the cables, pedals, seat the exact positions for the steering, gear rod, and some minor quirks.  </p>
-                <style>
-                  img {
-                    max-width: auto;
-                    height: auto;
-                  }
-                  </style>
-                  </head>
-                  <body>
-
-                  <img src="kart/workinprogress.jpg" >
-                  <p> This was the progress of our kart on day 15 </p>
-
-                  <h4> Technical specifications of our kart</h4>
-                  <p> We had to improvise and adapt for whatever materials we could locate easily and for a decent price. Most of the parts which were used are refurbished and resold in the vast markets of hyderabad. </p>
-                  <ul>
-                    <li>The Go Kart is powered by a Chetak 150CC engine which produces about 7.5BHP when new.</li>
-                    <li>The frame is made out of two 2x3 inch steel rods that were 20 feet long and weighed around 25 kg combined.</li>
-                    <li>Four tyres and hubs were salvaged from an auto rickshaw.</li>
-                    <li>The axle which was used was the steering column of a truck, which had to be processed on a lathe later to fix the imperfections.</li>
-                    <li>We used the disc break and its left-over leaver from a Bajaj Pulsar.</li>
-                    <li>The chain sprocket set is also from a Bajaj Pulsar 220cc variant.</li>
-                    <li>Finding wheel bearings for the front steering column was difficult and expensive in the markets of Afzal Gunj. The bearings used for the tyres are standard chetak bearings.</li>
-                  </ul>
-                    <style>
-                      img {
-                        max-width: 100%;
-                        height: auto;
-                      }
-                      </style>
-                      </head>
-                      <body>
-
-                      <img src="kart/Steel_warehouse.jpg">
-
-
-
-                  <h4> Problems faced</p>
-                    <p>As there was a pandemic, we had to be very careful and it was very risky to go to the crowded markets several times to buy spares. The merchants in the markets always tried to sell their parts at a premium as we were young. Some of the parts that we bought didn't function as intended, so we had to buy them again, which increased the budget of this project. We had to manage with the tools we had and for other</p>
-
-                      <p> Due to our ignorance, we had to buy a second engine. The angle wasn't correct and it got jammed. Thanks to Yaseen's father's contacts, we were able to find another refurbished engine. We had to make last minute changes in our frame and get some parts of the frame re-welded and change the position of the seat, which increased the budget of this project.  </p>
-                      <style>
-                        img {
-                          max-width: 100%;
-                          height: auto;
-                        }
-                        </style>
-                        </head>
-                        <body>
-
-                        <img src="kart/market_3.jpg" >
-                        <p></p>
-                        <p></p>
-
-                        <iframe width="720" height="576" src="https://www.youtube.com/embed/YrY1kmAjYWY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
-                  <h4> Conclusion</h4>
-                  <p>We are proud that we were able to build a working go kart from scratch. We have learned a lot about the sources of finding the parts for the parts and the prices of raw materials. We would never be able to accomplish this without a pandemic, as we would be trying to listen to a theoretical class in college. We also learned that until we try to do something practically, we will not be able to understand the real problems. Before we started this project, we estimated that it would be completed within 10 days, but it took way longer and was more difficult than expected. We also hope more people try to make big projects like this one or small autonomous vehicles. We should also thank our parents for their support and for agreeing to bear the cost of the project during one of the worst economic recessions in history.
-                    </p>
-
-                   <p>As this is our first attempt at trying to build a complex four-wheeler, there are a few flaws in the design and structure which have room for improvement.</p>
-                  <p></p>
-                  <p>We have plans to improve this frame and also convert it into an electric powered vehicle. We wanted to add autonomous capabilities such as anti-collision detection using Facebook's "pytorch", which is a platform for machine learning, but couldn't be done as this had already gotten a bit too expensive. It's very difficult, even for multinational companies, to implement such features on manual transmission combustion engines.                  </p>
-                  <p><a href="index.html">Go back to home page</a></p>
-
-
-
-
-
-
-
-
-          </div>
-        </div>
-        <footer class="demo-footer mdl-mini-footer">
-          <div class="mdl-mini-footer--left-section">
-            <ul class="mdl-mini-footer--link-list">
-              <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
-    <!-- <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li> -->
-      <!-- <li><a href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a></li> -->
-            </ul>
-          </div>
-        </footer>
-      </main>
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="../index.html" class="site-title">Vortex</a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="../index.html">Projects</a></li>
+          <li><a
+              href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
+          </li>
+        </ul>
+      </nav>
     </div>
-<!--    <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->   
-  </body>
-  
+  </header>
+
+  <main class="container content-wrapper">
+    <article>
+      <header style="margin-bottom: 2rem;">
+        <div style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0.5rem;">A pandemic project made by
+          Rahul and Yaseen</div>
+        <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem;">How we built a go kart during a global
+          pandemic</h1>
+      </header>
+
+      <h3>Why we built this go kart</h3>
+      <p>Everyone has driven go karts at race tracks but has always wanted to build their own. Since the early days of
+        college, Yaseen and I have always talked about a cool project we could try to do together, as we both wanted to
+        learn practically rather than just reading for an exam. He had already helped me build my Penplotter before, as
+        he knew all about finding the right parts and places. On a random day during lockdown, one came across a YouTube
+        video of a person making their own go karts. I shared it with Yaseen. We then discussed if this kind of project
+        is feasible, though. He knew where we could get the engine, estimated the cost of everything, and I have been
+        trying to learn how to use it. I have had SolidWorks for the past year so that I could use it with my 3D
+        printer. I got Last year With this knowledge of SolidWorks, I could make a basic design of the go kart.</p>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/header.jpg" alt="Go Kart Header" style="border-radius: var(--radius-md);">
+      </figure>
+
+      <div
+        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 800px; margin: 2rem auto; border-radius: var(--radius-md);">
+        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          src="https://www.youtube.com/embed/cWas50LT5Tk" title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/kart.jpg" alt="Go Kart" style="border-radius: var(--radius-md);">
+      </figure>
+
+      <h3>Sourcing the engine</h3>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/engine.jpg" alt="Engine" style="border-radius: var(--radius-md);">
+        <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">The first engine we were
+          supposed to get got damaged later, so we had to buy another engine from the used traders who refurbished old
+          engines.</figcaption>
+      </figure>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/chetak.jpg" alt="Chetak Scooter" style="border-radius: var(--radius-md);">
+        <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">A used second-hand chetak
+          was stripped down for us as we only wanted the engine out of it which had to be washed several times to remove
+          years' worth of dirt resting on it.</figcaption>
+      </figure>
+
+      <h3>Designing the frame of the go kart</h3>
+      <p>This part is the most important for making anything. Using SolidWorks, we started designing the frame with the
+        minimum knowledge and referring to other
+        frames from the official racing organizations' go karting manual and homemade builds made by random internet
+        users.</p>
+      <p>We spent a few days designing a bare bone frame but couldn't figure out what dimensions we had to use as we
+        didn't have parts for the go kart.</p>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/solidworks.jpg" alt="Solidworks Model" style="border-radius: var(--radius-md);">
+        <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">A rough sketch of out go
+          kart model made in SolidWorks.</figcaption>
+      </figure>
+
+      <p>Next day we went to several markets for search of used parts such as tyres, steering pedals for the
+        accelerator, clutch and brake. </p>
+
+      <h3>Looking for used parts in markets</h3>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/market_1.jpg" alt="Market" style="border-radius: var(--radius-md);">
+      </figure>
+
+      <p>We mainly found our steering, pedals, and axle in the Afzal Gunj market. Other parts were sourced from the
+        scrap yards of Malakpet and Karmanghat. Although we couldn't find a few parts for our specifications, we had to
+        adapt in unconventional ways.</p>
+      <p>Once we had almost all the parts we wanted, we had the biggest challenge. We had to cut our metal rods to our
+        dimensions using the equipment we had and get them welded as we didn't own an arc welding machine.</p>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/cut.jpg" alt="Cutting metal" style="border-radius: var(--radius-md);">
+        <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Both of us taking turns to
+          cut metal plates and rods.</figcaption>
+      </figure>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/circles.jpg" alt="Cutting circles" style="border-radius: var(--radius-md);">
+        <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Circles being cut using
+          gas welding equipment for mounts of sprocket and disk brakes.</figcaption>
+      </figure>
+
+      <div
+        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 800px; margin: 2rem auto; border-radius: var(--radius-md);">
+        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          src="https://www.youtube.com/embed/mbmun_rrxvQ" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p style="text-align: center; font-style: italic; color: var(--text-muted);"> Boring operation being done for the
+        axle and the hubs of the tyres.</p>
+
+      <p>Once we had all the parts ready to assemble, we had to cut our rods to the specific dimensions as the chassis
+        is the most important part of any moving vehicle.</p>
+
+      <h3>Getting the frame Welded.</h3>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/3dmodel.jpg" alt="3D Print Model" style="border-radius: var(--radius-md);">
+        <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">A 3D model was printed so
+          the welder could understand what we wanted.</figcaption>
+      </figure>
+
+      <p>It was day 15 by this point, and we had finished the majority of our work. All we had to do was arrange the
+        cables, pedals, seat the exact positions for the steering, gear rod, and some minor quirks. </p>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/workinprogress.jpg" alt="Work in progress" style="border-radius: var(--radius-md);">
+        <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">This was the progress of
+          our kart on day 15</figcaption>
+      </figure>
+
+      <h3>Technical specifications of our kart</h3>
+      <p> We had to improvise and adapt for whatever materials we could locate easily and for a decent price. Most of
+        the parts which were used are refurbished and resold in the vast markets of hyderabad. </p>
+      <ul>
+        <li>The Go Kart is powered by a Chetak 150CC engine which produces about 7.5BHP when new.</li>
+        <li>The frame is made out of two 2x3 inch steel rods that were 20 feet long and weighed around 25 kg combined.
+        </li>
+        <li>Four tyres and hubs were salvaged from an auto rickshaw.</li>
+        <li>The axle which was used was the steering column of a truck, which had to be processed on a lathe later to
+          fix the imperfections.</li>
+        <li>We used the disc break and its left-over leaver from a Bajaj Pulsar.</li>
+        <li>The chain sprocket set is also from a Bajaj Pulsar 220cc variant.</li>
+        <li>Finding wheel bearings for the front steering column was difficult and expensive in the markets of Afzal
+          Gunj. The bearings used for the tyres are standard chetak bearings.</li>
+      </ul>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/Steel_warehouse.jpg" alt="Steel Warehouse" style="border-radius: var(--radius-md);">
+      </figure>
+
+      <h3>Problems faced</h3>
+      <p>As there was a pandemic, we had to be very careful and it was very risky to go to the crowded markets several
+        times to buy spares. The merchants in the markets always tried to sell their parts at a premium as we were
+        young. Some of the parts that we bought didn't function as intended, so we had to buy them again, which
+        increased the budget of this project. We had to manage with the tools we had and for other</p>
+
+      <p> Due to our ignorance, we had to buy a second engine. The angle wasn't correct and it got jammed. Thanks to
+        Yaseen's father's contacts, we were able to find another refurbished engine. We had to make last minute changes
+        in our frame and get some parts of the frame re-welded and change the position of the seat, which increased the
+        budget of this project. </p>
+
+      <figure style="margin: 2rem 0; text-align: center;">
+        <img src="kart/market_3.jpg" alt="Market" style="border-radius: var(--radius-md);">
+      </figure>
+
+      <div
+        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 800px; margin: 2rem auto; border-radius: var(--radius-md);">
+        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          src="https://www.youtube.com/embed/YrY1kmAjYWY" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <h3>Conclusion</h3>
+      <p>We are proud that we were able to build a working go kart from scratch. We have learned a lot about the sources
+        of finding the parts for the parts and the prices of raw materials. We would never be able to accomplish this
+        without a pandemic, as we would be trying to listen to a theoretical class in college. We also learned that
+        until we try to do something practically, we will not be able to understand the real problems. Before we started
+        this project, we estimated that it would be completed within 10 days, but it took way longer and was more
+        difficult than expected. We also hope more people try to make big projects like this one or small autonomous
+        vehicles. We should also thank our parents for their support and for agreeing to bear the cost of the project
+        during one of the worst economic recessions in history.
+      </p>
+
+      <p>As this is our first attempt at trying to build a complex four-wheeler, there are a few flaws in the design and
+        structure which have room for improvement.</p>
+
+      <p>We have plans to improve this frame and also convert it into an electric powered vehicle. We wanted to add
+        autonomous capabilities such as anti-collision detection using Facebook's "pytorch", which is a platform for
+        machine learning, but couldn't be done as this had already gotten a bit too expensive. It's very difficult, even
+        for multinational companies, to implement such features on manual transmission combustion engines. </p>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a>
+      </div>
+      <div>&copy; 2024 Vortex</div>
+    </div>
+  </footer>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
+</body>
+
 </html>

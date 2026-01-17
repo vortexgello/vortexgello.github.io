@@ -1,219 +1,153 @@
 <!doctype html>
-<!--
-  Vortex
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
 <html lang="en">
-  <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-QJ8M5F06YR');
-</script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="vortextriangle's blog">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Vortex</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mini 3 axis CNC mill build log - Vortex">
+  <title>Mini 3 Axis CNC Mill - Vortex</title>
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="penpenplotter/android-desktop.svg">
+  <!-- Styles -->
+  <link rel="stylesheet" href="../styles.css">
 
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Vortex">
-    <link rel="apple-touch-icon-precomposed" href="penpenplotter/ios-desktop.svg">
+  <!-- Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-QJ8M5F06YR');
+  </script>
+</head>
 
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="penpenplotter/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
+<body>
 
-    <link rel="shortcut icon" href="penpenplotter/favicon.png">
-
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
-    </style>
-  </head>
-  <body>
-    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Vortex</span>
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-              <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" id="search">
-              <label class="mdl-textfield__label" for="search">Enter your query...</label>
-            </div>
-          </div>
-        </div>
-      </header>
-      <div class="demo-ribbon"></div>
-      <main class="demo-main mdl-layout__content">
-        <div class="demo-container mdl-grid">
-          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-            <div class="demo-crumbs mdl-color-text--grey-500">
-             <a class="demo-crumbs mdl-color-text--grey-500"  href="/index.html">Home page</a>
-            </div>
-          <h2> Mini 3 axis CNC mill </h2>
-          <p> Like all my other projects I try to minimize the cost this following plotter costed ~16000 rupees of which spindle was 
-            nearly 9000 rupees, NEMA 23 motors costed around 3500 rupees in total. As you can see and probably tell this machine looks 
-            very similar to OpenBuilds Mini mill. I had 8 meters of aluminum extrusion lying around that I had bought for something else 
-            but couldn't use these extrusion for that project and also participated in tworks hackathon during the same time. 
-            I decided to build a cnc mill and then laser-cut the required parts for carriage, bed, etc.</p>
-                  
-            <p>I can call this design a bit rushed as the rigidity of this machine is very bad and worse than i expected. My initial 
-              plan was to be able to cut aluminum on this. Woods and plastics is what this cuts the best.   
-            </p>
-            <h6>Here's the video of laser cutting of the parts</h6>
-            <h6>I went to visit the Tworks facility, they let us inside despite COVID restrictions.</h6>
-            <body>
-              <iframe width="200" height="600"
-                src="https://www.youtube.com/embed/4Q-_jfQDacQ">
-              </iframe>
-              <p></p>
-              <style>
-              img {
-                max-width: 100%;
-                height: auto;
-              }
-              </style>
-              </head>
-              
-
-              <h4>Assembly</h4>
-              <p>Like with  all my other projects, I try to minimise the cost. This following plotter cost 16000 rupees, of which the spindle was nearly 9000 rupees, and the NEMA 23 motors cost around 3500 rupees in total. As you can see and probably tell, this machine looks very similar to the OpenBuilds Mini mill. I had 8 metres of aluminium extrusion lying around that I had bought for something else but couldn't use these extrusions for that project and also participated in the Tworks hackathon during the same time. I decided to build a CNC mill and then laser-cut the required parts for the carriage, bed, etc.</p>
-                
-                <p>I can call this design a bit rushed as the rigidity of this machine is very bad and worse than I expected. My initial plan was to be able to cut aluminium on this. Woods and plastics are what this cuts the best.    
-                </p>
-                <body>
-                  <img src="CNC/laserparts.jpg" >
-                  <p></p>
-                  <style>
-                  img {
-                    max-width: 100%;
-                    height: auto;
-                  }
-                  </style>
-                  </head>
-                  <h6>Laser cut parts</h6>
-                  <body>
-                    <img src="CNC/build.jpg" >
-                    <p></p>
-                    <style>
-                    img {
-                      max-width: 100%;
-                      height: auto;
-                    }
-                    </style>
-                    </head>
-                    <h6>Testing the fit of the my assembly to check if all fits right.</h3>
-                <p></p>
-              <h4>Design problems</h4>
-              <p>Just like that pen plotter V2, the only problem with this build is probably the linear bearing, as I have standard ball bearings rolling on an aluminium extrusion. This causes the X-axis to flex when using the mill under load. The dimensional accuracy of milled parts is around +/-0.5mm. Although I haven't used this CNC to make lots of parts for this mill.
-              </p>
-              <p>In the future, I plan to add an enclosure so that the sound will be reduced. The frame materials can also be made using mild steel as I have access to a stick welding machine now. This can be coupled with better linear motion bearings.</p>
-              <h6>A tiger keychain cut using this mill</h6>
-                  <body>
-                    <img src="CNC/tiger.jpg" >
-                    <p></p>
-                    <style>
-                    img {
-                      max-width: 100%;
-                      height: auto;
-                    }
-                    </style>
-                    </head>
-                    <body>
-                      <img src="CNC/trollface.jpg" >
-                      <p></p>
-                      <style>
-                      img {
-                        max-width: 100%;
-                        height: auto;
-                      }
-                      </style>
-                      </head>
-                    <h6>Final build</h6>
-                  <body>
-                    <img src="CNC/final.jpeg" >
-                    <p></p>
-                    <style>
-                    img {
-                      max-width: 100%;
-                      height: auto;
-                    }
-                    </style>
-                    </head>
-                    <body>
-                      <img src="CNC/endmill.jpg" >
-                      <p></p>
-                      <style>
-                      img {
-                        max-width: 100%;
-                        height: auto;
-                      }
-                      </style>
-                      </head>
-                      <h4>Things learnt</h4>
-                    <p>Over the design and build process, I learnt that although it is easy to build machines, finding their use is a task. I don't find lots of reasons to use this as I already have a 3D printer which is a lot easier to use and operate. The setup time for 3D printers is much faster. I hope I'll find more uses for him in the future.
-                    </p>
-             </div>
-        </div>
-        <footer class="demo-footer mdl-mini-footer">
-          <div class="mdl-mini-footer--left-section">
-            <ul class="mdl-mini-footer--link-list">
-              <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
-    <!-- <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li> -->
-      <!-- <li><a href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a></li> -->
-            </ul>
-          </div>
-        </footer>
-      </main>
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="../index.html" class="site-title">Vortex</a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="../index.html">Projects</a></li>
+          <li><a
+              href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
+          </li>
+        </ul>
+      </nav>
     </div>
-<!--  <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </header>
 
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->   
-  </body>
-  
+  <main class="container content-wrapper">
+    <article>
+      <header style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem;">Mini 3 axis CNC mill</h1>
+      </header>
+
+      <p> Like all my other projects I try to minimize the cost this following plotter costed ~16000 rupees of which
+        spindle was
+        nearly 9000 rupees, NEMA 23 motors costed around 3500 rupees in total. As you can see and probably tell this
+        machine looks
+        very similar to OpenBuilds Mini mill. I had 8 meters of aluminum extrusion lying around that I had bought for
+        something else
+        but couldn't use these extrusion for that project and also participated in tworks hackathon during the same
+        time.
+        I decided to build a cnc mill and then laser-cut the required parts for carriage, bed, etc.</p>
+
+      <p>I can call this design a bit rushed as the rigidity of this machine is very bad and worse than i expected. My
+        initial
+        plan was to be able to cut aluminum on this. Woods and plastics is what this cuts the best.
+      </p>
+
+      <p><strong>Here's the video of laser cutting of the parts</strong></p>
+      <p>I went to visit the Tworks facility, they let us inside despite COVID restrictions.</p>
+
+      <div style="margin: 2rem 0; text-align: center;">
+        <div
+          style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 600px; margin: 0 auto; border-radius: var(--radius-md);">
+          <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+            src="https://www.youtube.com/embed/4Q-_jfQDacQ" title="Laser cutting video" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <h3>Assembly</h3>
+      <p>Like with all my other projects, I try to minimise the cost. This following plotter cost 16000 rupees, of which
+        the spindle was nearly 9000 rupees, and the NEMA 23 motors cost around 3500 rupees in total. As you can see and
+        probably tell, this machine looks very similar to the OpenBuilds Mini mill. I had 8 metres of aluminium
+        extrusion lying around that I had bought for something else but couldn't use these extrusions for that project
+        and also participated in the Tworks hackathon during the same time. I decided to build a CNC mill and then
+        laser-cut the required parts for the carriage, bed, etc.</p>
+
+      <p>I can call this design a bit rushed as the rigidity of this machine is very bad and worse than I expected. My
+        initial plan was to be able to cut aluminium on this. Woods and plastics are what this cuts the best.
+      </p>
+
+      <div style="display: grid; gap: 2rem; margin: 2rem 0;">
+        <figure style="text-align: center;">
+          <img src="CNC/laserparts.jpg" alt="Laser cut parts" style="border-radius: var(--radius-md);">
+          <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Laser cut parts
+          </figcaption>
+        </figure>
+
+        <figure style="text-align: center;">
+          <img src="CNC/build.jpg" alt="Assembly test" style="border-radius: var(--radius-md);">
+          <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Testing the fit of the
+            my assembly to check if all fits right.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Design problems</h3>
+      <p>Just like that pen plotter V2, the only problem with this build is probably the linear bearing, as I have
+        standard ball bearings rolling on an aluminium extrusion. This causes the X-axis to flex when using the mill
+        under load. The dimensional accuracy of milled parts is around +/-0.5mm. Although I haven't used this CNC to
+        make lots of parts for this mill.
+      </p>
+      <p>In the future, I plan to add an enclosure so that the sound will be reduced. The frame materials can also be
+        made using mild steel as I have access to a stick welding machine now. This can be coupled with better linear
+        motion bearings.</p>
+
+      <div style="display: grid; gap: 2rem; margin: 2rem 0;">
+        <figure style="text-align: center;">
+          <img src="CNC/tiger.jpg" alt="Tiger keychain" style="border-radius: var(--radius-md);">
+          <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">A tiger keychain cut
+            using this mill</figcaption>
+        </figure>
+
+        <figure style="text-align: center;">
+          <img src="CNC/trollface.jpg" alt="Trollface" style="border-radius: var(--radius-md);">
+        </figure>
+
+        <figure style="text-align: center;">
+          <img src="CNC/final.jpeg" alt="Final build" style="border-radius: var(--radius-md);">
+          <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Final build</figcaption>
+        </figure>
+
+        <figure style="text-align: center;">
+          <img src="CNC/endmill.jpg" alt="Endmill" style="border-radius: var(--radius-md);">
+        </figure>
+      </div>
+
+      <h3>Things learnt</h3>
+      <p>Over the design and build process, I learnt that although it is easy to build machines, finding their use is a
+        task. I don't find lots of reasons to use this as I already have a 3D printer which is a lot easier to use and
+        operate. The setup time for 3D printers is much faster. I hope I'll find more uses for him in the future.
+      </p>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a>
+      </div>
+      <div>&copy; 2024 Vortex</div>
+    </div>
+  </footer>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
+</body>
+
 </html>

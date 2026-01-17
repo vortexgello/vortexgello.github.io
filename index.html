@@ -1,244 +1,443 @@
 <!doctype html>
-<!--
-  Vortex
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vortex | Mechanical Engineering</title>
+  <meta name="description" content="Vortex - Mechanical Engineer specializing in space systems and mechanisms.">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-QJ8M5F06YR');
   </script>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="vortextriangle's blog">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-
-  <title>Vortex</title>
-
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="images/android-desktop.svg">
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Vortex">
-  <link rel="apple-touch-icon-precomposed" href="images/android-desktop.svg">
-
-  <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#3372DF">
-
-  <link rel="shortcut icon" href="images/favicon.svg">
-
-  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-  <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
-  </style>
 </head>
 
 <body>
-  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-    <header
-      class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Vortex</span>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-            <!-- <i class="material-icons">search</i> -->
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" id="search">
-            <label class="mdl-textfield__label" for="search">Enter your query...</label>
-          </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-title">Vortex</a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="badge">Available for hire</span>
+        <h1 class="hero-title">
+          Hi, I'm Vortex.
+          <span class="highlight-gradient">I engineer spaceflight hardware.</span>
+        </h1>
+        <p class="hero-subtitle">
+          I'm a Mechanical Engineer specializing in designing robust mechanisms, deployable structures, and precision
+          systems for space applications.
+        </p>
+        <div class="social-links">
+          <!-- GitHub Icon -->
+          <a href="https://github.com/vortexgello" target="_blank" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+              </path>
+            </svg>
+          </a>
+          <!-- LinkedIn/Email placeholder icons -->
+          <a href="#" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
         </div>
+
+        <!-- Scroll indicator could go here -->
       </div>
-    </header>
-    <div class="demo-ribbon"></div>
-    <main class="demo-main mdl-layout__content">
-      <div class="demo-container mdl-grid">
-        <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-        <div
-          class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-          <div class="demo-crumbs mdl-color-text--grey-500">
-            Projects
+    </section>
 
+    <!-- Featured Projects -->
+    <section id="projects">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-grid">
+
+        <!-- Project 1: Boom Mechanisms -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/images/boom_step_03.jpeg" alt="Boom Mechanisms">
           </div>
-          <hr>
-          <h5 style="text-align:center"> Exploring Boom Mechanisms - Part 2 </h5>
-          <img src="pages/boom2-img/65cm-mechanism.jpeg">
-          <p></P>
-          <p> <a href="pages/boom2.html">A gallery of the latest bi-stable boom with video </a> The boom shown above is
-            a 65cm long mechanism. </p>
-          <h6 style="text-align:right"> September 2025 </h6>
-          <hr>
-          <h5 style="text-align:center"> Exploring Boom Mechanisms</h5>
-          <img src="pages/images/boom_step_03.jpeg">
-          <p></P>
-          <p> <a href="pages/booms.html">Learn more about the boom mechanisms I designed and tested, including details
-              on their fabrication process and a collection of calculators for various design and performance
-              calculations.</a></p>
-          <h6 style="text-align:right"> April 2025 </h6>
-          <!--
-            <hr>
-            <h5 style="text-align:center"> Linkdump 1</h5>
-                        <p></P>
-              <p> <a href="pages/linkdump.html">List of some websites that I have found useful </a></p>
-              <h6 style="text-align:right"> 10 October 2022  </H6>
-          </style>
-          </head> -->
-          <hr>
-          <h5 style="text-align:center"> Designing and Testing Compliant Mechanisms for Holding a CR2032 Battery</h5>
-          </head>
-          <style>
-            img {
-              max-width: 100%;
-              height: auto;
-              display: block;
-              margin-left: auto;
-              margin-right: auto;
-            }
-          </style>
-          </head>
-
-          <body>
-
-            <img src="images/flexure.jpg">
-            <p></P>
-            <p> <a href="pages/flexure.html">Compliant mechanism using 3D printed PLA.</a></p>
-            <h6 style="text-align:right"> 29 September 2022 </H6>
-
-            <hr>
-            <h5 style="text-align:center"> 3D Printed Rubber Sleeves for Ikea glass bottles</h5>
-            <img src="images/Ikea.jpeg">
-            <p></P>
-            <p> Ikea glass bottles are great, but unfortunately glass is hard and brittle. To combat this I made a bunch
-              of rubber sleeves for these bottles using TPU filament. I have been using the above water bottles for the
-              past 4 months now and none of them have cracked. </p>
-            <h6 style="text-align:right"> 14 August 2022 </H6>
-            </style>
-            </head>
-            <hr>
-            <h5 style="text-align:center"> Experimenting with Composites</h5>
-            <img src="images/glass.jpeg">
-            <p></P>
-            <p> <a href="pages/glassfiber.html">Some more samples inside.</a></p>
-            <h6 style="text-align:right"> 20 April 2022 </H6>
-            </style>
-            </head>
-
-            <!-- <hr>
-            <h5 style="text-align:center"> Designing, Analyzing and Prototyping of gym Equipment</h5>
-            <img src="images/gym.png" >
-            <p></P>
-              <p> <a href="pages/gym.html">Perhaps one of the coolest projects I have worked on so far.</a></p>
-              <h6 style="text-align:right"> 17 April 2022  </h6> -->
-            <hr>
-            <h5 style="text-align:center"> 5 Degrees of freedom Monitor stand</h5>
-            <img src="images/monitor_stand.png">
-            <p></P>
-            <p> I always wanted to make a monitor stand of my own, so I decided to make a cad model of it and simulate
-              it in ansys. After doing so, I went ahead and cut the pieces for the stand and welded them. I'm quite
-              happy with how it turned out, but I haven't had enough time to paint it.</p>
-            <h6 style="text-align:right"> 20 April 2022 </H6>
-
-
-            <hr>
-            <h5 style="text-align:center"> Lite3Dp S1</h5>
-            <img src="images/a.jpeg">
-            <p></P>
-            <p> The cheapest SLA 3D printer you can buy! <a href="pages/Lite3Dp.html">Read more about it here</a></p>
-            <h6 style="text-align:right"> 3 March 2022 </h6>
-
-            <hr>
-            <h5 style="text-align:center"> Tuning my 3D printer steps</h5>
-            <img src="images/steps.png">
-            <p></P>
-            <p> <a href="pages/steps.html">Read more about it here</a> </p>
-            <h6 style="text-align:right"> 4 November 2021 </h6>
-
-            <hr>
-            <h5 style="text-align:center"> 3D printed mould to make planter</h5>
-            <img src="images/planter.jpeg">
-            <p></P>
-            <p> Used design from thingiverse as a first attempt. </p>
-            <h6 style="text-align:right"> October 2021 </h6>
-            <hr>
-            <h5 style="text-align:center"> Welding a frame for mom to put plant on.</h5>
-            <img src="images/plants frame.png">
-            <p></P>
-            <p> My mom wanted the creeper tree from the ground floor to form a wall on the first floor in such a way
-              that it blocks the view of the neighbors. So we decided to weld a couple of metal frames using galvanised
-              iron so they wouldn't rust. And the other one on the right is for pots made using square mild steel tube
-              and then later painted to prevent rusting. </p>
-            <h6 style="text-align:right"> 20 April 2022 </h6>
-            </style>
-            </head>
-            <div class="demo-crumbs mdl-color-text--grey-500" style="text-align:right">
-              <a class="demo-crumbs mdl-color-text--grey-500" href="index_2.html">Go to Page 2</a>, 1...
-
+          <div class="project-content">
+            <h3 class="project-title">Exploring Boom Mechanisms</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Mechanisms</span>
+              <span class="tech-tag">Calculators</span>
             </div>
+            <p class="project-description">Fabrication process and calculators for various design and performance
+              calculations.</p>
+            <div class="project-links">
+              <a href="pages/booms.html" class="icon-link">View Project &rarr;</a>
+            </div>
+          </div>
+        </article>
 
+        <!-- Project 2: Bistable Boom -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/images/boom_step_05.jpeg" alt="Bistable Boom">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Bistable Composite Boom</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Composites</span>
+              <span class="tech-tag">Fabrication</span>
+            </div>
+            <p class="project-description">Design and manual fabrication of a bistable carbon fiber composite boom.</p>
+            <div class="project-links">
+              <a href="pages/index_bistable.html" class="icon-link">View Project &rarr;</a>
+            </div>
+          </div>
+        </article>
 
-        </div>
+        <!-- Project 3: PRINT_R -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/PRINT_R/Print.jpeg" alt="PRINT_R">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">PRINT_R</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">SLA Printing</span>
+              <span class="tech-tag">Hardware</span>
+            </div>
+            <p class="project-description">An affordable DIY SLA 3D printer project based on Lite3DP.</p>
+            <div class="project-links">
+              <a href="pages/PRINT_R.html" class="icon-link">View Project &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4: Lite3DP -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <!-- Fixed image path relative to root -->
+            <img src="images/a.jpeg" alt="Lite3Dp">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Lite3Dp S1</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Review</span>
+              <span class="tech-tag">3D Printing</span>
+            </div>
+            <p class="project-description">The cheapest SLA 3D printer you can buy! Review and thoughts.</p>
+            <div class="project-links">
+              <a href="pages/Lite3Dp.html" class="icon-link">View Project &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 5: Monitor Stand -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="images/monitor_stand.png" alt="Monitor Stand">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">5 DoF Monitor Stand</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">CAD</span>
+              <span class="tech-tag">ANSYS</span>
+              <span class="tech-tag">Welding</span>
+            </div>
+            <p class="project-description">CAD modeled, ANSYS simulated, and custom welded monitor stand.</p>
+            <div class="project-links">
+              <span class="project-date">Apr 2022</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 6: Flexure -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/flexure/flexure_mechanism.gif" alt="Flexure Mechanism">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">CR2032 Battery Flexure</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Flexures</span>
+              <span class="tech-tag">Design</span>
+            </div>
+            <p class="project-description">A complaint mechanism for holding a CR2032 coin cell battery.</p>
+            <div class="project-links">
+              <a href="pages/flexure.html" class="icon-link">View Project &rarr;</a>
+            </div>
+          </div>
+        </article>
 
       </div>
-      <footer class="demo-footer mdl-mini-footer">
-        <div class="mdl-mini-footer--left-section">
-          <ul class="mdl-mini-footer--link-list">
-            <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
-            <!-- <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li> -->
-            <li><a
-                href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
-            </li>
+
+      <div style="text-align: center; margin-bottom: var(--space-2xl);">
+        <a href="index_2.html" class="btn">View All Projects</a>
+      </div>
+    </section>
+
+    <!-- Work Experience -->
+    <section id="experience" class="experience-section">
+      <h2 class="section-title">Work Experience</h2>
+
+      <div class="timeline">
+
+        <!-- Role 1 -->
+        <div class="timeline-item">
+          <div class="job-header">
+            <h3 class="job-title">Mechanical Engineer</h3>
+            <div class="job-company">TAKEME2SPACE</div>
+            <div class="job-location">Hyderabad, India</div>
+            <span class="job-date">Mar 2025 – Nov 2025</span>
+          </div>
+          <ul class="job-description">
+            <li>Designed and manufactured Shape Memory Alloy (SMA)–based Hold-Down and Release Mechanisms (HDRMs) for
+              solar-panel deployment systems.</li>
+            <li>Authored and published a technical paper detailing the design and performance of SMA-based HDRM.</li>
+            <li>Designed burn-wire–based HDRMs for triple-deployable solar panels as backup release systems.</li>
+            <li>Led structural/materials design of a composite-based CubeSat deployer, emphasizing weight optimization
+              using high-performance polymers (HPP).</li>
+            <li>Directed structural simulations layout (static, modal, random-vibration) ensuring compliance with
+              launch-vehicle requirements.</li>
           </ul>
         </div>
-      </footer>
-    </main>
-  </div>
-  <!--    <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
-  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->
+        <!-- Role 2 -->
+        <div class="timeline-item">
+          <div class="job-header">
+            <h3 class="job-title">Mechanical Engineer I</h3>
+            <div class="job-company">DHRUVA SPACE</div>
+            <div class="job-location">Hyderabad, India</div>
+            <span class="job-date">Oct 2023 – Mar 2025</span>
+          </div>
+          <ul class="job-description">
+            <li>Led structural design of a 30 kg-class satellite (LEAP-1), successfully passing Flight Model (FM)
+              testing.</li>
+            <li>Developed and matured Roll-Out Solar Panel mechanisms and rotary dampers to Technology Readiness Level
+              (TRL) 6.</li>
+            <li>Streamlined production workflows by standardizing engineering drawings according to GD&T.</li>
+            <li>Designed RF enclosures and performed data-driven evaluations through testing and simulation.</li>
+            <li>Menuored interns and provided guidance on R&D projects.</li>
+          </ul>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="timeline-item">
+          <div class="job-header">
+            <h3 class="job-title">Mechanical Engineer Intern</h3>
+            <div class="job-company">DHRUVA SPACE</div>
+            <div class="job-location">Hyderabad, India</div>
+            <span class="job-date">Mar 2023 – Oct 2023</span>
+          </div>
+          <ul class="job-description">
+            <li>Developed proof-of-concept prototypes for rotary dampers, roll-out solar panels, and SAR antenna models.
+            </li>
+            <li>Conducted in-depth research on spacecraft mechanisms, focusing on lubrication and mechanical reliability
+              in vacuum environments.</li>
+            <li>Validated mechanical subsystems using Altair Inspire for motion and static simulations.</li>
+            <li>Gained exposure to industry-standard environmental qualification practices by observing Vibration and
+              TVAC testing.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Work Experience -->
+    <section id="experience" class="experience-section">
+      <h2 class="section-title">Work Experience</h2>
+
+      <div class="timeline">
+
+        <!-- Role 1 -->
+        <div class="timeline-item">
+          <div class="job-header">
+            <h3 class="job-title">Mechanical Engineer</h3>
+            <div class="job-company">TAKEME2SPACE</div>
+            <div class="job-location">Hyderabad, India</div>
+            <span class="job-date">Mar 2025 – Nov 2025</span>
+          </div>
+          <ul class="job-description">
+            <li>Designed and manufactured Shape Memory Alloy (SMA)–based Hold-Down and Release Mechanisms (HDRMs) for
+              solar-panel deployment systems.</li>
+            <li>Authored and published a technical paper detailing the design and performance of SMA-based HDRM.</li>
+            <li>Designed burn-wire–based HDRMs for triple-deployable solar panels as backup release systems.</li>
+            <li>Led structural/materials design of a composite-based CubeSat deployer, emphasizing weight optimization
+              using high-performance polymers (HPP).</li>
+            <li>Directed structural simulations layout (static, modal, random-vibration) ensuring compliance with
+              launch-vehicle requirements.</li>
+          </ul>
+        </div>
+
+        <!-- Role 2 -->
+        <div class="timeline-item">
+          <div class="job-header">
+            <h3 class="job-title">Mechanical Engineer I</h3>
+            <div class="job-company">DHRUVA SPACE</div>
+            <div class="job-location">Hyderabad, India</div>
+            <span class="job-date">Oct 2023 – Mar 2025</span>
+          </div>
+          <ul class="job-description">
+            <li>Led structural design of a 30 kg-class satellite (LEAP-1), successfully passing Flight Model (FM)
+              testing.</li>
+            <li>Developed and matured Roll-Out Solar Panel mechanisms and rotary dampers to Technology Readiness Level
+              (TRL) 6.</li>
+            <li>Streamlined production workflows by standardizing engineering drawings according to GD&T.</li>
+            <li>Designed RF enclosures and performed data-driven evaluations through testing and simulation.</li>
+            <li>Menuored interns and provided guidance on R&D projects.</li>
+          </ul>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="timeline-item">
+          <div class="job-header">
+            <h3 class="job-title">Mechanical Engineer Intern</h3>
+            <div class="job-company">DHRUVA SPACE</div>
+            <div class="job-location">Hyderabad, India</div>
+            <span class="job-date">Mar 2023 – Oct 2023</span>
+          </div>
+          <ul class="job-description">
+            <li>Developed proof-of-concept prototypes for rotary dampers, roll-out solar panels, and SAR antenna models.
+            </li>
+            <li>Conducted in-depth research on spacecraft mechanisms, focusing on lubrication and mechanical reliability
+              in vacuum environments.</li>
+            <li>Validated mechanical subsystems using Altair Inspire for motion and static simulations.</li>
+            <li>Gained exposure to industry-standard environmental qualification practices by observing Vibration and
+              TVAC testing.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+              </path>
+            </svg>
+            Design & Analysis
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag">SolidWorks</span>
+            <span class="skill-tag">Ansys (Static/Modal)</span>
+            <span class="skill-tag">HyperMesh</span>
+            <span class="skill-tag">Altair Inspire</span>
+            <span class="skill-tag">MATLAB</span>
+            <span class="skill-tag">Siemens Simcenter</span>
+            <span class="skill-tag">STK</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            Prototyping & Mfg
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag">3D Printing (SLA/FDM)</span>
+            <span class="skill-tag">CNC Machining</span>
+            <span class="skill-tag">Composites (Carbon Fiber)</span>
+            <span class="skill-tag">Welding</span>
+            <span class="skill-tag">Prototyping</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+              </path>
+            </svg>
+            Space Systems
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Mechanisms (HDRMs)</span>
+            <span class="skill-tag">Space System Engineering</span>
+            <span class="skill-tag">Environmental Testing (TVAC)</span>
+            <span class="skill-tag">GD&T (ASME Y14.5)</span>
+            <span class="skill-tag">Vibration Testing</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+              <rect x="9" y="9" width="6" height="6"></rect>
+              <line x1="9" y1="1" x2="9" y2="4"></line>
+              <line x1="15" y1="1" x2="15" y2="4"></line>
+              <line x1="9" y1="20" x2="9" y2="23"></line>
+              <line x1="15" y1="20" x2="15" y2="23"></line>
+              <line x1="20" y1="9" x2="23" y2="9"></line>
+              <line x1="20" y1="14" x2="23" y2="14"></line>
+              <line x1="1" y1="9" x2="4" y2="9"></line>
+              <line x1="1" y1="14" x2="4" y2="14"></line>
+            </svg>
+            Electronics & Software
+          </h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Microcontrollers</span>
+            <span class="skill-tag">PCB Design / Schematics</span>
+            <span class="skill-tag">C Programming</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+      <h2>Ready to start a project?</h2>
+      <p style="max-width: 600px; margin: 1rem auto;">
+        I'm always interested in working on new and exciting challenges. Let's turn your ideas into reality.
+      </p>
+      <a href="mailto:vortex@example.com" class="btn">Get In Touch</a>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Vortex. Built with modern web technologies.</p>
+    </div>
+  </footer>
 
 </body>
 

@@ -1,296 +1,265 @@
 <!doctype html>
-<!--
-  Vortex
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Older Projects - Vortex">
+  <title>Older Projects - Vortex</title>
+
+  <link rel="icon" href="images/favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-QJ8M5F06YR');
   </script>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="vortextriangle's blog">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <title>Vortex</title>
-
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="images/android-desktop.svg">
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Vortex">
-  <link rel="apple-touch-icon-precomposed" href="images/android-desktop.svg">
-
-  <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#3372DF">
-
-  <link rel="shortcut icon" href="images/favicon.svg">
-
-  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-  <!--
-    -->
-
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
-  </style>
 </head>
 
 <body>
-  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-    <header
-      class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Vortex</span>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-            <!-- <i class="material-icons">search</i> -->
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" id="search">
-            <label class="mdl-textfield__label" for="search">Enter your query...</label>
+
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-title">Vortex</a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="index.html">Projects</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="projects">
+      <header class="section-title">Older Projects</header>
+      <div class="projects-grid">
+
+        <!-- Plotter V2 -->
+        <article class="project-card">
+          <a href="pages/plotter_v2.html" class="project-image-container">
+            <img src="images/plotter_v2.png" alt="Plotter V2">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="pages/plotter_v2.html">Plotter V2</a></h3>
+            <p class="project-description">2nd version of the pen plotter. A refined design for better performance.</p>
+            <div class="project-meta">
+              <span>Oct 2021</span>
+              <a href="pages/plotter_v2.html" class="read-more">Read More &rarr;</a>
+            </div>
           </div>
-        </div>
+        </article>
+
+        <!-- CNC Mill -->
+        <article class="project-card">
+          <a href="pages/CNC.html" class="project-image-container">
+            <img src="images/CNC.png" alt="CNC Mill">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="pages/CNC.html">3-Axis CNC Mill</a></h3>
+            <p class="project-description">Building a 3-axis CNC mill from scratch.</p>
+            <div class="project-meta">
+              <span>Jul 2021</span>
+              <a href="pages/CNC.html" class="read-more">Read More &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pen Plotter Art -->
+        <article class="project-card">
+          <a href="pages/plotter_art.html" class="project-image-container">
+            <img src="images/black2.jpg" alt="Plotter Art">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="pages/plotter_art.html">Pen Plotter Art</a></h3>
+            <p class="project-description">A collection of generative art created with my pen plotters.</p>
+            <div class="project-meta">
+              <span>Jun 2021</span>
+              <a href="pages/plotter_art.html" class="read-more">Read More &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Welded Desk -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="images/desk.jpeg" alt="Welded Desk">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Welded Desk</h3>
+            <p class="project-description">Building a custom desk for my 3D printer and workspace.</p>
+            <div class="project-meta">
+              <span>May 2021</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Barbell Holder -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="images/barbell_holder.jpeg" alt="Barbell Holder">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Barbell Holder</h3>
+            <p class="project-description">DIY gym equipment when COVID closed the gyms.</p>
+            <div class="project-meta">
+              <span>May 2021</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Hackathon Prototyping -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="images/collage.jpg" alt="Prototyping">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Hackathon Prototyping</h3>
+            <p class="project-description">Toothbrush holder and monitor stand made with free prototyping services.</p>
+            <div class="project-meta">
+              <span>Dec 2020</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Covid Watch -->
+        <article class="project-card">
+          <a href="pages/covid-distance-alarm.html" class="project-image-container">
+            <img src="images/chronicle.jpg" alt="Covid Watch">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="pages/covid-distance-alarm.html">Distance Alarm Watch</a></h3>
+            <p class="project-description">A wearable device to help maintain social distancing, featured in the news.
+            </p>
+            <div class="project-meta">
+              <span>Nov 2020</span>
+              <a href="pages/covid-distance-alarm.html" class="read-more">Read More &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3D Scan -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="images/me.jpeg" alt="3D Scan">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">3D Scan</h3>
+            <p class="project-description">Scanning myself using a Kinect sensor and printing it.</p>
+            <div class="project-meta">
+              <span>Sep 2020</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Go Kart -->
+        <article class="project-card">
+          <a href="pages/kart.html" class="project-image-container">
+            <img src="images/kart.jpg" alt="Go Kart">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="pages/kart.html">Homemade Go Kart</a></h3>
+            <p class="project-description">Built with a friend using a 2-stroke engine during the pandemic.</p>
+            <div class="project-meta">
+              <span>Aug 2020</span>
+              <a href="pages/kart.html" class="read-more">Read More &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Brushless Fan -->
+        <article class="project-card">
+          <a href="https://www.thingiverse.com/thing:4474555" class="project-image-container">
+            <img src="images/fan.jpg" alt="Brushless Fan">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="https://www.thingiverse.com/thing:4474555">Brushless Fan</a></h3>
+            <p class="project-description">A 3D printed brushless fan project.</p>
+            <div class="project-meta">
+              <span>Jul 2020</span>
+              <a href="https://www.thingiverse.com/thing:4474555" class="read-more">View on Thingiverse &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Key Holder -->
+        <article class="project-card">
+          <a href="https://www.thingiverse.com/thing:4283694" class="project-image-container">
+            <img src="images/keychain.jpg" alt="Key Holder">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="https://www.thingiverse.com/thing:4283694">Better Key Holder</a></h3>
+            <p class="project-description">A functional everyday print.</p>
+            <div class="project-meta">
+              <span>Apr 2020</span>
+              <a href="https://www.thingiverse.com/thing:4283694" class="read-more">View on Thingiverse &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pen Plotter V1 -->
+        <article class="project-card">
+          <a href="pages/penplotter.html" class="project-image-container">
+            <img src="images/honker.jpg" alt="Pen Plotter V1">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="pages/penplotter.html">3D Printed Pen Plotter</a></h3>
+            <p class="project-description">My first pen plotter built to write lab notes.</p>
+            <div class="project-meta">
+              <span>Mar 2020</span>
+              <a href="pages/penplotter.html" class="read-more">Read More &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Benelli Keychain -->
+        <article class="project-card">
+          <a href="https://www.thingiverse.com/thing:4229713" class="project-image-container">
+            <img src="images/bike.jpg" alt="Benelli Keychain">
+          </a>
+          <div class="project-content">
+            <h3 class="project-title"><a href="https://www.thingiverse.com/thing:4229713">Benelli Lion Keychain</a></h3>
+            <p class="project-description">Modeled and printed keychain.</p>
+            <div class="project-meta">
+              <span>Mar 2020</span>
+              <a href="https://www.thingiverse.com/thing:4229713" class="read-more">View on Thingiverse &rarr;</a>
+            </div>
+          </div>
+        </article>
+
       </div>
-    </header>
-    <div class="demo-ribbon"></div>
-    <main class="demo-main mdl-layout__content">
-      <div class="demo-container mdl-grid">
-        <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-        <div
-          class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-          <div class="demo-crumbs mdl-color-text--grey-500">
-            Page 2
 
-          </div>
-          <hr>
-          <h5 style="text-align:center"> 2nd version of the pen plotter</h5>
-          </head>
-          <style>
-            img {
-              max-width: 100%;
-              height: auto;
-              display: block;
-              margin-left: auto;
-              margin-right: auto;
-            }
-          </style>
-          </head>
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="index.html" class="read-more" style="font-size: 1.1rem;">&larr; Back to Recent Projects</a>
+      </div>
 
-          <body>
+    </section>
+  </main>
 
-            <img src="images/plotter_v2.png">
-            <p></P>
-            <p> <a href="pages/plotter_v2.html">Read more about it here</a> </p>
-            <h6 style="text-align:right"> October 2021 </H6>
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="copyright">
+        &copy; Vortex 2025. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/vortexgello/triangle.pages.dev">Source</a>
+      </div>
+    </div>
+  </footer>
 
-            </style>
-            </head>
-
-            <hr>
-            <h5 style="text-align:center"> Building a 3-axis CNC mill</h5>
-            </head>
-            <img src="images/CNC.png">
-            <p></P>
-            <p> <a href="pages/CNC.html">Read more about it here</a> </p>
-            <h6 style="text-align:right"> July 2021 </H6>
-
-            </style>
-            </head>
-            <hr>
-            <h5 style="text-align:center"> Welded desk</h5>
-            </head>
-            <img src="images/desk.jpeg">
-            <p></P>
-            <p> I needed a second desk in my room for the 3D printer and other stuff, so I decided it would be cheaper
-              to build my own. </p>
-            <h6 style="text-align:right"> 15 May 2021 </H6>
-            </style>
-            </head>
-
-            <hr>
-
-
-            <h5 style="text-align:center"> Some fun pen plotter art</h5>
-
-            <img src="images/black2.jpg">
-            <p></P>
-            <p> <a href="pages/plotter_art.html">Read more about it here</a> </p>
-            <h6 style="text-align:right"> June 2021 </H6>
-
-            <img src="images/barbell_holder.jpeg">
-            <p></P>
-            <p> When COVID peeked, we stopped going to the gym, and also, the subscription was about to end. We
-              determined that it was cheaper to buy after a quick calculation.
-              our own equipment rather than going to the gym. </p>
-            <h6 style="text-align:right"> May 1 2021 </H6>
-            </style>
-            </head>
-
-            <hr>
-            <h5 style="text-align:center"> What I did with the free prototyping service from the hackathon</h5>
-
-            <img src="images/collage.jpg">
-            <p></P>
-            <p> A cool looking toothbrush holder and monitor stand for my PC.</p>
-            <h6 style="text-align:right"> 14 December 2020 </H6>
-
-            </style>
-            </head>
-
-            <body>
-
-              <hr>
-              <h5 style="text-align:center"> How a watch i designed got featured in the news</h5>
-
-              <img src="images/chronicle.jpg">
-              <p></P>
-              <p> My watch design was compact and looked aesthetic compared to other inventions in the make-athon.
-                Although it didn't work as intended, we had a great learning experience.</p>
-              <p><a href="pages/covid-distance-alarm.html">Read about it here</a></p>
-              <h6 style="text-align:right"> 1 November 2020 </H6>
-              <hr>
-              <h5 style="text-align:center"> 3D scan of myself </h5>
-              </style>
-              </head>
-
-              <body>
-
-                <img src="images/me.jpeg">
-              </body>
-              <p> I always wanted to have a 3D print of myself, so I bought a used Kinect sensor for cheap and then
-                scanned myself using it.
-              <h6 style="text-align:right"> 14 September 2020 </H6>
-
-              <hr>
-
-              <h5 style="text-align:center">Homemade Go Kart</h5>
-              <p></p>
-              <img src="images/kart.jpg">
-            </body>
-
-            </p>
-            <p> This is a go kart made by me and my friend during the pandemic using a 2 stroke engine.
-            </p>
-            <p> <a href="pages/kart.html">Read more about it here</a> </p>
-
-
-            <h6 style="text-align:right"> 25 August 2020 </H6>
-            <hr>
-            <h5 style="text-align:center">Brushless fan</h5>
-            <p>
-              <img src="images/fan.jpg">
-          </body>
-          </p>
-
-          <p> <a href="https://www.thingiverse.com/thing:4474555"> For STL check my thingiverse</a></p>
-          <h6 style="text-align:right"> 18 July 2020 </H6>
-          <hr>
-          <h5 style="text-align:center">A better key holder </h5>
-          <p>
-            <style>
-              img {
-                max-width: 80%;
-                height: auto;
-              }
-            </style>
-            </head>
-
-            <body>
-
-              <img src="images/keychain.jpg">
-            </body>
-          </p>
-
-          <p> <a href="https://www.thingiverse.com/thing:4283694"> For STL check my thingiverse</a></p>
-          <h6 style="text-align:right"> 13 April 2020 </H6>
-          <hr>
-
-          <h5 style="text-align:center">3D Printed Pen Plotter</h5>
-          <p>
-            <img src="images/honker.jpg">
-</body>
-</p>
-<p>
-  I made this pen plotter so I can write my lab notes with this for my engineering degree. </p>
-<p> <a href="pages/penplotter.html">Read more about it here</a> </p>
-<h6 style="text-align:right"> 28 March 2020 </H6>
-<hr>
-<h5 style="text-align:center">Benelli lion keychain </h5>
-<p>
-  <img src="images/bike.jpg">
-</p>
-
-<p> <a href="https://www.thingiverse.com/thing:4229713"> For STL check my thingiverse</a></p>
-
-<h6 style="text-align:right"> 18 March 2020 </H6>
-</style>
-</head>
-<div class="demo-crumbs mdl-color-text--grey-500" style="text-align:right">
-
-  <a class="demo-crumbs mdl-color-text--grey-500" href="index.html">Back to Page 1</a>, 2 ...
-</div>
-
-
-</div>
-
-</div>
-<footer class="demo-footer mdl-mini-footer">
-  <div class="mdl-mini-footer--left-section">
-    <ul class="mdl-mini-footer--link-list">
-      <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
-      <!-- <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li> -->
-      <li><a
-          href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
-      </li>
-    </ul>
-  </div>
-</footer>
-</main>
-</div>
-<!--    <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
-<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
-<!-- Cloudflare Web Analytics -->
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-  data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->
-
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
 </body>
 
 </html>
