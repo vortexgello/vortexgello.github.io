@@ -1,136 +1,171 @@
 <!doctype html>
-<!--
-  Vortex
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books & Resources | Vortex</title>
+  <meta name="description" content="A collection of valuable engineering books, papers, and design resources.">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-QJ8M5F06YR');
   </script>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="vortextriangle's blog">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <title>Vortex</title>
-
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="penpenplotter/android-desktop.svg">
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Vortex">
-  <link rel="apple-touch-icon-precomposed" href="penpenplotter/ios-desktop.svg">
-
-  <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="penpenplotter/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#3372DF">
-
-  <link rel="shortcut icon" href="penpenplotter/favicon.png">
-
-  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-  <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
-  </style>
 </head>
 
 <body>
-  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
-    <header
-      class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Vortex</span>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-          <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-            <i class="material-icons">search</i>
-          </label>
-          <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" id="search">
-            <label class="mdl-textfield__label" for="search">Enter your query...</label>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="demo-ribbon"></div>
-    <main class="demo-main mdl-layout__content">
-      <div class="demo-container mdl-grid">
-        <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-        <div
-          class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-          <div class="demo-crumbs mdl-color-text--grey-500">
-            <a class="demo-crumbs mdl-color-text--grey-500" href="/index.html">Home page</a>
-          </div>
-          <div>
-            <h4>DuPont Design</h4>
-            <li><a href="https://drive.google.com/file/d/1Xdsy3oTjKWH427o2QFqzAO-E4fSpA_CB/view?usp=sharing">Foundations
-                of Mechanical Accuracy - Moore book</a></li>
-            <li><a href="/pages/books/Handbook of Lapping and Polishing.pdf">Handbook of Lapping and Polishing</a></li>
-            <li><a href="/pages/books/How Round Is Your Circle_scale.pdf">How Round is Your Circe?</a></li>
-            <li><a href="/pages/books/Optics Manufacturing Components and Systems .pdf">Optics Manufacturing Components
-                and Systems</a></li>
-            <li><a href="/pages/books/Stuart T. Smith - Foundations of Ultra-Precision Mechanism Design.pdf">Foundations
-                of Ultra-Precision Mechanism</a></li>
-            <li><a href="/pages/books/Hold-Down and Release Mechanism for CubeSats.pdf">HDRM Paper</a></li>
 
-          </div>
-        </div>
-      </div>
-      <footer class="demo-footer mdl-mini-footer">
-        <div class="mdl-mini-footer--left-section">
-          <ul class="mdl-mini-footer--link-list">
-            <li><a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a></li>
-            <!-- <li><a href="https://discord.gg/BtpcJS7VNB">Discord</a></li> -->
-            <!-- <li><a href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a></li> -->
-          </ul>
-        </div>
-      </footer>
-    </main>
-  </div>
-  <!--  <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a> -->
-  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-title">Vortex</a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="index.html#experience">Experience</a></li>
+          <li><a href="index.html#skills">Skills</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script><!-- End Cloudflare Web Analytics -->
+  <main class="container content-wrapper">
+
+    <div style="margin-bottom: 2rem;">
+      <a href="index.html" class="icon-link">&larr; Back to Home</a>
+    </div>
+
+    <section>
+      <h1 class="hero-title" style="font-size: 3rem; margin-bottom: 1rem;">Resources</h1>
+      <p class="hero-subtitle" style="margin: 0 0 3rem 0; text-align: left; max-width: 100%;">
+        A curated collection of technical books, research papers, and reference materials focusing on precision
+        engineering and mechanisms.
+      </p>
+
+      <h2 class="section-title" style="justify-content: flex-start; font-size: 1.75rem; margin-bottom: 1.5rem;">DuPont
+        Design Collection</h2>
+
+      <div class="skills-grid" style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));">
+
+        <!-- Item 1 -->
+        <a href="https://drive.google.com/file/d/1Xdsy3oTjKWH427o2QFqzAO-E4fSpA_CB/view?usp=sharing" target="_blank"
+          class="skill-card" style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            Foundations of Mechanical Accuracy
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); flex-grow: 1;">Wayne R. Moore</p>
+          <span class="skill-tag" style="width: fit-content; margin-top: 1rem; font-size: 0.75rem;">External Link</span>
+        </a>
+
+        <!-- Item 2 -->
+        <a href="/pages/books/Handbook of Lapping and Polishing.pdf" target="_blank" class="skill-card"
+          style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Handbook of Lapping and Polishing
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); flex-grow: 1;">Ioan D. Marinescu et
+            al.</p>
+          <span class="skill-tag" style="width: fit-content; margin-top: 1rem; font-size: 0.75rem;">PDF</span>
+        </a>
+
+        <!-- Item 3 -->
+        <a href="/pages/books/How Round Is Your Circle_scale.pdf" target="_blank" class="skill-card"
+          style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+              </path>
+              <path d="M2 12h20"></path>
+            </svg>
+            How Round is Your Circle?
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); flex-grow: 1;">Where Engineering and
+            Mathematics Meet</p>
+          <span class="skill-tag" style="width: fit-content; margin-top: 1rem; font-size: 0.75rem;">PDF</span>
+        </a>
+
+        <!-- Item 4 -->
+        <a href="/pages/books/Optics Manufacturing Components and Systems .pdf" target="_blank" class="skill-card"
+          style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            Optics Manufacturing Components and Systems
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); flex-grow: 1;">Mark A. Kahan</p>
+          <span class="skill-tag" style="width: fit-content; margin-top: 1rem; font-size: 0.75rem;">PDF</span>
+        </a>
+
+        <!-- Item 5 -->
+        <a href="/pages/books/Stuart T. Smith - Foundations of Ultra-Precision Mechanism Design.pdf" target="_blank"
+          class="skill-card" style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            Foundations of Ultra-Precision Mechanism Design
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); flex-grow: 1;">Stuart T. Smith</p>
+          <span class="skill-tag" style="width: fit-content; margin-top: 1rem; font-size: 0.75rem;">PDF</span>
+        </a>
+
+        <!-- Item 6: HDRM Paper -->
+        <a href="/pages/books/Hold-Down and Release Mechanism for CubeSats.pdf" target="_blank" class="skill-card"
+          style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+          <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+            Open Source HDRM Paper
+          </h3>
+          <p style="font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); flex-grow: 1;">Design and Performance
+            of SMA HDRM</p>
+          <span class="skill-tag"
+            style="width: fit-content; margin-top: 1rem; font-size: 0.75rem; border-color: var(--accent); color: var(--accent);">PDF</span>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Vortex. Built with modern web technologies.</p>
+    </div>
+  </footer>
+
 </body>
 
 </html>
