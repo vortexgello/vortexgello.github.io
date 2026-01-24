@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Portfolio website",
   "scripts": {
-    "build": "echo 'No build step required for static site'"
+    "build": "node build.js"
   },
   "keywords": [],
   "author": "",
