@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Older Projects | Vortex</title>
+  <title>All Projects | Vortex</title>
   <meta name="description" content="Archive of older engineering and maker projects by Vortex.">
   <link rel="stylesheet" href="styles.css">
 
@@ -36,13 +36,139 @@
   </header>
 
   <main class="container">
-    <section id="older-projects">
-      <h2 class="section-title">Older Projects</h2>
+    <section id="all-projects">
+      <h2 class="section-title">All Projects</h2>
       <p class="section-intro">
-        A collection of my earlier engineering explorations, maker projects, and experiments.
+        A comprehensive collection of my engineering explorations, maker projects, and experiments.
         These projects represent my journey and growth in building and designing.
       </p>
+
+      <div class="sort-controls">
+        <button class="sort-btn active" data-sort="date">Newest</button>
+        <button class="sort-btn" data-sort="views">Most Popular</button>
+      </div>
+
       <div class="projects-grid">
+
+        <!-- Project: Solar Sail -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/solar-sail/render_1.png" alt="Solar Sail Mechanism">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Solar Sail Mechanism</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Mechanisms</span>
+              <span class="tech-tag">Composites</span>
+            </div>
+            <p class="project-description">Deployable solar sail mechanism using a tri-boom configuration and composite
+              rods.</p>
+            <div class="project-links">
+              <a href="pages/solar-sail.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date">Jan 2026</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project: Selfie Boom -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/selfie-boom/iso_extended.png" alt="Selfie Boom">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">CubeSat Selfie Camera</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Mechanisms</span>
+              <span class="tech-tag">CAD</span>
+            </div>
+            <p class="project-description">A deployable boom that opens up to take selfies of your own CubeSat.</p>
+            <div class="project-links">
+              <a href="pages/cubesat_selfie.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date">Dec 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project: Roll-Out Solar Array -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/boom2-img/65cm-mechanism.jpeg" alt="Roll-Out Solar Array">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Roll-Out Solar Array</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Mechanisms</span>
+              <span class="tech-tag">Space Systems</span>
+            </div>
+            <p class="project-description">Latest deployable boom iterations for a solar array inspired by ISS iROSA.
+            </p>
+            <div class="project-links">
+              <a href="pages/boom2.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date">Jun 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project: HDRM -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="https://github.com/tm2space/HDRM/raw/main/images/cover.jpg" alt="Open Source SMA HDRM">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Open Source SMA HDRM</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Space Mechanisms</span>
+              <span class="tech-tag">Open Source</span>
+            </div>
+            <p class="project-description">A fully open-source, affordable Hold-Down and Release Mechanism (HDRM) for
+              CubeSats.</p>
+            <div class="project-links">
+              <a href="pages/hdrm.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date">May 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project: Maker Mission -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/maker-mission/console.png" alt="Maker Mission Console">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Maker Mission Workshop</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Electronics</span>
+              <span class="tech-tag">Education</span>
+              <span class="tech-tag">RISC-V</span>
+            </div>
+            <p class="project-description">Organized a hands-on workshop teaching electronics by building a custom game
+              console.</p>
+            <div class="project-links">
+              <a href="pages/maker_mission.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date">May 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project: Boom Mechanisms -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="pages/images/boom_step_03.jpeg" alt="Boom Mechanisms">
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Exploring Boom Mechanisms</h3>
+            <div class="tech-tags">
+              <span class="tech-tag">Mechanisms</span>
+              <span class="tech-tag">Calculators</span>
+            </div>
+            <p class="project-description">Fabrication process and calculators for various design and performance
+              calculations.</p>
+            <div class="project-links">
+              <a href="pages/booms.html" class="icon-link">View Project &rarr;</a>
+              <span class="project-date">May 2025</span>
+            </div>
+          </div>
+        </article>
 
         <!-- Project: Bistable Boom -->
         <article class="project-card">
@@ -439,6 +565,7 @@
     </div>
   </footer>
 
+  <script src="js/project-sort.js"></script>
 </body>
 
 </html>

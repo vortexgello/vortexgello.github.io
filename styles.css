@@ -663,3 +663,35 @@ p {
     left: -1.9rem;
   }
 }
+
+/* Sort Controls */
+.sort-controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.sort-btn {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+
+.sort-btn:hover {
+  border-color: var(--accent);
+  color: var(--text-main);
+}
+
+.sort-btn.active {
+  background: var(--tag-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
