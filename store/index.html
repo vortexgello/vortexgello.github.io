@@ -17,6 +17,19 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .store-grid {
@@ -122,15 +135,7 @@
 
     <header class="site-header">
         <div class="container header-content">
-            <a href="../index.html" class="site-title">Vortex</a>
-            <nav class="site-nav">
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../index.html#projects">Projects</a></li>
-                    <li><a href="index.html" style="color: var(--accent);">Store</a></li>
-                    <li><a href="../index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
+            <a href="index.html" class="site-title">Vortex</a>
         </div>
     </header>
 
@@ -138,7 +143,6 @@
 
         <section class="store-hero">
             <div class="hero-content">
-                <span class="badge">Available Now</span>
                 <h1 class="hero-title">
                     Space <span class="highlight-gradient">Store</span>
                 </h1>
@@ -210,11 +214,28 @@
 
         </section>
 
+        </section>
+
+        <section class="contact-section"
+            style="text-align: center; padding: 4rem 0; background: var(--bg-card); border-radius: var(--radius-lg); margin-bottom: 2rem;">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Get in Touch</h2>
+            <p
+                style="color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Interested in our mechanisms? Contact us for custom orders, quotes, or collaboration inquiries.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="mailto:rahul.yadgirkar@gmail.com" class="btn-primary" style="padding: 0.75rem 2rem;">Email
+                    Us</a>
+                <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" class="btn-outline"
+                    style="padding: 0.75rem 2rem; border: 1px solid var(--border-light); border-radius: var(--radius-full); color: var(--text-main); text-decoration: none;">LinkedIn</a>
+            </div>
+        </section>
+
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Vortex. Storefront Demo.</p>
+            <p>&copy; 2026 Vortex.</p>
         </div>
     </footer>
 
