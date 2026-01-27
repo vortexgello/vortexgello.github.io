@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deployable Boom | Vortex Store</title>
-  <meta name="description" content="Lightweight, bistable composite deployable boom for CubeSats.">
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <title>Boom Mechanism v2 | Vortex Store</title>
+  <meta name="description" content="Second generation bistable boom mechanism for roll-out solar arrays.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
   <style>
     /* Product Page Specific Styles */
     .product-container {
@@ -193,13 +193,13 @@
 
   <header class="site-header">
     <div class="container header-content">
-      <a href="../index.html" class="site-title">Vortex</a>
+      <a href="index.html" class="site-title">Vortex</a>
       <nav class="site-nav">
         <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="../index.html#projects">Projects</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
           <li><a href="index.html" style="color: var(--accent);">Store</a></li>
-          <li><a href="../index.html#contact">Contact</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -211,30 +211,29 @@
 
       <!-- Left Column: Gallery -->
       <div class="product-gallery">
-        <img src="../pages/images/booms_new_1.jpg" alt="Deployable Boom" class="main-image" id="mainImage">
+        <img src="pages/boom2-img/65cm-mechanism.jpeg" alt="Boom Mechanism v2" class="main-image" id="mainImage">
         <div class="image-thumbnails">
-          <img src="../pages/images/booms_new_1.jpg" class="thumbnail active" onclick="changeImage(this)">
-          <img src="../pages/images/booms_new_2.jpg" class="thumbnail" onclick="changeImage(this)">
+          <img src="pages/boom2-img/65cm-mechanism.jpeg" class="thumbnail active" onclick="changeImage(this)">
+          <img src="pages/boom2-img/mechanism.jpeg" class="thumbnail" onclick="changeImage(this)">
         </div>
       </div>
 
       <!-- Right Column: Info -->
       <div class="product-info">
         <nav style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
-          <a href="index.html">Store</a> / Deployable Boom
+          <a href="index.html">Store</a> / Boom Mechanism
         </nav>
 
-        <h1>Bistable Composite Boom</h1>
+        <h1>Roll-Out Solar Array Mechanism</h1>
         <span class="product-price">Custom Order</span>
 
         <p class="product-description-short">
-          Extremely lightweight deployable boom with a low coefficient of thermal expansion.
-          Uses bistable composite technology (BhorForce® UC160C and LY556 epoxy) to hold two stable configurations
-          without external force.
+          Deployable composite boom system for solar arrays, inspired by the ISS iROSA.
+          Offers compact storage and significant power generation for small satellites.
         </p>
 
         <div class="action-buttons">
-          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Deployable Booms" class="btn-primary">Request
+          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Boom Mechanism" class="btn-primary">Request
             Quote</a>
           <a href="#specs" class="btn-outline">View Specs</a>
         </div>
@@ -244,15 +243,13 @@
             <button class="accordion-header">Product Description</button>
             <div class="accordion-content">
               <p>
-                This project documents the hands-on development of a <strong>bistable composite boom</strong> a
-                structure
-                capable of holding two stable configurations (coiled and extended) without mechanisms.
-                Achieving bistability involved numerous iterations, with careful adjustment of layup strategy and curing
-                consistency.
+                The core of this system uses bistable composite booms to deploy a flexible solar blanket.
+                Its rolling mandrel design not only saves space but acts as a protective core during launch,
+                shielding the fragile solar blanket.
               </p>
               <p style="margin-top: 1rem;">
-                Ideal for CubeSat antennas, solar sail deployment, and instrument booms where volume constraints are
-                critical.
+                This design simplifies electrical architecture by eliminating slip rings and enables
+                multi-functional utility, such as embedded antennas.
               </p>
             </div>
           </div>
@@ -262,63 +259,53 @@
             <div class="accordion-content">
               <table class="specs-table">
                 <tr>
-                  <td>Material</td>
-                  <td>UD Carbon Fiber (160 gsm) / Epoxy</td>
+                  <td>Prototype Length</td>
+                  <td>65 cm</td>
                 </tr>
                 <tr>
-                  <td>Mechanism Type</td>
-                  <td>Bistable / Strain Energy</td>
+                  <td>Architecture</td>
+                  <td>Rolling Mandrel</td>
                 </tr>
                 <tr>
-                  <td>Stowed Form</td>
-                  <td>Coiled</td>
+                  <td>Power Transfer</td>
+                  <td>Direct (No Slip Ring)</td>
                 </tr>
                 <tr>
-                  <td>Length</td>
-                  <td>Customizable (tested 70cm)</td>
+                  <td>Applications</td>
+                  <td>Solar Arrays, Antenna Arrays</td>
                 </tr>
                 <tr>
-                  <td>Mass</td>
-                  <td>~5g (depending on length)</td>
+                  <td>System Mass</td>
+                  <td>&lt; 250g (Estimated)</td>
                 </tr>
                 <tr>
-                  <td>Cross-Section</td>
-                  <td>Customizable (20-50mm width)</td>
+                  <td>Stowed Dimensions</td>
+                  <td>98 x 98 x 50 mm (1U Footprint)</td>
                 </tr>
                 <tr>
-                  <td>Bending Stiffness</td>
-                  <td>Contact for Analysis</td>
+                  <td>Motor Voltage</td>
+                  <td>5V DC (Nominal)</td>
                 </tr>
                 <tr>
-                  <td>Op. Temperature</td>
-                  <td>-40°C to +80°C</td>
-                </tr>
-                <tr>
-                  <td>TRL</td>
-                  <td>4 (Component in Lab)</td>
+                  <td>Deployment Speed</td>
+                  <td>~2 cm/s (Variable)</td>
                 </tr>
               </table>
             </div>
           </div>
 
           <div class="accordion-item">
-            <button class="accordion-header">Analysis Services</button>
+            <button class="accordion-header">Deployment Sequence</button>
             <div class="accordion-content">
-              <p>
-                We provide comprehensive performance calculations as a service for your specific mission requirements.
-              </p>
-              <p style="margin-top: 1rem;">
-                Available analysis includes:
-              </p>
-              <ul style="padding-left: 1.5rem; margin-top: 0.5rem; color: var(--accent);">
-                <li>Tip Deflection Force</li>
-                <li>Snap-Through Moment</li>
-                <li>Stiffness & Deflection Modeling</li>
-              </ul>
+              <div
+                style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                <iframe src="https://www.youtube.com/embed/sLQ1yiBxTDs"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
             </div>
           </div>
-
-
         </div>
 
       </div>
