@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store | Vortex</title>
+    <meta name="description" content="Vortex Store - Mechanisms and Booms">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <style>
+        /* Store specific overrides */
+        .store-hero {
+            min-height: 40vh;
+            padding: var(--space-xl) 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-hover);
+            background: var(--bg-card-hover);
+        }
+
+        .product-image {
+            aspect-ratio: 4/3;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .product-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: auto;
+        }
+
+        .store-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            z-index: 10;
+        }
+
+        /* Make the whole card clickable */
+        .product-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="index.html" style="color: var(--accent);">Store</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="store-hero">
+            <div class="hero-content">
+                <span class="badge">Available Now</span>
+                <h1 class="hero-title">
+                    Space <span class="highlight-gradient">Store</span>
+                </h1>
+                <p class="hero-subtitle">
+                    High-quality mechanisms and booms for CubeSats and space applications.
+                </p>
+            </div>
+        </section>
+
+        <section class="store-grid">
+
+            <!-- Product 1: Deployable Booms -->
+            <article class="product-card">
+                <span class="store-tag">Featured</span>
+                <div class="product-image">
+                    <img src="../pages/images/booms_new_1.jpg" alt="Deployable Booms">
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">Deployable Booms</h2>
+                    <p class="product-desc">
+                        Lightweight, compact deployable booms for antennas, sensors, and solar sails.
+                    </p>
+                    <a href="booms.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Product 2: Boom Mechanism -->
+            <article class="product-card">
+                <div class="product-image">
+                    <img src="../pages/boom2-img/65cm-mechanism.jpeg" alt="Boom Mechanism">
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">Boom Mechanism</h2>
+                    <p class="product-desc">
+                        Bistable boom mechanism with improved reliability and extension ratio.
+                    </p>
+                    <a href="boom2.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Product 3: Solar Sail -->
+            <article class="product-card">
+                <span class="store-tag">New</span>
+                <div class="product-image">
+                    <img src="../pages/solar-sail/quad_hub_render.png" alt="Solar Sail">
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">Solar Sail System</h2>
+                    <p class="product-desc">
+                        Complete solar sail deployment system including hub, booms, and sail membrane.
+                    </p>
+                    <a href="solar-sail.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Product 4: CubeSat Selfie -->
+            <article class="product-card">
+                <div class="product-image">
+                    <img src="../pages/selfie-boom/iso_extended.png" alt="CubeSat Selfie Stick">
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">CubeSat Selfie Boom</h2>
+                    <p class="product-desc">
+                        Deployable camera boom for monitoring satellite deployment and health.
+                    </p>
+                    <a href="cubesat_selfie.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex. Storefront Demo.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

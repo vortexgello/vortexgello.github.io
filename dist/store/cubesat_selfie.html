@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CubeSat Selfie Boom | Vortex Store</title>
+    <meta name="description" content="Deployable camera boom for CubeSat monitoring and selfies.">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <style>
+        /* Product Page Specific Styles */
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 4rem 0;
+            align-items: start;
+        }
+
+        .product-gallery {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .main-image {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            margin-bottom: 1rem;
+            background: #000;
+        }
+
+        .image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.7;
+            transition: all 0.2s;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .product-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .product-description-short {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-body);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            border: 1px solid var(--text-main);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-body);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-main);
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .specs-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        .specs-table td:first-child {
+            font-weight: 600;
+            color: var(--text-main);
+            width: 40%;
+        }
+
+        .accordion {
+            border-top: 1px solid var(--border-light);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1.5rem 0;
+            background: none;
+            border: none;
+            text-align: left;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .accordion-item.active .accordion-header::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            display: none;
+            padding-bottom: 1.5rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-gallery {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="index.html" style="color: var(--accent);">Store</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div class="product-container">
+
+            <!-- Left Column: Gallery -->
+            <div class="product-gallery">
+                <img src="../pages/selfie-boom/iso_extended.png" alt="Selfie Boom" class="main-image" id="mainImage">
+                <div class="image-thumbnails">
+                    <img src="../pages/selfie-boom/iso_extended.png" class="thumbnail active"
+                        onclick="changeImage(this)">
+                    <img src="../pages/selfie-boom/camera_closeup.png" class="thumbnail" onclick="changeImage(this)">
+                    <img src="../pages/selfie-boom/cubesat_deploy.png" class="thumbnail" onclick="changeImage(this)">
+                    <img src="../pages/selfie-boom/prototype_test.png" class="thumbnail" onclick="changeImage(this)">
+                </div>
+            </div>
+
+            <!-- Right Column: Info -->
+            <div class="product-info">
+                <nav style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    <a href="index.html">Store</a> / CubeSat Selfie Boom
+                </nav>
+
+                <h1>CubeSat Selfie Camera Boom</h1>
+                <span class="product-price">Custom Order</span>
+
+                <p class="product-description-short">
+                    Deployable camera boom mechanism for capturing visual inspection data and "selfies" of the satellite
+                    in orbit.
+                </p>
+
+                <div class="action-buttons">
+                    <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Selfie Boom" class="btn-primary">Request
+                        Quote</a>
+                    <a href="#specs" class="btn-outline">View Specs</a>
+                </div>
+
+                <div class="accordion">
+                    <div class="accordion-item active">
+                        <button class="accordion-header">Product Description</button>
+                        <div class="accordion-content">
+                            <p>
+                                The system uses stored strain energy to deploy a bistable composite or flexible polymer
+                                boom
+                                rolled compactly against the CubeSat.
+                            </p>
+                            <p style="margin-top: 1rem;">
+                                Features an integrated flex PCB running along the boom length for the camera module,
+                                eliminating complex wire harnesses and reducing snag risks.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">Specifications</button>
+                        <div class="accordion-content">
+                            <table class="specs-table">
+                                <tr>
+                                    <td>Camera Integration</td>
+                                    <td>Off-the-shelf Module via Flex PCB</td>
+                                </tr>
+                                <tr>
+                                    <td>Deployment Method</td>
+                                    <td>Stored Strain Energy</td>
+                                </tr>
+                                <tr>
+                                    <td>Form Factor</td>
+                                    <td>Compatible with 1U+</td>
+                                </tr>
+                                <tr>
+                                    <td>Extended Length</td>
+                                    <td>Up to 1.5 m</td>
+                                </tr>
+                                <tr>
+                                    <td>System Mass</td>
+                                    <td>&lt; 150g (w/ Camera)</td>
+                                </tr>
+                                <tr>
+                                    <td>Camera Resolution</td>
+                                    <td>5 MP (Typical)</td>
+                                </tr>
+                                <tr>
+                                    <td>Data Interface</td>
+                                    <td>MIPI CSI-2 / USB</td>
+                                </tr>
+                                <tr>
+                                    <td>Power</td>
+                                    <td>3.3V / 150mW</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">Deployment Sequence</button>
+                        <div class="accordion-content">
+                            <div
+                                style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-bottom: 1.5rem;">
+                                <iframe src="https://www.youtube.com/embed/FCsuLYd_ojA"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+
+                            <p style="color: var(--text-muted); margin-bottom: 1rem;">Step-by-step deployment
+                                (Autoplaying):</p>
+                            <div style="width: 100%; text-align: center;">
+                                <img id="deploymentSeqImage" src="../pages/selfie-boom/deploy_seq_1.png"
+                                    alt="Deployment Sequence"
+                                    style="width: 100%; max-width: 400px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex. Storefront Demo.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Image Gallery
+        function changeImage(el) {
+            document.getElementById('mainImage').src = el.src;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+
+        // Autoplay Deployment Sequence
+        const deployImages = [
+            "../pages/selfie-boom/deploy_seq_1.png",
+            "../pages/selfie-boom/deploy_seq_2.png",
+            "../pages/selfie-boom/deploy_seq_3.png",
+            "../pages/selfie-boom/deploy_seq_4.png",
+            "../pages/selfie-boom/deploy_seq_5.png"
+        ];
+        let deployIndex = 0;
+        const deployImgElement = document.getElementById('deploymentSeqImage');
+
+        if (deployImgElement) {
+            setInterval(() => {
+                deployIndex = (deployIndex + 1) % deployImages.length;
+                deployImgElement.src = deployImages[deployIndex];
+            }, 1500);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -16,7 +16,8 @@ const items = [
     'sitemap.xml',
     'images',
     'pages',
-    'plotter'
+    'plotter',
+    'store'
 ];
 
 function copyRecursive(src, dest) {
