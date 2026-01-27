@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Sail System | Vortex Store</title>
+    <meta name="description" content="Tri-boom deployable solar sail mechanism for CubeSats.">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <style>
+        /* Product Page Specific Styles */
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 4rem 0;
+            align-items: start;
+        }
+
+        .product-gallery {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .main-image {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            margin-bottom: 1rem;
+            background: #000;
+        }
+
+        .image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.7;
+            transition: all 0.2s;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .product-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .product-description-short {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-body);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            border: 1px solid var(--text-main);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-body);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-main);
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .specs-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        .specs-table td:first-child {
+            font-weight: 600;
+            color: var(--text-main);
+            width: 40%;
+        }
+
+        .accordion {
+            border-top: 1px solid var(--border-light);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1.5rem 0;
+            background: none;
+            border: none;
+            text-align: left;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .accordion-item.active .accordion-header::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            display: none;
+            padding-bottom: 1.5rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-gallery {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="index.html" style="color: var(--accent);">Store</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div class="product-container">
+
+            <!-- Left Column: Gallery -->
+            <div class="product-gallery">
+                <img src="../pages/solar-sail/quad_hub_render.png" alt="Solar Sail Render" class="main-image"
+                    id="mainImage">
+                <div class="image-thumbnails">
+                    <img src="../pages/solar-sail/quad_hub_render.png" class="thumbnail active"
+                        onclick="changeImage(this)">
+                    <img src="../pages/solar-sail/render_1.png" class="thumbnail" onclick="changeImage(this)">
+                    <img src="../pages/solar-sail/render_2.png" class="thumbnail" onclick="changeImage(this)">
+                    <img src="../pages/solar-sail/proto_1.jpg" class="thumbnail" onclick="changeImage(this)">
+                </div>
+            </div>
+
+            <!-- Right Column: Info -->
+            <div class="product-info">
+                <nav style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    <a href="index.html">Store</a> / Solar Sail System
+                </nav>
+
+                <h1>Solar Sail Deployment System</h1>
+                <span class="product-price">Custom Order</span>
+
+                <p class="product-description-short">
+                    Compact, deployable boom system for CubeSat solar sails.
+                    Solves common "blossoming" issues using a tri-boom configuration and solid carbon rods.
+                </p>
+
+                <div class="action-buttons">
+                    <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Solar Sail" class="btn-primary">Request
+                        Quote</a>
+                    <a href="#specs" class="btn-outline">View Specs</a>
+                </div>
+
+                <div class="accordion">
+                    <div class="accordion-item active">
+                        <button class="accordion-header">Product Description</button>
+                        <div class="accordion-content">
+                            <p>
+                                The primary challenge for CubeSat solar sails is packaging a massive membrane structure
+                                into a
+                                compact volume without jamming. This project utilizes a 3-boom configuration with solid
+                                Carbon Fiber rod guides.
+                            </p>
+                            <p style="margin-top: 1rem;">
+                                This "Tri-Boom" design increases available stowage volume by 30% and shifts tribology
+                                to a low-friction carbon-on-carbon interface, preventing deployment failures.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">Specifications</button>
+                        <div class="accordion-content">
+                            <table class="specs-table">
+                                <tr>
+                                    <td>Configuration</td>
+                                    <td>Tri-Boom (3 Booms)</td>
+                                </tr>
+                                <tr>
+                                    <td>Boom Material</td>
+                                    <td>Composite Slit-Tube</td>
+                                </tr>
+                                <tr>
+                                    <td>Guide Rails</td>
+                                    <td>3mm Solid Carbon Fiber Rods</td>
+                                </tr>
+                                <tr>
+                                    <td>Stowed Volume</td>
+                                    <td>~80mm Diameter (Tuna Can)</td>
+                                </tr>
+                                <tr>
+                                    <td>Sail Area</td>
+                                    <td>4 m² (Nominal 12U Class)</td>
+                                </tr>
+                                <tr>
+                                    <td>Sail Material</td>
+                                    <td>CP1 Polyimide (2.5 &mu;m)</td>
+                                </tr>
+                                <tr>
+                                    <td>System Mass</td>
+                                    <td>&lt; 800g (Target)</td>
+                                </tr>
+                                <tr>
+                                    <td>TRL</td>
+                                    <td>3 (Proof of Concept)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">Deployment Sequence</button>
+                        <div class="accordion-content">
+                            <div
+                                style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-bottom: 1.5rem;">
+                                <iframe src="https://www.youtube.com/embed/2zEE49DpdVs"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+
+                            <p style="color: var(--text-muted); margin-bottom: 1rem;">Prototype deployment testing
+                                (Autoplaying):</p>
+                            <div style="width: 100%; text-align: center;">
+                                <img id="sailSeqImage" src="../pages/solar-sail/proto_1.jpg" alt="Solar Sail Deployment"
+                                    style="width: 100%; max-width: 400px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex. Storefront Demo.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Image Gallery
+        function changeImage(el) {
+            document.getElementById('mainImage').src = el.src;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Autoplay Deployment Sequence
+        const sailImages = [
+            "../pages/solar-sail/proto_1.jpg",
+            "../pages/solar-sail/proto_2.jpg",
+            "../pages/solar-sail/proto_3.jpg",
+            "../pages/solar-sail/proto_4.jpg"
+        ];
+        let sailIndex = 0;
+        const sailImgElement = document.getElementById('sailSeqImage');
+
+        if (sailImgElement) {
+            setInterval(() => {
+                sailIndex = (sailIndex + 1) % sailImages.length;
+                sailImgElement.src = sailImages[sailIndex];
+            }, 1500);
+        }
+    </script>
+
+</body>
+
+</html>

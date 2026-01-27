@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roll-Out Solar Array | Vortex</title>
+  <meta name="description"
+    content="Development of a deployable composite boom system for solar arrays, inspired by the ISS iROSA.">
+  <link rel="stylesheet" href="../styles.css">
+
+  <!-- Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-QJ8M5F06YR');
+  </script>
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="../index.html" class="site-title">Vortex</a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="../index.html">Projects</a></li>
+          <li><a href="../index.html#experience">Experience</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container content-wrapper">
+    <article class="project-detail">
+      <header class="project-header">
+        <div style="margin-bottom: 1rem;">
+          <a href="../index.html" class="icon-link">&larr; Back to Projects</a>
+        </div>
+        <h1 class="project-title-large">Roll-Out Solar Array</h1>
+        <div class="project-meta-large">
+          <span>Space Mechanisms</span>
+          <span class="separator">•</span>
+          <span>Prototyping</span>
+        </div>
+      </header>
+
+      <section class="project-section">
+        <p class="lead-text">
+          A development log of deployable boom mechanisms and a roll-out solar array system inspired by the
+          <a href="https://youtu.be/Q8kXZm-U-z4?list=LL&t=135" target="_blank" class="text-link">International Space
+            Station's iROSA (Roll-Out Solar Array)</a> technology.
+        </p>
+
+        <figure class="full-width-image">
+          <img src="boom2-img/65cm-mechanism.jpeg" alt="Roll-Out Solar Array Mechanism"
+            style="border-radius: var(--radius-lg); width: 100%;">
+          <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">The 65cm prototype
+            mechanism in its deployed state.</figcaption>
+        </figure>
+
+        <h2>Mechanism Overview</h2>
+        <p>
+          The core of this project focuses on using bistable composite booms to deploy a flexible solar blanket. This
+          compact storage method allows for significant power generation capability in small satellites without the
+          volume constraints of rigid panels.
+        </p>
+        <p>
+          The design was heavily influenced by the <a href="https://youtu.be/Q8kXZm-U-z4?list=LL&t=135" target="_blank"
+            class="text-link">ISS iROSA deployment mechanism</a>, adapting those large-scale principles for smaller,
+          cost-effective applications.
+        </p>
+
+        <figure class="full-width-image">
+          <img src="boom2-img/mechanism.jpeg" alt="Mechanism Detail"
+            style="border-radius: var(--radius-lg); width: 100%;">
+          <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Close-up of the
+            deployment root.</figcaption>
+        </figure>
+
+
+
+        <h2>Design Advantages & Integration</h2>
+        <p>
+          Beyond solar power generation, the rolling mandrel design offers critical structural benefits.
+          During launch, the mandrel acts as a protective core, shielding the fragile solar blanket
+          from acoustic vibrations and mechanical loads.
+        </p>
+        <p>
+          Furthermore, this architecture enables multi-functional utility. The blanket itself can host
+          embedded patch antennae, or the entire deployable structure can be utilized as a large-aperture
+          antenna array. This dual-use capability allows the mechanism to serve simultaneously as a power
+          generation system and a high-gain RF communication system, optimizing the volume-constrained
+          envelope of small satellites.
+        </p>
+        <p>
+          Additionally, the foldable solar cell prototype significantly simplifies the electrical architecture
+          by eliminating the need for a slip ring. In alternative designs where booms are encased in an
+          axle positioned near the satellite bus, slip rings are usually required to transfer power across
+          moving interfaces. This design removes that complexity, reducing both mass and potential failure points.
+        </p>
+
+        <h2>Deployment Testing</h2>
+        <p>
+          Iterative testing was crucial to ensure smooth deployment without jamming or damaging the simulated solar
+          blanket.
+        </p>
+
+        <div class="video-grid" style="display: grid; gap: 2rem; margin: 2rem 0;">
+          <!-- Primary Solar Array Deployment Video -->
+          <div class="video-container"
+            style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/sLQ1yiBxTDs"
+              title="Solar Array Deployment" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+
+
+          <h3 style="margin-top: 1rem;">Early Boom Tests</h3>
+          <div class="video-container"
+            style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/9fKSwI2cJSc" title="Boom Test"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+
+          <h3 style="margin-top: 1rem;">Additional Deployment Test</h3>
+          <div class="video-container"
+            style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/mUFTDc-yqOg"
+              title="Additional Deployment Test" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+
+        </div>
+
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Vortex. Built with modern web technologies.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Sail Mechanism | Vortex</title>
+    <meta name="description"
+        content="Development of a deployable solar sail mechanism, featuring a transition from a 4-boom to a 3-boom design to solve deployment challenges.">
+    <link rel="stylesheet" href="../styles.css">
+
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-QJ8M5F06YR');
+    </script>
+    <style>
+        .sequence-player {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #f0f0f0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: 2rem 0;
+            cursor: pointer;
+        }
+
+        .sequence-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .sequence-img.active {
+            display: block;
+        }
+
+        .player-controls {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 0.5rem;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            background: white;
+        }
+    </style>
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Projects</a></li>
+                    <li><a href="../index.html#experience">Experience</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content-wrapper">
+        <article class="project-detail">
+            <header class="project-header">
+                <div style="margin-bottom: 1rem;">
+                    <a href="../index.html" class="icon-link">&larr; Back to Projects</a>
+                </div>
+                <h1 class="project-title-large">Solar Sail Mechanism</h1>
+                <div class="project-meta-large">
+                    <span>Space Mechanisms</span>
+                </div>
+            </header>
+
+            <section class="project-section">
+                <p class="lead-text">
+                    Solar sails utilize the radiation pressure exerted by sunlight on large, highly reflective mirrors
+                    to propel spacecraft without fuel. This capability enables long-duration missions that would be
+                    impossible with chemical propulsion due to the tyranny of the rocket equation.
+                </p>
+                <p>
+                    However, the primary engineering challenge especially for small satellites like CubeSats is
+                    packaging a massive membrane structure into a compact 75-80mm diameter volume fitting perfectly
+                    within the "tuna can" payload constraints and deploying it reliably
+                    without tearing, snagging, or jamming. This project explores the mechanical design of such a
+                    compact, deployable boom system.
+                </p>
+                <p>
+
+                </p>
+
+
+
+                <!-- Design Evolution Section -->
+                <h2>Design Evolution: The Quad Sail</h2>
+                <p>
+                    The initial design ("Revision 1") utilized a 4-boom configuration (Quad Sail) to maximize the
+                    deployed surface area and maintain symmetry. The booms were thin-walled composite slit-tubes,
+                    designed to flatten completely and roll around a central hub.
+                </p>
+                <p>
+                    Although the Quad Sail offers significantly more surface area for propulsion compared to a Tri-Boom
+                    design (for a given boom length), the mechanical limitations of the boom cross-section dictated a
+                    change. The strain limits of the composite material required a larger coiling radius than the Quad
+                    hub could accommodate within the CubeSat form factor.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <figure>
+                        <img src="solar-sail/quad_render_1.png" alt="Quad Sail Design"
+                            style="width: 100%; border-radius: var(--radius-md);">
+                        <figcaption style="text-align: center; color: var(--text-muted);">The initial 4-boom concept.
+                        </figcaption>
+                    </figure>
+                    <figure>
+                        <img src="solar-sail/quad_hub_close.png" alt="Quad Hub"
+                            style="width: 100%; border-radius: var(--radius-md);">
+                        <figcaption style="text-align: center; color: var(--text-muted);">Close-up of the hub mechanism.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <h3>The "Blossoming" Problem</h3>
+                <p>
+                    A critical failure mode known as "blossoming" occurred during deployment. This is a classic stored
+                    strain energy failure where the coil attempts to unwind faster than it can exit the housing
+                    mechanism.
+                </p>
+                <p>
+                    Because the boom thickness was slightly greater than standard space-grade specs, the stored
+                    potential energy was higher than anticipated. In the confined space of the hub, this caused the coil
+                    to expand radially outward, pressing hard against the casing walls and effectively locking the
+                    entire system up instantly.
+                </p>
+
+                <figure class="full-width-image">
+                    <img src="solar-sail/blossoming_diagram.png" alt="Blossoming Diagram"
+                        style="border-radius: var(--radius-lg); width: 100%; max-width: 600px; margin: 0 auto; display: block;">
+                    <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Diagram
+                        illustrating the blossoming effect (jamming inside the hub).</figcaption>
+                </figure>
+
+                <p>
+                    Additionally, the 3D-printed cross-section guide created excessive friction, further hindering
+                    smooth deployment.
+                </p>
+
+                <h3>Mitigation Strategies</h3>
+                <p>
+                    There are several established methods to mitigate blossoming, as researched by <a
+                        href="https://youtu.be/ZnlyvTW3W9o?t=2180" target="_blank" class="text-link">Caltech</a> and
+                    others in
+                    the field. These include radial force stabilization (using rollers to constrain the coil) and
+                    pressure stabilization.
+                </p>
+                <figure class="full-width-image">
+                    <a href="https://youtu.be/ZnlyvTW3W9o?t=2180" target="_blank" rel="noopener noreferrer">
+                        <img src="solar-sail/blossoming_mitigation.png" alt="Blossoming Mitigation Strategies"
+                            style="border-radius: var(--radius-lg); width: 100%; max-width: 800px; margin: 0 auto; display: block;">
+                    </a>
+                    <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Overview of
+                        coiling instabilities and stabilization concepts (Source: Caltech).</figcaption>
+                </figure>
+                <p>
+                    Another effective technique involved modifying the motor control logic. By rapidly running the motor
+                    backwards to tighten the coil and then slowly feeding it forward, we could momentarily break the
+                    static friction and prevent the "stick-slip" behavior that leads to blossoming.
+                </p>
+                <p>
+                    <em>Future Improvement Note:</em> While the current prototype relied on manual control to manage
+                    this deployment sequence, a robust flight version would likely require a closed-loop stepper motor
+                    algorithm. This would allow for precise real-time adjustment of the tension and feed rate to
+                    automatically counteract blossoming onset.
+                </p>
+
+
+
+                <!-- Final Design Section -->
+                <h2>Revision 2: Tri-Boom & Carbon Rods</h2>
+                <p>
+                    To resolve these issues, the design was simplified to a 3-boom configuration. This geometric change
+                    wasn't just an aesthetic choice; it increased the available stowage volume for each boom by over
+                    30%, giving the mechanism much-needed "breathing room."
+                </p>
+                <p>
+                    Crucially, I replaced the high-friction 3D printed guides with <strong>3mm solid Carbon Fiber
+                        rods</strong>. This shifted the tribology from a high-friction surface contact to a low-friction
+                    line contact.
+                </p>
+
+                <p>
+                    Since the booms are also carbon composite, the Carbon-on-Carbon interface offers a naturally low
+                    coefficient of friction. Combined with the inherent stiffness of the rods, this reduced the
+                    deployment force requirements drasticallly. The rods are positioned precisely to constrain the coil,
+                    forcing it to deploy tangentially and physically preventing the "blossoming" expansion.
+                </p>
+
+                <figure class="full-width-image">
+                    <img src="solar-sail/render_1.png" alt="Solar Sail Render"
+                        style="border-radius: var(--radius-lg); width: 100%;">
+                    <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Conceptual
+                        render of the deployed 3-boom system.</figcaption>
+                </figure>
+
+                <!-- Custom Sequence Player -->
+                <h3>Prototype Deployment Sequence</h3>
+                <p>Click play to see the frame-by-frame deployment of the physical prototype.</p>
+
+                <div class="sequence-player" id="mechPlayer">
+                    <img src="solar-sail/proto_1.jpg" class="sequence-img active" alt="Frame 1">
+                    <img src="solar-sail/proto_2.jpg" class="sequence-img" alt="Frame 2">
+                    <img src="solar-sail/proto_3.jpg" class="sequence-img" alt="Frame 3">
+                    <img src="solar-sail/proto_4.jpg" class="sequence-img" alt="Frame 4">
+
+                    <div class="player-controls">
+                        <button class="control-btn" onclick="togglePlay()" id="playBtn">▶</button>
+                        <div class="progress-dots" id="progressDots"></div>
+                    </div>
+                </div>
+
+                <div class="video-container"
+                    style="margin: 2rem 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+                    <iframe width="100%" height="500" src="https://www.youtube.com/embed/2zEE49DpdVs"
+                        title="Solar Sail Deployment" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+
+                <h3>Render Gallery</h3>
+                <div class="image-gallery"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    <img src="solar-sail/render_2.png" alt="Render 2"
+                        style="width: 100%; border-radius: var(--radius-sm);">
+                    <img src="solar-sail/render_3.png" alt="Render 3"
+                        style="width: 100%; border-radius: var(--radius-sm);">
+                    <img src="solar-sail/render_4.png" alt="Render 4"
+                        style="width: 100%; border-radius: var(--radius-sm);">
+                    <img src="solar-sail/render_5.png" alt="Render 5"
+                        style="width: 100%; border-radius: var(--radius-sm);">
+                    <img src="solar-sail/render_6.png" alt="Render 6"
+                        style="width: 100%; border-radius: var(--radius-sm);">
+                </div>
+                <p
+                    style="text-align: center; color: var(--text-muted); font-style: italic; font-size: 0.9rem; margin-top: -1rem; margin-bottom: 2rem;">
+                    Note: Please excuse the visual artifacts in these renders. Simulating thin-film mechanics is a
+                    complex beast!
+                </p>
+
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex. Built with modern web technologies.</p>
+        </div>
+    </footer>
+
+    <script>
+        const images = document.querySelectorAll('.sequence-img');
+        const dotsContainer = document.getElementById('progressDots');
+        const playBtn = document.getElementById('playBtn');
+        let currentIndex = 0;
+        let isPlaying = false;
+        let interval;
+
+        // Init dots
+        images.forEach((_, idx) => {
+            const dot = document.createElement('div');
+            dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function showFrame(index) {
+            images.forEach(img => img.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            images[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        let direction = 1;
+
+        function nextFrame() {
+            // Ping-pong logic
+            if (currentIndex + direction >= images.length || currentIndex + direction < 0) {
+                direction *= -1;
+            }
+            currentIndex += direction;
+            showFrame(currentIndex);
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                clearInterval(interval);
+                playBtn.textContent = '▶';
+            } else {
+                interval = setInterval(nextFrame, 800); // 800ms per frame
+                playBtn.textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+</body>
+
+</html>

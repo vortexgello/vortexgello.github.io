@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CubeSat Selfie Camera Boom | Vortex</title>
+    <meta name="description" content="A deployable boom mechanism designed to take selfies of a CubeSat in orbit.">
+    <link rel="stylesheet" href="../styles.css">
+
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-QJ8M5F06YR');
+    </script>
+    </script>
+    <style>
+        .sequence-player {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #f0f0f0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: 2rem 0;
+            cursor: pointer;
+        }
+
+        .sequence-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+            background: #1e293b;
+            /* Dark background for better contrast */
+        }
+
+        .sequence-img.active {
+            display: block;
+        }
+
+        .player-controls {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 0.5rem;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            background: white;
+        }
+    </style>
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Projects</a></li>
+                    <li><a href="../index.html#experience">Experience</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content-wrapper">
+        <article class="project-detail">
+            <header class="project-header">
+                <div style="margin-bottom: 1rem;">
+                    <a href="../index.html" class="icon-link">&larr; Back to Projects</a>
+                </div>
+                <h1 class="project-title-large">CubeSat Selfie Camera Boom</h1>
+                <div class="project-meta-large">
+                    <span>Space Mechanisms</span>
+                </div>
+            </header>
+
+            <section class="project-section">
+                <p class="lead-text">
+                    A deployable boom mechanism designed to extend a camera away from the CubeSat body, allowing it to
+                    capture "selfies" of the satellite in orbit for visual inspection and mission outreach.
+                </p>
+
+                <div class="video-container"
+                    style="margin: 2rem 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+                    <iframe width="100%" height="500" src="https://www.youtube.com/embed/FCsuLYd_ojA"
+                        title="CubeSat Selfie Camera Boom" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+
+                <h2>Mechanism Design</h2>
+                <p>
+                    The system uses a stored strain energy deployment method. The boom, made of a bistable composite or
+                    flexible polymer, is rolled up compactly against the side of the CubeSat. Upon release, it naturally
+                    unfurls to its extended state.
+                </p>
+
+                <figure class="full-width-image">
+                    <img src="selfie-boom/iso_extended.png" alt="Fully extended boom"
+                        style="border-radius: var(--radius-lg); width: 100%;">
+                    <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Isometric view
+                        of the fully extended camera boom.</figcaption>
+                </figure>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <figure>
+                        <img src="selfie-boom/camera_closeup.png" alt="Camera Module"
+                            style="width: 100%; border-radius: var(--radius-md);">
+                        <figcaption
+                            style="margin-top: 0.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                            Common off-the-shelf camera module integration.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="selfie-boom/cubesat_deploy.png" alt="Stowed Configuration"
+                            style="width: 100%; border-radius: var(--radius-md);">
+                        <figcaption
+                            style="margin-top: 0.5rem; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                            The boom deploying from the CubeSat chassis.</figcaption>
+                    </figure>
+                </div>
+
+                <p>
+                    The tip of the boom houses a small camera module connected via a flex PCB that runs along the length
+                    of the boom. This eliminates the need for complex wire harnesses that could snag during deployment.
+                </p>
+
+                <figure class="full-width-image">
+                    <img src="selfie-boom/prototype_test.png" alt="Prototype Testing"
+                        style="border-radius: var(--radius-lg); width: 100%;">
+                    <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Prototype
+                        deployment test in a 1U form factor.</figcaption>
+                </figure>
+
+                <h2>Deployment Sequence</h2>
+                <p>
+                    High-speed capture of the deployment sequence, showing the boom unrolling from its stowed state to
+                    full extension.
+                </p>
+
+                <!-- Custom Sequence Player -->
+                <h3>Deployment Sequence</h3>
+                <p>Click play to see the frame-by-frame deployment.</p>
+
+                <div class="sequence-player" id="mechPlayer">
+                    <img src="selfie-boom/deploy_seq_1.png" class="sequence-img active" alt="Frame 1">
+                    <img src="selfie-boom/deploy_seq_2.png" class="sequence-img" alt="Frame 2">
+                    <img src="selfie-boom/deploy_seq_3.png" class="sequence-img" alt="Frame 3">
+                    <img src="selfie-boom/deploy_seq_4.png" class="sequence-img" alt="Frame 4">
+                    <img src="selfie-boom/deploy_seq_5.png" class="sequence-img" alt="Frame 5">
+
+                    <div class="player-controls">
+                        <button class="control-btn" onclick="togglePlay()" id="playBtn">▶</button>
+                        <div class="progress-dots" id="progressDots"></div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <!-- Placeholders for any additional static content if needed -->
+                </div>
+
+                <figure class="full-width-image">
+                    <img src="selfie-boom/iso_side.png" alt="Side profile"
+                        style="border-radius: var(--radius-lg); width: 100%;">
+                </figure>
+
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex. Built with modern web technologies.</p>
+        </div>
+    </footer>
+
+    <script>
+        const images = document.querySelectorAll('.sequence-img');
+        const dotsContainer = document.getElementById('progressDots');
+        const playBtn = document.getElementById('playBtn');
+        let currentIndex = 0;
+        let isPlaying = false;
+        let interval;
+
+        // Init dots
+        images.forEach((_, idx) => {
+            const dot = document.createElement('div');
+            dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function showFrame(index) {
+            images.forEach(img => img.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            images[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextFrame() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showFrame(currentIndex);
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                clearInterval(interval);
+                playBtn.textContent = '▶';
+            } else {
+                interval = setInterval(nextFrame, 800); // 800ms per frame
+                playBtn.textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+</body>
+
+</html>

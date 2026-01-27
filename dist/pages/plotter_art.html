@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pen Plotter Art Gallery - Vortex">
+  <title>Pen Plotter Art - Vortex</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    /* Lightbox Styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(2, 6, 23, 0.95);
+      backdrop-filter: blur(5px);
+    }
+
+    .lightbox-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+
+    .lightbox-image-container {
+      position: relative;
+      max-width: 90%;
+      max-height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 4px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      object-fit: contain;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-size: 3rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      z-index: 1010;
+      line-height: 1;
+    }
+
+    .close-btn:hover {
+      color: var(--accent);
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      user-select: none;
+      z-index: 1010;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      background: var(--accent);
+    }
+
+    .prev-btn {
+      left: 2rem;
+      padding-right: 4px;
+      /* Optical adjustment */
+    }
+
+    .next-btn {
+      right: 2rem;
+      padding-left: 4px;
+      /* Optical adjustment */
+    }
+
+    .gallery-item {
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent) !important;
+    }
+
+    .caption {
+      margin-top: 1rem;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-btn {
+        font-size: 2rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .prev-btn {
+        left: 0.5rem;
+      }
+
+      .next-btn {
+        right: 0.5rem;
+      }
+
+      .close-btn {
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+  </style>
+
+  <!-- Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-QJ8M5F06YR');
+  </script>
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="../index.html" class="site-title">Vortex</a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="../index.html">Projects</a></li>
+          <li><a href="../pages/linkdump.html">Link Dump</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container content-wrapper">
+    <article>
+      <header style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem;">Pen Plotter Art</h1>
+        <p style="font-size: 1.1rem; color: var(--text-muted);">A collection of generative art plotted with my custom
+          pen plotter.</p>
+      </header>
+
+      <p style="margin-bottom: 2rem;">This is a follow up of my other penplotter post: <a href="penplotter.html"
+          style="color: var(--accent); font-weight: 500;">Building a Pen Plotter</a></p>
+
+      <div class="gallery-grid"
+        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+
+        <!-- Gallery Items with onclick handlers -->
+        <div class="gallery-item" onclick="openLightbox(0)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/xi.jpg" alt="Art 1" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(1)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/ballpen.jpg" alt="Art 2" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(2)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/black1.jpg" alt="Art 3" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(3)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/black2.jpg" alt="Art 4" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(4)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/circle1.jpg" alt="Art 5" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(5)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/circle2.jpg" alt="Art 6" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(6)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/circle3.jpg" alt="Art 7" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(7)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/flowlines.jpg" alt="Art 8" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(8)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/multicolour.jpg" alt="Art 9" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(9)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/multicolour2.jpg" alt="Art 10" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(10)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/patterns.jpg" alt="Art 11" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(11)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/red.jpg" alt="Art 12" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(12)"
+          style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+          <img src="plottter_art/sunset.jpg" alt="Art 13" style="width: 100%; height: auto; display: block;">
+        </div>
+
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container navbar-content">
+      <div>&copy; 2026 Vortex</div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Structure -->
+  <div id="lightbox" class="lightbox" onclick="if(event.target === this) closeLightbox()">
+    <span class="close-btn" onclick="closeLightbox()">&times;</span>
+
+    <div class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</div>
+
+    <div class="lightbox-content">
+      <div class="lightbox-image-container">
+        <img id="lightbox-img" class="lightbox-image" src="" alt="">
+      </div>
+      <div id="caption" class="caption"></div>
+    </div>
+
+    <div class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</div>
+  </div>
+
+  <script>
+    // Image data
+    const images = [
+      { src: 'plottter_art/xi.jpg', caption: 'Art 1' },
+      { src: 'plottter_art/ballpen.jpg', caption: 'Art 2' },
+      { src: 'plottter_art/black1.jpg', caption: 'Art 3' },
+      { src: 'plottter_art/black2.jpg', caption: 'Art 4' },
+      { src: 'plottter_art/circle1.jpg', caption: 'Art 5' },
+      { src: 'plottter_art/circle2.jpg', caption: 'Art 6' },
+      { src: 'plottter_art/circle3.jpg', caption: 'Art 7' },
+      { src: 'plottter_art/flowlines.jpg', caption: 'Art 8' },
+      { src: 'plottter_art/multicolour.jpg', caption: 'Art 9' },
+      { src: 'plottter_art/multicolour2.jpg', caption: 'Art 10' },
+      { src: 'plottter_art/patterns.jpg', caption: 'Art 11' },
+      { src: 'plottter_art/red.jpg', caption: 'Art 12' },
+      { src: 'plottter_art/sunset.jpg', caption: 'Art 13' }
+    ];
+
+    let currentIndex = 0;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const captionText = document.getElementById('caption');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      showSlide(currentIndex);
+      lightbox.style.display = 'block';
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    function closeLightbox() {
+      lightbox.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Enable scrolling
+    }
+
+    function changeSlide(n) {
+      currentIndex += n;
+      if (currentIndex >= images.length) currentIndex = 0;
+      if (currentIndex < 0) currentIndex = images.length - 1;
+      showSlide(currentIndex);
+    }
+
+    function showSlide(index) {
+      lightboxImg.src = images[index].src;
+      // Optional: Add filename or descriptive caption if available
+      // captionText.innerHTML = images[index].caption; 
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function (e) {
+      if (lightbox.style.display === 'block') {
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+        if (e.key === 'ArrowRight') changeSlide(1);
+        if (e.key === 'Escape') closeLightbox();
+      }
+    });
+  </script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
+</body>
+
+</html>
