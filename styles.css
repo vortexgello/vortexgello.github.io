@@ -236,9 +236,47 @@ p {
   padding: var(--space-xl) 0;
   text-align: center;
   position: relative;
+  overflow: hidden;
+}
+
+.hero-carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 6, 23, 0.7);
+  /* Dark overlay for text readability */
+  z-index: 1;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 2;
   max-width: 900px;
   animation: fadeIn 1s ease-out forwards;
 }
@@ -728,5 +766,199 @@ p {
 
   .timeline-item::before {
     left: -1.9rem;
+  }
+}
+
+/* Product Page Specific Styles - Migrated from local files */
+.product-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  padding: 4rem 0;
+  align-items: start;
+}
+
+.product-gallery {
+  position: sticky;
+  top: 2rem;
+}
+
+.main-image {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  margin-bottom: 1rem;
+  background: var(--bg-card);
+}
+
+.image-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.thumbnail {
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.7;
+  transition: all 0.2s;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+  opacity: 1;
+  border-color: var(--accent);
+}
+
+.product-info h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.product-description-short {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.specs-table td {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-muted);
+}
+
+.specs-table td:first-child {
+  font-weight: 600;
+  color: var(--text-main);
+  width: 40%;
+}
+
+.accordion {
+  border-top: 1px solid var(--border-light);
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 1.5rem 0;
+  background: none;
+  border: none;
+  text-align: left;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header::after {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.accordion-item.active .accordion-header::after {
+  content: '-';
+}
+
+.accordion-content {
+  display: none;
+  padding-bottom: 1.5rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.accordion-item.active .accordion-content {
+  display: block;
+}
+
+/* Contact Section Styling */
+.contact-section {
+  text-align: center;
+  padding: 4rem 0;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-light);
+  /* Added requested border */
+}
+
+.contact-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-bio {
+  margin-bottom: 2rem;
+}
+
+.contact-bio h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.contact-bio p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-cta-text {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .product-gallery {
+    position: static;
   }
 }
