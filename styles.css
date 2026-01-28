@@ -88,6 +88,12 @@
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-body);
+  background-image: 
+    radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 4px),
+    radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 2px),
+    radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 3px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
   color: var(--text-main);
   line-height: 1.6;
   font-size: var(--font-size-base);
