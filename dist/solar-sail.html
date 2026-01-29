@@ -218,7 +218,8 @@
                         onclick="changeImage(this)">
                     <img src="pages/solar-sail/render_1.png" class="thumbnail" onclick="changeImage(this)">
                     <img src="pages/solar-sail/render_2.png" class="thumbnail" onclick="changeImage(this)">
-                    <img src="pages/solar-sail/proto_1.jpg" class="thumbnail" onclick="changeImage(this)">
+                    <img src="pages/solar-sail/sail_stowed.jpg" class="thumbnail" onclick="changeImage(this)">
+                    <img src="pages/solar-sail/sail_deploy_1.png" class="thumbnail" onclick="changeImage(this)">
                 </div>
             </div>
 
@@ -232,8 +233,8 @@
                 <span class="product-price">Custom Order</span>
 
                 <p class="product-description-short">
-                    Compact, deployable boom system for CubeSat solar sails.
-                    Solves common "blossoming" issues using a tri-boom configuration and solid carbon rods.
+                    Precision-engineered deployment mechanism for high-area CubeSat solar sails. Features a modular
+                    Tri-Boom architecture for industry-leading packaging efficiency and deployment reliability.
                 </p>
 
                 <div class="action-buttons">
@@ -247,14 +248,15 @@
                         <button class="accordion-header">Product Description</button>
                         <div class="accordion-content">
                             <p>
-                                The primary challenge for CubeSat solar sails is packaging a massive membrane structure
-                                into a
-                                compact volume without jamming. This project utilizes a 3-boom configuration with solid
-                                Carbon Fiber rod guides.
+                                The <strong>Aurora Sail</strong> represents a significant advancement in small-satellite
+                                propulsion. Engineered to bridge the gap between heavy packaging and large surface area,
+                                this system utilizes a refined Tri-Boom configuration to maximize available stowed
+                                volume.
                             </p>
                             <p style="margin-top: 1rem;">
-                                This "Tri-Boom" design increases available stowage volume by 30% and shifts tribology
-                                to a low-friction carbon-on-carbon interface, preventing deployment failures.
+                                By integrating precision carbon fiber stabilizers, the Aurora Sail provides a
+                                low-friction, high-reliability solution for deploying large-scale membranes, ensuring
+                                mission success in complex orbital environments.
                             </p>
                         </div>
                     </div>
@@ -281,7 +283,7 @@
                                 </tr>
                                 <tr>
                                     <td>Sail Area</td>
-                                    <td>4 m² (Nominal 12U Class)</td>
+                                    <td>0.425 m² (Scalable architecture; larger booms available on request)</td>
                                 </tr>
                                 <tr>
                                     <td>Sail Material</td>
@@ -293,7 +295,7 @@
                                 </tr>
                                 <tr>
                                     <td>TRL</td>
-                                    <td>3 (Proof of Concept)</td>
+                                    <td>4 (Component/System Validation)</td>
                                 </tr>
                             </table>
                         </div>
@@ -314,7 +316,8 @@
                             <p style="color: var(--text-muted); margin-bottom: 1rem;">Prototype deployment testing
                                 (Autoplaying):</p>
                             <div style="width: 100%; text-align: center;">
-                                <img id="sailSeqImage" src="pages/solar-sail/proto_1.jpg" alt="Solar Sail Deployment"
+                                <img id="sailSeqImage" src="pages/solar-sail/sail_stowed.jpg"
+                                    alt="Solar Sail Deployment"
                                     style="width: 100%; max-width: 400px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
                             </div>
                         </div>
@@ -350,10 +353,11 @@
 
         // Autoplay Deployment Sequence
         const sailImages = [
-            "../pages/solar-sail/proto_1.jpg",
-            "../pages/solar-sail/proto_2.jpg",
-            "../pages/solar-sail/proto_3.jpg",
-            "../pages/solar-sail/proto_4.jpg"
+            "pages/solar-sail/sail_stowed.jpg",
+            "pages/solar-sail/sail_deploy_1.png",
+            "pages/solar-sail/proto_2.jpg",
+            "pages/solar-sail/proto_3.jpg",
+            "pages/solar-sail/proto_4.jpg"
         ];
         let sailIndex = 0;
         const sailImgElement = document.getElementById('sailSeqImage');
