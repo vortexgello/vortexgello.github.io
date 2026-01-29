@@ -87,6 +87,11 @@
     <header class="site-header">
         <div class="container header-content">
             <a href="../index.html" class="site-title">Vortex</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <nav class="site-nav">
                 <ul>
                     <li><a href="../index.html">Projects</a></li>
@@ -142,7 +147,8 @@
                     hub could accommodate within the CubeSat form factor.
                 </p>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                <div class="project-evolution-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 2rem; margin: 2rem 0;">
                     <figure>
                         <img src="solar-sail/quad_render_1.png" alt="Quad Sail Design"
                             style="width: 100%; border-radius: var(--radius-md);">
@@ -265,7 +271,7 @@
 
                 <h3>Render Gallery</h3>
                 <div class="image-gallery"
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 1rem; margin: 2rem 0;">
                     <img src="solar-sail/render_2.png" alt="Render 2"
                         style="width: 100%; border-radius: var(--radius-sm);">
                     <img src="solar-sail/render_3.png" alt="Render 3"
@@ -339,6 +345,23 @@
             }
             isPlaying = !isPlaying;
         }
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteHeader = document.querySelector('.site-header');
+        const navLinks = document.querySelectorAll('.site-nav a');
+
+        menuToggle.addEventListener('click', () => {
+            siteHeader.classList.toggle('nav-open');
+            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                siteHeader.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
     </script>
 </body>
 

@@ -34,9 +34,15 @@
 
         .store-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
             gap: var(--space-lg);
             margin-bottom: var(--space-2xl);
+        }
+
+        @media (max-width: 480px) {
+            .store-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .product-card {
@@ -62,7 +68,8 @@
             width: 100%;
             overflow: hidden;
             position: relative;
-            /* Transparent background */
+            background: #ffffff;
+            padding: var(--space-md);
         }
 
         .product-image img {
@@ -137,6 +144,26 @@
             height: 100%;
             z-index: 1;
         }
+
+        @media (max-width: 768px) {
+            .store-hero {
+                padding: 4rem 1rem;
+                text-align: center;
+            }
+
+            .store-hero h1 {
+                font-size: clamp(2rem, 10vw, 3rem);
+            }
+
+            .product-content {
+                padding: 1.25rem;
+            }
+
+            .store-grid {
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+        }
     </style>
 </head>
 
@@ -144,7 +171,20 @@
 
     <header class="site-header">
         <div class="container header-content">
-            <a href="index.html" class="site-title">Vortex</a>
+            <a href="../index.html" class="site-title">Vortex</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="index.html" style="color: var(--accent);">Store</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
@@ -250,12 +290,12 @@
                 style="color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
                 Interested in our mechanisms? Contact us for custom orders, quotes, or collaboration inquiries.
             </p>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding: 0 1rem;">
                 <a href="mailto:rahul.yadgirkar@gmail.com" class="btn"
-                    style="padding: 0.75rem 2rem; margin-top: 0;">Email
+                    style="padding: 0.75rem 2rem; margin-top: 0; min-width: 200px; width: auto;">Email
                     Us</a>
                 <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" class="btn-outline"
-                    style="padding: 0.75rem 2rem; border-radius: var(--radius-full); text-decoration: none; margin-top: 0;">LinkedIn</a>
+                    style="padding: 0.75rem 2rem; border-radius: var(--radius-full); text-decoration: none; margin-top: 0; min-width: 200px; width: auto;">LinkedIn</a>
             </div>
         </section>
 
@@ -267,6 +307,24 @@
         </div>
     </footer>
 
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteHeader = document.querySelector('.site-header');
+        const navLinks = document.querySelectorAll('.site-nav a');
+
+        menuToggle.addEventListener('click', () => {
+            siteHeader.classList.toggle('nav-open');
+            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                siteHeader.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -15,7 +15,20 @@
 
   <header class="site-header">
     <div class="container header-content">
-      <a href="index.html" class="site-title">Vortex</a>
+      <a href="../index.html" class="site-title">Vortex</a>
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../index.html#projects">Projects</a></li>
+          <li><a href="index.html" style="color: var(--accent);">Store</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
@@ -208,8 +221,24 @@
         item.classList.toggle('active');
       });
     });
-  </script>
 
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const siteHeader = document.querySelector('.site-header');
+    const navLinks = document.querySelectorAll('.site-nav a');
+
+    menuToggle.addEventListener('click', () => {
+      siteHeader.classList.toggle('nav-open');
+      document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        siteHeader.classList.remove('nav-open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
 </body>
 
 </html>
