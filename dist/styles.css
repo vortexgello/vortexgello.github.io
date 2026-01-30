@@ -101,6 +101,11 @@ body {
   font-size: var(--font-size-base);
   -webkit-font-smoothing: antialiased;
   padding-bottom: var(--space-xl);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 img {
@@ -181,7 +186,12 @@ p {
   -webkit-backdrop-filter: blur(12px);
   z-index: 100;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.site-header.nav-open {
+  background: var(--bg-body);
+  backdrop-filter: none;
 }
 
 .site-header.scrolled {
@@ -225,6 +235,40 @@ p {
 
 .site-nav a:hover {
   color: var(--accent);
+}
+
+/* Menu Toggle Button */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 101;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  transition: all 0.3s ease;
+}
+
+/* Hamburger to X Animation */
+.nav-open .menu-toggle span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-open .menu-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-open .menu-toggle span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 /* Hero Section */
@@ -295,7 +339,7 @@ p {
 }
 
 .hero-title {
-  font-size: clamp(3rem, 8vw, 5rem);
+  font-size: clamp(2.25rem, 8vw, 5rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: var(--space-md);
@@ -363,7 +407,7 @@ p {
 /* Projects Grid */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: var(--space-lg);
   margin-bottom: var(--space-2xl);
 }
@@ -592,8 +636,10 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 220px;
-  padding: 1rem 0;
+  min-width: 200px;
+  width: 100%;
+  max-width: 280px;
+  padding: 1rem 1.5rem;
   border-radius: var(--radius-full);
   font-weight: 600;
   font-size: 1rem;
@@ -610,8 +656,8 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 220px;
-  padding: 1rem 0;
+  min-width: 200px;
+  padding: 1rem 1.5rem;
   border-radius: var(--radius-full);
   font-weight: 600;
   font-size: 1rem;
@@ -649,8 +695,8 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 220px;
-  padding: 1rem 0;
+  min-width: 200px;
+  padding: 1rem 1.5rem;
   border-radius: var(--radius-full);
   font-weight: 600;
   font-size: 1rem;
@@ -660,7 +706,6 @@ p {
   background: transparent;
   color: var(--text-main);
   border: 1px solid var(--border-light);
-  margin-left: 1rem;
   text-decoration: none;
 }
 
@@ -695,7 +740,7 @@ p {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: var(--space-lg);
 }
 
@@ -748,8 +793,48 @@ p {
 
 /* Mobile check */
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-body);
+    padding: var(--space-2xl) var(--space-lg);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+  }
+
+  .nav-open .site-nav {
+    transform: translateX(0);
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .site-nav a {
+    font-size: 1.5rem;
+    color: var(--text-main);
+  }
+
+  .site-header {
+    height: 4.5rem;
+  }
+
+  .nav-open .site-nav {
+    top: 4.5rem;
+  }
+
   .hero-title {
-    font-size: 3rem;
+    font-size: clamp(2rem, 10vw, 3rem);
   }
 
   .section-title {
@@ -767,9 +852,13 @@ p {
   .timeline-item::before {
     left: -1.9rem;
   }
+
+  .container {
+    padding: 0 1rem;
+  }
 }
 
-/* Product Page Specific Styles - Migrated from local files */
+/* Product Page Specific Styles */
 .product-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -780,38 +869,45 @@ p {
 
 .product-gallery {
   position: sticky;
-  top: 2rem;
+  top: 6rem;
 }
 
 .main-image {
   width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: contain;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
   margin-bottom: 1rem;
-  background: var(--bg-card);
+  background: #ffffff;
+  padding: var(--space-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .image-thumbnails {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 1rem;
 }
 
 .thumbnail {
   aspect-ratio: 1;
-  object-fit: cover;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 5px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
   cursor: pointer;
   width: 100%;
-  opacity: 0.7;
-  transition: all 0.2s;
+  opacity: 0.6;
+  transition: all 0.2s ease;
 }
 
 .thumbnail:hover,
 .thumbnail.active {
   opacity: 1;
   border-color: var(--accent);
+  transform: translateY(-2px);
 }
 
 .product-info h1 {
@@ -912,7 +1008,6 @@ p {
   margin-top: 4rem;
   margin-bottom: 2rem;
   border: 1px solid var(--border-light);
-  /* Added requested border */
 }
 
 .contact-section h2 {
@@ -950,15 +1045,46 @@ p {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 768px) {
   .product-container {
     grid-template-columns: 1fr;
+    padding: 2rem 0;
     gap: 2rem;
   }
 
   .product-gallery {
     position: static;
+  }
+
+  .main-image {
+    aspect-ratio: 1/1;
+    padding: var(--space-sm);
+  }
+
+  .product-info h1 {
+    font-size: clamp(1.75rem, 8vw, 2.2rem);
+    line-height: 1.2;
+  }
+
+  .product-info nav {
+    margin-bottom: 1rem;
+  }
+
+  .product-info nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .image-thumbnails {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
   }
 }

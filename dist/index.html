@@ -2,443 +2,330 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vortex | Mechanical Engineering</title>
-  <meta name="description" content="Vortex - Mechanical Engineer specializing in space systems and mechanisms.">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store | Vortex</title>
+    <meta name="description" content="Vortex Store - Mechanisms and Booms">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <style>
+        /* Store specific overrides */
+        .store-hero {
+            min-height: 40vh;
+            padding: var(--space-xl) 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
 
-  <!-- Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-QJ8M5F06YR');
-  </script>
-  <link rel="icon" type="image/png" href="images/favicon.png">
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        @media (max-width: 480px) {
+            .store-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .product-card {
+            /* background: transparent; */
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-hover);
+            /* background handled in content */
+        }
+
+        .product-image {
+            aspect-ratio: 4/3;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: #ffffff;
+            padding: var(--space-md);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background 0.3s ease;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .product-card:hover .product-content {
+            background: var(--bg-card-hover);
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .product-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: auto;
+        }
+
+        .store-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            z-index: 10;
+        }
+
+        /* Make the whole card clickable */
+        .product-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .store-hero {
+                padding: 4rem 1rem;
+                text-align: center;
+            }
+
+            .store-hero h1 {
+                font-size: clamp(2rem, 10vw, 3rem);
+            }
+
+            .product-content {
+                padding: 1.25rem;
+            }
+
+            .store-grid {
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-content">
-      <a href="index.html" class="site-title">Vortex</a>
-      <nav class="site-nav">
-        <ul>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="pages/linkdump.html">Link Dump</a></li>
-          <li><a href="https://triangle-store.pages.dev/">Store</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container">
-
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-carousel">
-        <div class="hero-overlay"></div>
-        <img src="pages/solar-sail/render_6.png" class="carousel-slide active" alt="Solar Sail Render">
-        <img src="pages/boom2-img/65cm-mechanism.jpeg" class="carousel-slide" alt="Horizon Array">
-        <img src="pages/selfie-boom/iso_extended.png" class="carousel-slide" alt="Scout Boom">
-      </div>
-      <div class="hero-content">
-        <span class="badge">Available for hire</span>
-        <h1 class="hero-title">
-          Hi, I'm Rahul.
-          <span class="highlight-gradient">Mechanical Engineer.</span>
-        </h1>
-        <p class="hero-subtitle">
-          I'm a Mechanical Engineer specializing in designing robust mechanisms, deployable structures, and precision
-          systems for space applications.
-        </p>
-        <div class="social-links">
-          <!-- GitHub Icon -->
-          <a href="https://github.com/vortexgello" target="_blank" aria-label="GitHub">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-              </path>
-            </svg>
-          </a>
-          <!-- LinkedIn Icon -->
-          <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" aria-label="LinkedIn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-              <rect x="2" y="9" width="4" height="12"></rect>
-              <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-          </a>
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="index.html" class="site-title">Vortex</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html" style="color: var(--accent);">Store</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <!-- Scroll indicator could go here -->
-      </div>
-    </section>
+    <main class="container">
 
-    <!-- Featured Projects -->
-    <section id="projects">
-      <h2 class="section-title">Featured Projects</h2>
-      <div class="projects-grid">
-
-        <!-- Project: Solar Sail -->
-        <article class="project-card">
-          <div class="project-image-container">
-            <a href="pages/solar-sail.html" style="display: block; width: 100%; height: 100%;">
-              <img src="pages/solar-sail/render_1.png" alt="Solar Sail Mechanism">
-            </a>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Solar Sail Mechanism</h3>
-            <div class="tech-tags">
-              <span class="tech-tag">Mechanisms</span>
-              <span class="tech-tag">Composites</span>
+        <section class="store-hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Space <span class="highlight-gradient">Store</span>
+                </h1>
+                <p class="hero-subtitle">
+                    High-quality mechanisms and booms for CubeSats and space applications.
+                </p>
             </div>
-            <p class="project-description">Deployable solar sail mechanism using a tri-boom configuration and composite
-              rods.</p>
-            <div class="project-links">
-              <a href="pages/solar-sail.html" class="icon-link">View Project &rarr;</a>
-              <span class="project-date">Jan 2026</span>
+        </section>
+
+        <section class="store-grid">
+
+            <!-- Product 1: Deployable Booms -->
+            <article class="product-card">
+                <span class="store-tag">Featured</span>
+                <div class="product-image">
+                    <a href="booms.html" style="display: block; width: 100%; height: 100%;">
+                        <img src="pages/images/booms_updated_1.jpg" alt="Deployable Booms">
+                    </a>
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">Zenith Boom</h2>
+                    <p class="product-desc">
+                        Lightweight, compact deployable booms for antennas, sensors, and solar sails.
+                    </p>
+                    <a href="booms.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Product 2: Boom Mechanism -->
+            <article class="product-card">
+                <div class="product-image">
+                    <a href="boom2.html" style="display: block; width: 100%; height: 100%;">
+                        <img src="pages/boom2-img/65cm-mechanism.jpeg" alt="Boom Mechanism">
+                    </a>
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">Horizon Array</h2>
+                    <p class="product-desc">
+                        Bistable boom mechanism with improved reliability and extension ratio.
+                    </p>
+                    <a href="boom2.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Product 3: Solar Sail -->
+            <article class="product-card">
+                <span class="store-tag">New</span>
+                <div class="product-image">
+                    <a href="solar-sail.html" style="display: block; width: 100%; height: 100%;">
+                        <img src="pages/solar-sail/quad_hub_render.png" alt="Solar Sail">
+                    </a>
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">Aurora Sail</h2>
+                    <p class="product-desc">
+                        Complete solar sail deployment system including hub, booms, and sail membrane.
+                    </p>
+                    <a href="solar-sail.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Product 4: CubeSat Selfie -->
+            <article class="product-card">
+                <div class="product-image">
+                    <a href="cubesat_selfie.html" style="display: block; width: 100%; height: 100%;">
+                        <img src="pages/selfie-boom/iso_extended.png" alt="CubeSat Selfie Stick">
+                    </a>
+                </div>
+                <div class="product-content">
+                    <h2 class="product-title">Scout Boom</h2>
+                    <p class="product-desc">
+                        Deployable camera boom for monitoring satellite deployment and health.
+                    </p>
+                    <a href="cubesat_selfie.html" class="product-link btn-link">View Details &rarr;</a>
+                </div>
+            </article>
+
+        </section>
+
+        </section>
+
+        <section class="contact-section"
+            style="text-align: center; padding: 4rem 0; background: var(--bg-card); border-radius: var(--radius-lg); margin-bottom: 2rem;">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Get in Touch</h2>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Rahul
+                    Yadgirkar</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto;">
+                    Mechanical Engineer specializing in designing robust mechanisms, deployable structures, and
+                    precision systems for space applications.
+                </p>
             </div>
-          </div>
-        </article>
 
-
-
-        <!-- Project: Roll-Out Solar Array -->
-        <article class="project-card">
-          <div class="project-image-container">
-            <a href="pages/boom2.html" style="display: block; width: 100%; height: 100%;">
-              <img src="pages/boom2-img/65cm-mechanism.jpeg" alt="Roll-Out Solar Array">
-            </a>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Roll-Out Solar Array</h3>
-            <div class="tech-tags">
-              <span class="tech-tag">Mechanisms</span>
-              <span class="tech-tag">Space Systems</span>
-            </div>
-            <p class="project-description">Latest deployable boom iterations for a solar array inspired by ISS iROSA.
+            <p
+                style="color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Interested in our mechanisms? Contact us for custom orders, quotes, or collaboration inquiries.
             </p>
-            <div class="project-links">
-              <a href="pages/boom2.html" class="icon-link">View Project &rarr;</a>
-              <span class="project-date">Jun 2025</span>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding: 0 1rem;">
+                <a href="mailto:rahul.yadgirkar@gmail.com" class="btn"
+                    style="padding: 0.75rem 2rem; margin-top: 0; min-width: 200px; width: auto;">Email
+                    Us</a>
+                <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" class="btn-outline"
+                    style="padding: 0.75rem 2rem; border-radius: var(--radius-full); text-decoration: none; margin-top: 0; min-width: 200px; width: auto;">LinkedIn</a>
             </div>
-          </div>
-        </article>
+        </section>
 
-        <!-- Project: HDRM -->
-        <article class="project-card">
-          <div class="project-image-container">
-            <a href="pages/hdrm.html" style="display: block; width: 100%; height: 100%;">
-              <img src="https://github.com/tm2space/HDRM/raw/main/images/cover.jpg" alt="Open Source SMA HDRM">
-            </a>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Open Source SMA HDRM</h3>
-            <div class="tech-tags">
-              <span class="tech-tag">Space Mechanisms</span>
-              <span class="tech-tag">Open Source</span>
-            </div>
-            <p class="project-description">A fully open-source, affordable Hold-Down and Release Mechanism (HDRM) for
-              CubeSats.</p>
-            <div class="project-links">
-              <a href="pages/hdrm.html" class="icon-link">View Project &rarr;</a>
-              <span class="project-date">May 2025</span>
-            </div>
-          </div>
-        </article>
+    </main>
 
-        <!-- Project: Maker Mission -->
-        <article class="project-card">
-          <div class="project-image-container">
-            <a href="pages/maker_mission.html" style="display: block; width: 100%; height: 100%;">
-              <img src="pages/maker-mission/console.png" alt="Maker Mission Console">
-            </a>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Maker Mission Workshop</h3>
-            <div class="tech-tags">
-              <span class="tech-tag">Electronics</span>
-              <span class="tech-tag">Education</span>
-              <span class="tech-tag">RISC-V</span>
-            </div>
-            <p class="project-description">Organized a hands-on workshop teaching electronics by building a custom game
-              console.</p>
-            <div class="project-links">
-              <a href="pages/maker_mission.html" class="icon-link">View Project &rarr;</a>
-              <span class="project-date">May 2025</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project: Boom Mechanisms -->
-        <article class="project-card">
-          <div class="project-image-container">
-            <a href="pages/booms.html" style="display: block; width: 100%; height: 100%;">
-              <img src="pages/images/boom_step_03.jpeg" alt="Boom Mechanisms">
-            </a>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Exploring Boom Mechanisms</h3>
-            <div class="tech-tags">
-              <span class="tech-tag">Mechanisms</span>
-              <span class="tech-tag">Calculators</span>
-            </div>
-            <p class="project-description">Fabrication process and calculators for various design and performance
-              calculations.</p>
-            <div class="project-links">
-              <a href="pages/booms.html" class="icon-link">View Project &rarr;</a>
-              <span class="project-date">May 2025</span>
-            </div>
-          </div>
-        </article>
-
-
-
-
-
-        <!-- Project: Link Dump -->
-        <article class="project-card">
-          <div class="project-image-container">
-            <a href="pages/linkdump.html" style="display: block; width: 100%; height: 100%;">
-              <div
-                style="width: 100%; height: 100%; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); display: flex; align-items: center; justify-content: center;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
-                  stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                </svg>
-              </div>
-            </a>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Link Dump</h3>
-            <div class="tech-tags">
-              <span class="tech-tag">Resources</span>
-              <span class="tech-tag">Collection</span>
-            </div>
-            <p class="project-description">A curated collection of interesting engineering blogs, tools, and resources.
-            </p>
-            <div class="project-links">
-              <a href="pages/linkdump.html" class="icon-link">View Project &rarr;</a>
-              <span class="project-date">Oct 2022</span>
-            </div>
-          </div>
-        </article>
-
-
-
-
-
-
-
-      </div>
-
-      <div class="btn-container">
-        <a href="index_2.html" class="btn">View All Projects</a>
-      </div>
-    </section>
-    <!-- Work Experience -->
-    <section id="experience" class="experience-section">
-      <h2 class="section-title">Work Experience</h2>
-
-      <div class="timeline">
-
-        <!-- Role 1 -->
-        <div class="timeline-item">
-          <div class="job-header">
-            <h3 class="job-title">Mechanical Engineer</h3>
-            <div class="job-company">TAKEME2SPACE</div>
-            <div class="job-location">Hyderabad, India</div>
-            <span class="job-date">Mar 2025 - Nov 2025</span>
-          </div>
-          <ul class="job-description">
-            <li>Designed and manufactured Shape Memory Alloy (SMA) based Hold-Down and Release Mechanisms (HDRMs) for
-              solar-panel deployment systems.</li>
-            <li>Authored and published a technical paper detailing the design and performance of SMA-based HDRM.</li>
-            <li>Designed burn-wire-based HDRMs for triple-deployable solar panels as backup release systems.</li>
-            <li>Led structural/materials design of a composite-based CubeSat deployer, emphasizing weight optimization
-              using high-performance polymers (HPP).</li>
-            <li>Directed structural simulations layout (static, modal, random-vibration) ensuring compliance with
-              launch-vehicle requirements.</li>
-          </ul>
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex.</p>
         </div>
+    </footer>
 
-        <!-- Role 2 -->
-        <div class="timeline-item">
-          <div class="job-header">
-            <h3 class="job-title">Mechanical Engineer I</h3>
-            <div class="job-company">DHRUVA SPACE</div>
-            <div class="job-location">Hyderabad, India</div>
-            <span class="job-date">Oct 2023 - Mar 2025</span>
-          </div>
-          <ul class="job-description">
-            <li>Led structural design of a 30 kg-class satellite (LEAP-1), successfully passing Flight Model (FM)
-              testing.</li>
-            <li>Developed and matured Roll-Out Solar Panel mechanisms and rotary dampers to Technology Readiness Level
-              (TRL) 6.</li>
-            <li>Streamlined production workflows by standardizing engineering drawings according to GD&T.</li>
-            <li>Designed RF enclosures and performed data-driven evaluations through testing and simulation.</li>
-            <li>Mentored interns and provided guidance on R&D projects.</li>
-          </ul>
-        </div>
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteHeader = document.querySelector('.site-header');
+        const navLinks = document.querySelectorAll('.site-nav a');
 
-        <!-- Role 3 -->
-        <div class="timeline-item">
-          <div class="job-header">
-            <h3 class="job-title">Mechanical Engineer Intern</h3>
-            <div class="job-company">DHRUVA SPACE</div>
-            <div class="job-location">Hyderabad, India</div>
-            <span class="job-date">Mar 2023 - Oct 2023</span>
-          </div>
-          <ul class="job-description">
-            <li>Developed proof-of-concept prototypes for rotary dampers, roll-out solar panels, and SAR antenna models.
-            </li>
-            <li>Conducted in-depth research on spacecraft mechanisms, focusing on lubrication and mechanical reliability
-              in vacuum environments.</li>
-            <li>Validated mechanical subsystems using Altair Inspire for motion and static simulations.</li>
-            <li>Gained exposure to industry-standard environmental qualification practices by observing Vibration and
-              TVAC testing.</li>
-          </ul>
-        </div>
+        menuToggle.addEventListener('click', () => {
+            siteHeader.classList.toggle('nav-open');
+            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+        });
 
-      </div>
-    </section>
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-      <h2 class="section-title">Technical Skills</h2>
-      <div class="skills-grid">
-
-        <div class="skill-card">
-          <h3>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path
-                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-              </path>
-            </svg>
-            Design & Analysis
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag">SolidWorks</span>
-            <span class="skill-tag">Ansys (Static/Modal)</span>
-            <span class="skill-tag">HyperMesh</span>
-            <span class="skill-tag">Altair Inspire</span>
-            <span class="skill-tag">MATLAB</span>
-            <span class="skill-tag">Siemens Simcenter</span>
-            <span class="skill-tag">STK</span>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <h3>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-            Prototyping & Mfg
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag">3D Printing (SLA/FDM)</span>
-            <span class="skill-tag">CNC Machining</span>
-            <span class="skill-tag">Composites (Carbon Fiber)</span>
-            <span class="skill-tag">Welding</span>
-            <span class="skill-tag">Prototyping</span>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <h3>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-              </path>
-            </svg>
-            Space Systems
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Mechanisms (HDRMs)</span>
-            <span class="skill-tag">Space System Engineering</span>
-            <span class="skill-tag">Environmental Testing (TVAC)</span>
-            <span class="skill-tag">GD&T (ASME Y14.5)</span>
-            <span class="skill-tag">Vibration Testing</span>
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <h3>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-              <rect x="9" y="9" width="6" height="6"></rect>
-              <line x1="9" y1="1" x2="9" y2="4"></line>
-              <line x1="15" y1="1" x2="15" y2="4"></line>
-              <line x1="9" y1="20" x2="9" y2="23"></line>
-              <line x1="15" y1="20" x2="15" y2="23"></line>
-              <line x1="20" y1="9" x2="23" y2="9"></line>
-              <line x1="20" y1="14" x2="23" y2="14"></line>
-              <line x1="1" y1="9" x2="4" y2="9"></line>
-              <line x1="1" y1="14" x2="4" y2="14"></line>
-            </svg>
-            Electronics & Software
-          </h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Microcontrollers</span>
-            <span class="skill-tag">PCB Design / Schematics</span>
-            <span class="skill-tag">C Programming</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="contact" class="cta-section">
-      <h2>Ready to start a project?</h2>
-      <p class="cta-text">
-        I'm always interested in working on new and exciting challenges. Let's turn your ideas into reality.
-      </p>
-      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <a href="mailto:rahulyadgirkar@gmail.com" class="btn">Get In Touch</a>
-        <a href="https://triangle-store.pages.dev/" class="btn-outline">Visit Store</a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 Vortex.</p>
-    </div>
-  </footer>
-
-  <script>
-    // Hero Image Carousel
-    const slides = document.querySelectorAll('.carousel-slide');
-    let currentSlide = 0;
-    const slideInterval = 4000; // 4 seconds
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-
-    if (slides.length > 0) {
-      setInterval(nextSlide, slideInterval);
-    }
-  </script>
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                siteHeader.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+    <script src="js/logging.js"></script>
 </body>
 
 </html>

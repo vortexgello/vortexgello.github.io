@@ -4,189 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boom Mechanism v2 | Vortex Store</title>
+  <title>Horizon Array | Vortex Store</title>
   <meta name="description" content="Second generation bistable boom mechanism for roll-out solar arrays.">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <style>
-    /* Product Page Specific Styles */
-    .product-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      padding: 4rem 0;
-      align-items: start;
-    }
 
-    .product-gallery {
-      position: sticky;
-      top: 2rem;
-    }
-
-    .main-image {
-      width: 100%;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-light);
-      margin-bottom: 1rem;
-      background: #000;
-    }
-
-    .image-thumbnails {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
-
-    .thumbnail {
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-light);
-      cursor: pointer;
-      width: 100%;
-      opacity: 0.7;
-      transition: all 0.2s;
-    }
-
-    .thumbnail:hover,
-    .thumbnail.active {
-      opacity: 1;
-      border-color: var(--accent);
-    }
-
-    .product-info h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      line-height: 1.1;
-    }
-
-    .product-price {
-      font-size: 1.5rem;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 2rem;
-      display: block;
-    }
-
-    .product-description-short {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .btn-primary {
-      background: var(--text-main);
-      color: var(--bg-body);
-      padding: 1rem 2rem;
-      border-radius: var(--radius-full);
-      font-weight: 600;
-      text-align: center;
-      flex: 1;
-      border: 1px solid var(--text-main);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--bg-body);
-      transform: translateY(-2px);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text-main);
-      padding: 1rem 2rem;
-      border-radius: var(--radius-full);
-      font-weight: 600;
-      text-align: center;
-      flex: 1;
-      border: 1px solid var(--border-light);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--text-main);
-    }
-
-    .specs-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 2rem;
-    }
-
-    .specs-table td {
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border-light);
-      color: var(--text-muted);
-    }
-
-    .specs-table td:first-child {
-      font-weight: 600;
-      color: var(--text-main);
-      width: 40%;
-    }
-
-    .accordion {
-      border-top: 1px solid var(--border-light);
-    }
-
-    .accordion-item {
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .accordion-header {
-      width: 100%;
-      padding: 1.5rem 0;
-      background: none;
-      border: none;
-      text-align: left;
-      color: var(--text-main);
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .accordion-header::after {
-      content: '+';
-      font-size: 1.5rem;
-      font-weight: 400;
-    }
-
-    .accordion-item.active .accordion-header::after {
-      content: '-';
-    }
-
-    .accordion-content {
-      display: none;
-      padding-bottom: 1.5rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .accordion-item.active .accordion-content {
-      display: block;
-    }
-
-    @media (max-width: 768px) {
-      .product-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .product-gallery {
-        position: static;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -194,6 +16,11 @@
   <header class="site-header">
     <div class="container header-content">
       <a href="index.html" class="site-title">Vortex</a>
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <nav class="site-nav">
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -221,19 +48,20 @@
       <!-- Right Column: Info -->
       <div class="product-info">
         <nav style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
-          <a href="index.html">Store</a> / Boom Mechanism
+          <a href="index.html">Store</a> / Horizon Array
         </nav>
 
-        <h1>Roll-Out Solar Array Mechanism</h1>
+        <h1>Horizon Array</h1>
         <span class="product-price">Custom Order</span>
 
         <p class="product-description-short">
-          Deployable composite boom system for solar arrays, inspired by the ISS iROSA.
+          The <strong>Horizon Array</strong> is a deployable composite boom system for solar arrays, inspired by the ISS
+          iROSA.
           Offers compact storage and significant power generation for small satellites.
         </p>
 
         <div class="action-buttons">
-          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Boom Mechanism" class="btn-primary">Request
+          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Horizon Array" class="btn-primary">Request
             Quote</a>
           <a href="#specs" class="btn-outline">View Specs</a>
         </div>
@@ -243,7 +71,8 @@
             <button class="accordion-header">Product Description</button>
             <div class="accordion-content">
               <p>
-                The core of this system uses bistable composite booms to deploy a flexible solar blanket.
+                The core of the <strong>Horizon Array</strong> uses bistable composite booms to deploy a flexible solar
+                blanket.
                 Its rolling mandrel design not only saves space but acts as a protective core during launch,
                 shielding the fragile solar blanket.
               </p>
@@ -251,6 +80,36 @@
                 This design simplifies electrical architecture by eliminating slip rings and enables
                 multi-functional utility, such as embedded antennas.
               </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">Interfacing</button>
+            <div class="accordion-content">
+              <p><strong>Connection Interfaces:</strong></p>
+              <ul style="margin-top: 0.5rem; padding-left: 1.2rem; margin-bottom: 1rem;">
+                <li style="margin-bottom: 0.5rem;">
+                  <strong>Standard:</strong> Solder Pads (Resistors) + Pico-Lock Connector (Data/Feedback).
+                </li>
+                <li>
+                  <strong>High-Reliability:</strong> Harwin Gecko/Datamate (Integrated Power & Data) available on
+                  request.
+                </li>
+              </ul>
+
+              <p><strong>Electrical Specs:</strong></p>
+              <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
+                <li style="margin-bottom: 0.5rem;">
+                  <strong>Actuation (Release):</strong> Burn Wire / Resistor.
+                  <br><span style="font-size: 0.9em; color: var(--text-muted);">Recommended Drive: 5V @ 2A
+                    (current-limited) for &lt; 2s.</span>
+                </li>
+                <li>
+                  <strong>Feedback (Status):</strong> Limit Switch.
+                  <br><span style="font-size: 0.9em; color: var(--text-muted);">Dry contact closure upon full deployment
+                    (Normally Open).</span>
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -280,17 +139,38 @@
                 </tr>
                 <tr>
                   <td>Stowed Dimensions</td>
-                  <td>98 x 98 x 50 mm (1U Footprint)</td>
+                  <td>300 x 50 x 50 mm</td>
                 </tr>
                 <tr>
-                  <td>Motor Voltage</td>
-                  <td>5V DC (Nominal)</td>
+                  <td>Deployment Method</td>
+                  <td>Self-Deployable (Strain Energy)</td>
                 </tr>
                 <tr>
-                  <td>Deployment Speed</td>
-                  <td>~2 cm/s (Variable)</td>
+                  <td>Actuation</td>
+                  <td>Burn Wire (HDRM Options Available)</td>
+                </tr>
+                <tr>
+                  <td>Variants</td>
+                  <td>
+                    <div style="margin-bottom: 0.5rem;"><strong>Horizon ROSA</strong> (Roll-Out Array)</div>
+                    <div><strong>Horizon FOSA</strong> (Fold-Out Array)</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Horizon ROSA Specs</td>
+                  <td>
+                    <ul style="padding-left: 1rem; margin: 0;">
+                      <li><strong>Payload:</strong> ~200g (Solar Blanket)</li>
+                      <li><strong>Output:</strong> ~80W (w/ 30% eff. cells)</li>
+                    </ul>
+                  </td>
                 </tr>
               </table>
+              <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--text-muted);">
+                * Note: Specifications listed are for the standard prototype. We design custom systems based on your
+                specific power and volume requirements. Advanced High-Reliability Hold Down Release Mechanism (HDRM)
+                solutions are available please contact us for integration details.
+              </p>
             </div>
           </div>
 
@@ -311,11 +191,31 @@
       </div>
     </div>
 
+    <section class="contact-section">
+      <h2>Get in Touch</h2>
+
+      <div class="contact-bio">
+        <h3>Rahul Yadgirkar</h3>
+        <p>
+          Mechanical Engineer specializing in designing robust mechanisms, deployable structures, and precision systems
+          for space applications.
+        </p>
+      </div>
+
+      <p class="contact-cta-text">
+        Interested in our mechanisms? Contact us for custom orders, quotes, or collaboration inquiries.
+      </p>
+      <div class="contact-buttons">
+        <a href="mailto:rahul.yadgirkar@gmail.com" class="btn-primary">Email Us</a>
+        <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" class="btn-outline">LinkedIn</a>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; 2026 Vortex. .</p>
+      <p>&copy; 2026 Vortex.</p>
     </div>
   </footer>
 
@@ -334,8 +234,25 @@
         item.classList.toggle('active');
       });
     });
-  </script>
 
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const siteHeader = document.querySelector('.site-header');
+    const navLinks = document.querySelectorAll('.site-nav a');
+
+    menuToggle.addEventListener('click', () => {
+      siteHeader.classList.toggle('nav-open');
+      document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        siteHeader.classList.remove('nav-open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+  <script src="js/logging.js"></script>
 </body>
 
 </html>

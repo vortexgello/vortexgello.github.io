@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -186,7 +186,7 @@
                     <img src="selfie-boom/deploy_seq_5.png" class="sequence-img" alt="Frame 5">
 
                     <div class="player-controls">
-                        <button class="control-btn" onclick="togglePlay()" id="playBtn">▶</button>
+                        <button class="control-btn" onclick="togglePlay()" id="playBtn">â–¶</button>
                         <div class="progress-dots" id="progressDots"></div>
                     </div>
                 </div>
@@ -243,14 +243,15 @@
         function togglePlay() {
             if (isPlaying) {
                 clearInterval(interval);
-                playBtn.textContent = '▶';
+                playBtn.textContent = 'â–¶';
             } else {
                 interval = setInterval(nextFrame, 800); // 800ms per frame
-                playBtn.textContent = '⏸';
+                playBtn.textContent = 'â¸';
             }
             isPlaying = !isPlaying;
         }
     </script>
+    <script src="../js/logging.js"></script>
 </body>
 
 </html>
