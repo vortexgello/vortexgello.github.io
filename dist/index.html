@@ -17,36 +17,17 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .store-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: var(--space-lg);
             margin-bottom: var(--space-2xl);
         }
 
-        @media (max-width: 480px) {
-            .store-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .product-card {
-            /* background: transparent; */
+            background: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
             overflow: hidden;
@@ -60,7 +41,7 @@
             transform: translateY(-5px);
             border-color: var(--accent);
             box-shadow: var(--shadow-hover);
-            /* background handled in content */
+            background: var(--bg-card-hover);
         }
 
         .product-image {
@@ -68,14 +49,13 @@
             width: 100%;
             overflow: hidden;
             position: relative;
-            background: #ffffff;
-            padding: var(--space-md);
+            background: #000;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             transition: transform 0.5s ease;
         }
 
@@ -88,15 +68,6 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: background 0.3s ease;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .product-card:hover .product-content {
-            background: var(--bg-card-hover);
         }
 
         .product-title {
@@ -144,26 +115,6 @@
             height: 100%;
             z-index: 1;
         }
-
-        @media (max-width: 768px) {
-            .store-hero {
-                padding: 4rem 1rem;
-                text-align: center;
-            }
-
-            .store-hero h1 {
-                font-size: clamp(2rem, 10vw, 3rem);
-            }
-
-            .product-content {
-                padding: 1.25rem;
-            }
-
-            .store-grid {
-                grid-template-columns: 1fr;
-                padding: 0;
-            }
-        }
     </style>
 </head>
 
@@ -172,11 +123,6 @@
     <header class="site-header">
         <div class="container header-content">
             <a href="index.html" class="site-title">Vortex</a>
-            <button class="menu-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
             <nav class="site-nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -192,6 +138,7 @@
 
         <section class="store-hero">
             <div class="hero-content">
+                <span class="badge">Available Now</span>
                 <h1 class="hero-title">
                     Space <span class="highlight-gradient">Store</span>
                 </h1>
@@ -207,12 +154,10 @@
             <article class="product-card">
                 <span class="store-tag">Featured</span>
                 <div class="product-image">
-                    <a href="booms.html" style="display: block; width: 100%; height: 100%;">
-                        <img src="pages/images/booms_updated_1.jpg" alt="Deployable Booms">
-                    </a>
+                    <img src="pages/images/booms_new_1.jpg" alt="Deployable Booms">
                 </div>
                 <div class="product-content">
-                    <h2 class="product-title">Zenith Boom</h2>
+                    <h2 class="product-title">Deployable Booms</h2>
                     <p class="product-desc">
                         Lightweight, compact deployable booms for antennas, sensors, and solar sails.
                     </p>
@@ -223,12 +168,10 @@
             <!-- Product 2: Boom Mechanism -->
             <article class="product-card">
                 <div class="product-image">
-                    <a href="boom2.html" style="display: block; width: 100%; height: 100%;">
-                        <img src="pages/boom2-img/65cm-mechanism.jpeg" alt="Boom Mechanism">
-                    </a>
+                    <img src="pages/boom2-img/65cm-mechanism.jpeg" alt="Boom Mechanism">
                 </div>
                 <div class="product-content">
-                    <h2 class="product-title">Horizon Array</h2>
+                    <h2 class="product-title">Boom Mechanism</h2>
                     <p class="product-desc">
                         Bistable boom mechanism with improved reliability and extension ratio.
                     </p>
@@ -240,12 +183,10 @@
             <article class="product-card">
                 <span class="store-tag">New</span>
                 <div class="product-image">
-                    <a href="solar-sail.html" style="display: block; width: 100%; height: 100%;">
-                        <img src="pages/solar-sail/quad_hub_render.png" alt="Solar Sail">
-                    </a>
+                    <img src="pages/solar-sail/quad_hub_render.png" alt="Solar Sail">
                 </div>
                 <div class="product-content">
-                    <h2 class="product-title">Aurora Sail</h2>
+                    <h2 class="product-title">Solar Sail System</h2>
                     <p class="product-desc">
                         Complete solar sail deployment system including hub, booms, and sail membrane.
                     </p>
@@ -256,12 +197,10 @@
             <!-- Product 4: CubeSat Selfie -->
             <article class="product-card">
                 <div class="product-image">
-                    <a href="cubesat_selfie.html" style="display: block; width: 100%; height: 100%;">
-                        <img src="pages/selfie-boom/iso_extended.png" alt="CubeSat Selfie Stick">
-                    </a>
+                    <img src="pages/selfie-boom/iso_extended.png" alt="CubeSat Selfie Stick">
                 </div>
                 <div class="product-content">
-                    <h2 class="product-title">Scout Boom</h2>
+                    <h2 class="product-title">CubeSat Selfie Boom</h2>
                     <p class="product-desc">
                         Deployable camera boom for monitoring satellite deployment and health.
                     </p>
@@ -269,34 +208,6 @@
                 </div>
             </article>
 
-        </section>
-
-        </section>
-
-        <section class="contact-section"
-            style="text-align: center; padding: 4rem 0; background: var(--bg-card); border-radius: var(--radius-lg); margin-bottom: 2rem;">
-            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Get in Touch</h2>
-
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 1.25rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">Rahul
-                    Yadgirkar</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto;">
-                    Mechanical Engineer specializing in designing robust mechanisms, deployable structures, and
-                    precision systems for space applications.
-                </p>
-            </div>
-
-            <p
-                style="color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Interested in our mechanisms? Contact us for custom orders, quotes, or collaboration inquiries.
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding: 0 1rem;">
-                <a href="mailto:rahul.yadgirkar@gmail.com" class="btn"
-                    style="padding: 0.75rem 2rem; margin-top: 0; min-width: 200px; width: auto;">Email
-                    Us</a>
-                <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" class="btn-outline"
-                    style="padding: 0.75rem 2rem; border-radius: var(--radius-full); text-decoration: none; margin-top: 0; min-width: 200px; width: auto;">LinkedIn</a>
-            </div>
         </section>
 
     </main>
@@ -307,25 +218,6 @@
         </div>
     </footer>
 
-    <script>
-        // Mobile Menu Toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const siteHeader = document.querySelector('.site-header');
-        const navLinks = document.querySelectorAll('.site-nav a');
-
-        menuToggle.addEventListener('click', () => {
-            siteHeader.classList.toggle('nav-open');
-            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
-        });
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                siteHeader.classList.remove('nav-open');
-                document.body.style.overflow = '';
-            });
-        });
-    </script>
-    <script src="js/logging.js"></script>
 </body>
 
 </html>

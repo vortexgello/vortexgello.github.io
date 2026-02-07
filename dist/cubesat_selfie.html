@@ -4,11 +4,189 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scout Boom | Vortex Store</title>
+    <title>CubeSat Selfie Boom | Vortex Store</title>
     <meta name="description" content="Deployable camera boom for CubeSat monitoring and selfies.">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="images/favicon.png">
+    <style>
+        /* Product Page Specific Styles */
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 4rem 0;
+            align-items: start;
+        }
 
+        .product-gallery {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .main-image {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            margin-bottom: 1rem;
+            background: #000;
+        }
+
+        .image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.7;
+            transition: all 0.2s;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .product-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .product-description-short {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-body);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            border: 1px solid var(--text-main);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-body);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-main);
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .specs-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        .specs-table td:first-child {
+            font-weight: 600;
+            color: var(--text-main);
+            width: 40%;
+        }
+
+        .accordion {
+            border-top: 1px solid var(--border-light);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1.5rem 0;
+            background: none;
+            border: none;
+            text-align: left;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .accordion-item.active .accordion-header::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            display: none;
+            padding-bottom: 1.5rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-gallery {
+                position: static;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -16,11 +194,6 @@
     <header class="site-header">
         <div class="container header-content">
             <a href="index.html" class="site-title">Vortex</a>
-            <button class="menu-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
             <nav class="site-nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -37,46 +210,32 @@
         <div class="product-container">
 
             <!-- Left Column: Gallery -->
-            <!-- Left Column: Gallery -->
             <div class="product-gallery">
                 <img src="pages/selfie-boom/iso_extended.png" alt="Selfie Boom" class="main-image" id="mainImage">
                 <div class="image-thumbnails">
-                    <!-- Renders -->
-                    <img src="pages/selfie-boom/iso_extended.png" class="thumbnail active"
-                        onclick="changeImage(this)">
-
-                    <!-- Photos -->
-                    <img src="pages/selfie-boom/camera_updated_1.jpg" class="thumbnail" onclick="changeImage(this)">
-                    <img src="pages/selfie-boom/camera_updated_2.jpg" class="thumbnail" onclick="changeImage(this)">
-
-                    <!-- More Renders -->
+                    <img src="pages/selfie-boom/iso_extended.png" class="thumbnail active" onclick="changeImage(this)">
                     <img src="pages/selfie-boom/camera_closeup.png" class="thumbnail" onclick="changeImage(this)">
                     <img src="pages/selfie-boom/cubesat_deploy.png" class="thumbnail" onclick="changeImage(this)">
+                    <img src="pages/selfie-boom/prototype_test.png" class="thumbnail" onclick="changeImage(this)">
                 </div>
-                <p
-                    style="font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; font-style: italic;">
-                    * Images show the 45cm prototype configuration.
-                </p>
             </div>
 
             <!-- Right Column: Info -->
             <div class="product-info">
                 <nav style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
-                    <a href="index.html">Store</a> / Scout Boom
+                    <a href="index.html">Store</a> / CubeSat Selfie Boom
                 </nav>
 
-                <h1>Scout Boom</h1>
+                <h1>CubeSat Selfie Camera Boom</h1>
                 <span class="product-price">Custom Order</span>
 
                 <p class="product-description-short">
-                    The <strong>Scout Boom</strong> is a deployable camera mechanism for capturing visual inspection
-                    data and
-                    "selfies" of the satellite
+                    Deployable camera boom mechanism for capturing visual inspection data and "selfies" of the satellite
                     in orbit.
                 </p>
 
                 <div class="action-buttons">
-                    <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Scout Boom" class="btn-primary">Request
+                    <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Selfie Boom" class="btn-primary">Request
                         Quote</a>
                     <a href="#specs" class="btn-outline">View Specs</a>
                 </div>
@@ -86,9 +245,7 @@
                         <button class="accordion-header">Product Description</button>
                         <div class="accordion-content">
                             <p>
-                                The <strong>Scout Boom</strong> system uses stored strain energy to deploy a bistable
-                                composite or
-                                flexible polymer
+                                The system uses stored strain energy to deploy a bistable composite or flexible polymer
                                 boom
                                 rolled compactly against the CubeSat.
                             </p>
@@ -116,21 +273,12 @@
                                     <td>Compatible with 1U+</td>
                                 </tr>
                                 <tr>
-                                    <td>Stowed Dimensions</td>
-                                    <td>50 x 40 x 38 mm (incl. HDRM)</td>
-                                </tr>
-
-                                <tr>
                                     <td>Extended Length</td>
                                     <td>Up to 1.5 m</td>
                                 </tr>
                                 <tr>
                                     <td>System Mass</td>
                                     <td>&lt; 150g (w/ Camera)</td>
-                                </tr>
-                                <tr>
-                                    <td>Max Tip Mass</td>
-                                    <td>40g (at 70cm length)</td>
                                 </tr>
                                 <tr>
                                     <td>Camera Resolution</td>
@@ -144,48 +292,7 @@
                                     <td>Power</td>
                                     <td>3.3V / 150mW</td>
                                 </tr>
-                                <tr>
-                                    <td>Actuation (HDRM)</td>
-                                    <td>Burn Wire (Solder Pads + Feedback)</td>
-                                </tr>
-                                <tr>
-                                    <td>TRL</td>
-                                    <td>4 (Functional Prototype)</td>
-                                </tr>
                             </table>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <button class="accordion-header">Interfacing</button>
-                        <div class="accordion-content">
-                            <p><strong>Connection Interfaces:</strong></p>
-                            <ul style="margin-top: 0.5rem; padding-left: 1.2rem; margin-bottom: 1rem;">
-                                <li style="margin-bottom: 0.5rem;">
-                                    <strong>Standard:</strong> Solder Pads (Resistors) + Pico-Lock Connector
-                                    (Data/Feedback).
-                                </li>
-                                <li>
-                                    <strong>High-Reliability:</strong> Harwin Gecko/Datamate (Integrated Power & Data)
-                                    available on request.
-                                </li>
-                            </ul>
-
-                            <p><strong>Electrical Specs:</strong></p>
-                            <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
-                                <li style="margin-bottom: 0.5rem;">
-                                    <strong>Actuation (Release):</strong> Burn Wire / Resistor.
-                                    <br><span style="font-size: 0.9em; color: var(--text-muted);">Recommended Drive: 5V
-                                        @
-                                        2A (current-limited) for &lt; 2s.</span>
-                                </li>
-                                <li>
-                                    <strong>Feedback (Status):</strong> Limit Switch.
-                                    <br><span style="font-size: 0.9em; color: var(--text-muted);">Dry contact closure
-                                        upon
-                                        full deployment (Normally Open).</span>
-                                </li>
-                            </ul>
                         </div>
                     </div>
 
@@ -214,26 +321,6 @@
 
             </div>
         </div>
-
-        <section class="contact-section">
-            <h2>Get in Touch</h2>
-
-            <div class="contact-bio">
-                <h3>Rahul Yadgirkar</h3>
-                <p>
-                    Mechanical Engineer specializing in designing robust mechanisms, deployable structures, and
-                    precision systems for space applications.
-                </p>
-            </div>
-
-            <p class="contact-cta-text">
-                Interested in our mechanisms? Contact us for custom orders, quotes, or collaboration inquiries.
-            </p>
-            <div class="contact-buttons">
-                <a href="mailto:rahul.yadgirkar@gmail.com" class="btn-primary">Email Us</a>
-                <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" class="btn-outline">LinkedIn</a>
-            </div>
-        </section>
 
     </main>
 
@@ -277,25 +364,8 @@
                 deployImgElement.src = deployImages[deployIndex];
             }, 1500);
         }
-
-        // Mobile Menu Toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const siteHeader = document.querySelector('.site-header');
-        const navLinks = document.querySelectorAll('.site-nav a');
-
-        menuToggle.addEventListener('click', () => {
-            siteHeader.classList.toggle('nav-open');
-            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
-        });
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                siteHeader.classList.remove('nav-open');
-                document.body.style.overflow = '';
-            });
-        });
     </script>
-    <script src="js/logging.js"></script>
+
 </body>
 
 </html>

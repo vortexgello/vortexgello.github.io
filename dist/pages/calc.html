@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSC Boom Calculator | Vortex</title>
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-QJ8M5F06YR');
+    </script>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Tool-Specific Styles Override */
+        /* Re-implement grid layout within container */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Panels using theme variables */
+        .panel {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            margin-bottom: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .panel h2 {
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-top: 0;
+        }
+
+        /* Diagrams */
+        .diagram-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .diagram-box {
+            flex: 1;
+            border: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            text-align: center;
+        }
+
+        svg {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--border-light);
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .diag-label {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        /* Form Elements */
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+        }
+
+        input,
+        select {
+            padding: 8px;
+            border: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border-radius: var(--radius-md);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+
+        /* Tables */
+        .layer-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            color: var(--text-main);
+        }
+
+        .layer-table th {
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+            padding: 5px;
+            color: var(--text-muted);
+        }
+
+        .layer-table td {
+            border-bottom: 1px solid var(--border-light);
+            padding: 6px 5px;
+        }
+
+        .badge {
+            margin-bottom: 0;
+            /* Reset global badge margin */
+        }
+
+        .badge-ud {
+            background: rgba(33, 150, 243, 0.2);
+            color: #64b5f6;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+
+        .badge-pw {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffd54f;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        /* Buttons */
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 8px 12px;
+            font-weight: 600;
+            transition: 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .btn-calc {
+            background: var(--accent);
+            color: #000;
+            width: 100%;
+            font-size: 1.1em;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .btn-calc:hover {
+            background: #38bdf8;
+            /* Lighter sky */
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn-add {
+            background: #22c55e;
+            /* Green 500 */
+            color: white;
+            width: 100%;
+        }
+
+        .btn-del {
+            background: #ef4444;
+            /* Red 500 */
+            color: white;
+            padding: 2px 6px;
+            font-size: 0.8em;
+        }
+
+        /* Results */
+        .res-val {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .status-safe {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .status-danger {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .chart-box {
+            height: 250px;
+            position: relative;
+        }
+
+        /* Specific text overrides for info boxes */
+        #geoInfo,
+        #rollInfo,
+        #stackSvg text {
+            fill: var(--text-muted);
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Projects</a></li>
+                    <li><a href="../index.html#experience">Experience</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content-wrapper" style="max-width: 1200px;">
+        <header class="project-header" style="text-align: center; margin-bottom: 2rem;">
+            <div style="margin-bottom: 1rem;">
+                <a href="../index.html" class="icon-link">&larr; Back to Home</a>
+            </div>
+            <h1 class="project-title-large">HSC Boom Calculator</h1>
+            <p class="lead-text" style="max-width: 800px; margin: 0 auto;">
+                Interactive design tool for High Strain Composite booms based on Murphey, Brinkmeyer, and Prigent
+                models.
+            </p>
+        </header>
+
+        <div class="calculator-grid">
+            <!-- LEFT COLUMN: Inputs -->
+            <div>
+                <!-- MATERIAL SYSTEM -->
+                <div class="panel" style="border-left: 4px solid #673ab7;">
+                    <h2 style="color:#673ab7;">1. Material System</h2>
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Resin Type</label>
+                            <select onchange="setResin(this.value)"
+                                style="width:100%; padding:8px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light); color:var(--text-main); border-radius:4px; appearance:none;">
+                                <option value="LY556" style="background:#1e293b; color:#cbd5e1;" selected>LY556 / HY951
+                                    (Space Std)</option>
+                                <option value="DBF" style="background:#1e293b; color:#cbd5e1;">Araldite DBF (Tough)
+                                </option>
+                                <option value="L5" style="background:#1e293b; color:#cbd5e1;">L5 (Rigidizable PU)
+                                </option>
+                                <option value="L6" style="background:#1e293b; color:#cbd5e1;">L6 (Rubber/Hinge)</option>
+                                <option value="Generic" style="background:#1e293b; color:#cbd5e1;">Generic Epoxy
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Resin Density (g/cm³)</label>
+                            <input type="number" id="rho_m" value="1.18" step="0.01" oninput="calculate()">
+                            <div style="font-size:0.75em; color:var(--text-muted);">Ref: LY556 Datasheet</div>
+                        </div>
+                        <div style="flex:1">
+                            <label>Resin Modulus (GPa)</label>
+                            <input type="number" id="Em" value="2.9" step="0.1" oninput="calculate()">
+                            <div style="font-size:0.75em; color:var(--text-muted);">Ref: Cured w/ XB3473</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Fiber Modulus (GPa)</label>
+                            <input type="number" id="Ef" value="240" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Fiber Density (g/cm³)</label>
+                            <input type="number" id="rho_f" value="1.76" oninput="calculate()">
+                        </div>
+                    </div>
+
+                    <div class="row"
+                        style="margin-top:10px; border-top:1px dashed var(--border-light); padding-top:10px;">
+                        <div style="flex:1">
+                            <label>Operational Temp (°C)</label>
+                            <input type="number" id="temp_op" value="25" step="5" onchange="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Resin Tg (°C)</label>
+                            <input type="number" id="temp_tg" value="100" step="5" onchange="calculate()">
+                            <div style="font-size:0.75em; color:var(--text-muted);">Approx. limit</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Effective Resin Modulus</label>
+                            <div class="res-val" id="resEmEff" style="font-size:1.1em; color:var(--text-main);">-- GPa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Geometry Inputs -->
+                <div class="panel">
+                    <h2>2. Boom Geometry</h2>
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Flat Width (b) [mm]</label>
+                            <input type="number" id="width" value="50" oninput="drawDiagrams()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Transverse Radius (R) [mm]</label>
+                            <input type="number" id="R_trans" value="25" oninput="drawDiagrams()">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Target Roll Dia (2r) [mm]</label>
+                            <input type="number" id="rollDia" value="40" oninput="drawDiagrams()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DYNAMICS & ADVANCED GEOMETRY -->
+                <div class="panel" style="border-left: 5px solid #a855f7;">
+                    <h2 style="color: #a855f7; border-bottom-color: #a855f7;">3. Dynamics & Advanced Shape</h2>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Boom Length (L) [m]</label>
+                            <input type="number" id="boomLength" value="1.2" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Cross-Section Shape</label>
+                            <select id="geoShape" onchange="calculate()">
+                                <option value="circular">Circular Arc</option>
+                                <option value="parabolic">Parabolic (NASA/Yao)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Embedded Wires Option -->
+                    <div style="margin-top:10px; background:rgba(168, 85, 247, 0.1); padding:8px; border-radius:4px;">
+                        <label style="display:flex; align-items:center; cursor:pointer;">
+                            <input type="checkbox" id="embedWires" onchange="calculate()"
+                                style="width: auto; margin-right: 8px;">
+                            <span>Embed 44-AWG Copper Wires (x4)</span>
+                        </label>
+                        <div style="font-size:0.8em; color:#a855f7; margin-left:24px;">
+                            Ref: Yao et al. (Adds ~0.05mm thickness)
+                        </div>
+                    </div>
+
+                    <div style="margin-top:15px;">
+                        <label>Vibration Analysis</label>
+                        <div class="row" style="margin-top:5px; align-items:flex-start;">
+                            <div style="flex:1">
+                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">1st Natural
+                                    Frequency</span>
+                                <div class="res-val" id="resFreq" style="color:#a855f7; font-size:1.6em;">-- Hz</div>
+                            </div>
+                            <div style="flex:1">
+                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">Linear
+                                    Density</span>
+                                <div class="res-val" id="resMass" style="font-size:1.1em; color:var(--text-main);">--
+                                    g/m</div>
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <span style="font-size:0.85em; display:block; color:var(--text-muted);">Bending Stiffness
+                                (EI)</span>
+                            <div class="res-val" id="resEI" style="font-size:1.1em; color:var(--text-main);">--</div>
+                            <div style="font-size:0.75em; color:var(--text-muted);">N·m² (Global)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STRUCTURAL PERFORMANCE PANEL -->
+                <div class="panel" style="border-left: 5px solid #d32f2f;">
+                    <h2 style="color: #d32f2f;">4. Structural Performance</h2>
+                    <p style="font-size:0.85em; color:#666;">
+                        Load bearing analysis for deployed cantilever state.<br>
+                        Ref: Murphey et al. Eq. 5 (Buckling) & Yao et al. (Stiffness).
+                    </p>
+
+                    <!-- DEFLECTION VISUALIZER -->
+                    <div class="diagram-box" style="margin-bottom:15px; height:140px; position:relative;">
+                        <canvas id="beamCanvas" width="300" height="120"></canvas>
+                        <div id="deflectText"
+                            style="position:absolute; bottom:5px; right:10px; font-size:0.8em; color:#d32f2f; font-weight:bold;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Tip Payload (g)</label>
+                            <input type="number" id="tipLoad" value="50" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Gravity (g's)</label>
+                            <input type="number" id="gForce" value="1.0" step="0.1" oninput="calculate()">
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: rgba(211, 47, 47, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <div class="row" style="margin-bottom:5px;">
+                            <div style="flex:1">
+                                <label style="color:#ef4444;">Tip Deflection</label>
+                                <div class="res-val" id="resDeflect" style="color:#ef4444;">--</div>
+                            </div>
+                            <div style="flex:1">
+                                <label style="color:#ef4444;">Max Stress</label>
+                                <div class="res-val" id="resStress" style="font-size:1.1em; color:var(--text-main);">--
+                                </div>
+                            </div>
+                        </div>
+                        <div style="border-top:1px solid rgba(211, 47, 47, 0.2); margin:5px 0;"></div>
+                        <div class="row">
+                            <div style="flex:1">
+                                <label>Snap Moment</label>
+                                <div class="res-val" id="resSnap" style="font-size:1.1em; color:var(--text-main);">--
+                                </div>
+                                <div style="font-size:0.75em; color:var(--text-muted);">(Opposite Sense)</div>
+                            </div>
+                            <div style="flex:1">
+                                <label>Crit. Buckling</label>
+                                <div class="res-val" id="resBuckle" style="font-size:1.1em; color:var(--text-main);">--
+                                </div>
+                                <div style="font-size:0.75em; color:var(--text-muted);">(Axial Load)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DUAL BOOM SOLAR BLANKET PANEL -->
+                <div class="panel" style="border-left: 5px solid #ff5722;">
+                    <h2 style="color: #e64a19;">5. Dual-Boom Solar Array</h2>
+                    <p style="font-size:0.85em; color:#666;">
+                        Calculates max blanket size based on Boom Buckling Limit.<br>
+                        Ref: Murphey et al. (Compressive Load) & ROSA Architecture.
+                    </p>
+
+                    <!-- VISUALIZER -->
+                    <div class="diagram-box" style="margin-bottom:15px; height:100px; position:relative;">
+                        <canvas id="arrayCanvas" width="300" height="90"></canvas>
+                    </div>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Blanket Density (gsm)</label>
+                            <input type="number" id="blanketRho" value="500" placeholder="e.g. 1000 for cell+kapton"
+                                oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">PV + Substrate</span>
+                        </div>
+                        <div style="flex:1">
+                            <label>Req. Tension (N/m)</label>
+                            <input type="number" id="reqTension" value="20" placeholder="Typ. 10-50"
+                                oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">To prevent flutter</span>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: rgba(255, 87, 34, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <div class="row">
+                            <div style="flex:1">
+                                <label style="color:#bf360c;">Max Tension Load</label>
+                                <div class="res-val" id="resMaxTen" style="color:#bf360c;">--</div>
+                                <div style="font-size:0.7em;">(2x Booms Buckling Limit)</div>
+                            </div>
+                            <div style="flex:1">
+                                <label style="color:#bf360c;">Max Blanket Mass</label>
+                                <div class="res-val" id="resMaxMass">--</div>
+                                <div style="font-size:0.7em;">@ Max Width</div>
+                            </div>
+                        </div>
+                        <div style="margin-top:5px; border-top:1px solid #ffccbc; padding-top:5px;">
+                            <label style="color:#bf360c;">Max Allowed Width:</label> <b id="resMaxWidth"
+                                style="color:var(--text-main);">--</b>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Laminate Stack -->
+                <div class="panel">
+                    <h2>2. Laminate Design</h2>
+                    <div class="diagram-container">
+                        <div class="diagram-box">
+                            <span class="diag-label">Stack Visualizer</span>
+                            <svg id="stackSvg" width="100%" height="60"></svg>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Angle</label>
+                            <input type="number" id="addAngle" placeholder="±45" value="0">
+                        </div>
+                        <div style="flex:1">
+                            <label>Type</label>
+                            <select id="addType">
+                                <option value="UD">UD Tape</option>
+                                <option value="PW">Woven</option>
+                            </select>
+                        </div>
+                        <div style="flex:1">
+                            <label>Thick (mm)</label>
+                            <input type="number" id="addThick" value="0.17" step="0.01">
+                        </div>
+                    </div>
+                    <button class="btn-add" onclick="addLayer()">+ Add Layer</button>
+
+                    <div style="margin-top: 10px; max-height: 200px; overflow-y: auto;">
+                        <table class="layer-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Angle</th>
+                                    <th>Type</th>
+                                    <th>Thick</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="layerBody"></tbody>
+                        </table>
+                    </div>
+                    <p style="text-align:right; font-size:0.9em; margin-top:5px; color: var(--text-muted);">Total t:
+                        <strong id="totalThick" style="color:var(--text-main);">0.00</strong> mm
+                    </p>
+
+                    <div style="margin-top:10px; display:flex; gap:5px;">
+                        <button onclick="loadPreset('yours')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
+                            160gsm Hybrid</button>
+                        <button onclick="loadPreset('yao')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
+                            Yao/NASA</button>
+                    </div>
+                    <button onclick="loadUserConfig()"
+                        style="width:100%; margin-top:5px; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; font-weight:bold; font-size:0.9em; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">
+                        Load Custom Config (LY556 30mm)
+                    </button>
+                </div>
+
+                <!-- EXPERIMENTAL VALIDATION PANEL -->
+                <div class="panel" style="border-top: 4px solid #f97316;">
+                    <h2 style="color: #f97316; border-bottom-color: #f97316;">3. Experimental Validation</h2>
+                    <p style="font-size:0.85em; color:var(--text-muted);">Enter Platen Test (Squeeze) data to see if
+                        your physical boom
+                        matches theory.</p>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Platen Dist (d) [mm]</label>
+                            <input type="number" id="exp_d" value="40" placeholder="Gap" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Load (P) [grams]</label>
+                            <input type="number" id="exp_mass" value="500" placeholder="Scale reading"
+                                oninput="calculate()">
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: rgba(249, 115, 22, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <label style="color:#f97316;">Experimental Stiffness (EI)</label>
+                        <div class="res-val" id="exp_EI" style="color:#f97316;">--</div>
+                        <div style="font-size:0.8em; color:var(--text-muted);">Theoretical: <span id="theo_EI">--</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Visualization & Results -->
+            <div>
+                <!-- Geometric Diagrams -->
+                <div class="panel">
+                    <h2>Geometry Visualizer</h2>
+                    <div class="diagram-container">
+                        <!-- Cross Section View -->
+                        <div class="diagram-box">
+                            <span class="diag-label">Deployed Cross-Section</span>
+                            <svg id="geoSvg" width="200" height="120"></svg>
+                            <div id="geoInfo" style="font-size:0.85em; color:var(--text-muted); margin-top:5px;"></div>
+                        </div>
+                        <!-- Rolled View -->
+                        <div class="diagram-box">
+                            <span class="diag-label">Stowed (Rolled)</span>
+                            <svg id="rollSvg" width="120" height="120"></svg>
+                            <div id="rollInfo" style="font-size:0.85em; color:var(--text-muted); margin-top:5px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Numerical Results -->
+                <div class="panel">
+                    <h2>Analysis Results</h2>
+                    <div style="display: flex; gap: 15px;">
+                        <div style="flex:1">
+                            <label>Fiber Strain</label>
+                            <div class="res-val" id="resStrain">--</div>
+                            <div id="resStatus"></div>
+                        </div>
+                        <div style="flex:1">
+                            <label>Deploy Torque</label>
+                            <div class="res-val" id="resTorque">--</div>
+                            <div style="font-size:0.8em; color:var(--text-muted)">N·mm</div>
+                        </div>
+                        <div style="flex:1">
+                            <label>Natural Radius</label>
+                            <div class="res-val" id="resNatRad" style="font-size:1.1em; margin-top:5px;">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Energy Plot -->
+                <div class="panel">
+                    <h2>Strain Energy Landscape</h2>
+                    <div class="chart-box">
+                        <canvas id="energyChart"></canvas>
+                    </div>
+                    <p style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
+                        Theory: Minima in this curve represent stable states. If it slopes down to the right, the boom
+                        self-deploys.
+                    </p>
+                </div>
+
+                <!-- VALIDATION CHART -->
+                <div class="panel">
+                    <h2>Safety & Validation (Strain vs. Dia)</h2>
+                    <div class="chart-box">
+                        <canvas id="strainChart"></canvas>
+                    </div>
+                    <p style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
+                        <strong style="color:#f97316;">Orange Dot:</strong> Your test point. If it's
+                        <strong>below</strong>
+                        the blue line, your boom is stiffer than predicted (check resin/thickness). If
+                        <strong>above</strong>, it's softer.
+                    </p>
+                </div>
+
+                <!-- ADVANCED ANALYSIS PANELS -->
+                <div class="panel">
+                    <h2>Stowage Life (Viscoelasticity)</h2>
+                    <div class="chart-box">
+                        <canvas id="relaxChart"></canvas>
+                    </div>
+                    <p style="font-size:0.85em; color:var(--text-muted);">
+                        Estimated torque loss over time (based on Brinkmeyer Epoxy Model at 60°C).
+                        <strong style="color:#ef4444;">Warning:</strong> If torque hits 0, boom will stall.
+                    </p>
+                </div>
+
+                <div class="panel">
+                    <h2>Design Sensitivity (Angle Tuning)</h2>
+                    <div class="chart-box">
+                        <canvas id="angleChart"></canvas>
+                    </div>
+                    <p style="font-size:0.85em; color:var(--text-muted);">
+                        How changing your skin angle (currently <span id="currAngleDisp">45</span>°) affects the natural
+                        roll size.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set Chart.js Defaults for Dark Theme
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = '#1e293b';
+
+        // Toggle Menu Logic
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteHeader = document.querySelector('.site-header');
+        const navLinks = document.querySelectorAll('.site-nav a');
+
+        menuToggle.addEventListener('click', () => {
+            siteHeader.classList.toggle('nav-open');
+            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                siteHeader.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // --- CALCULATOR LOGIC ---
+        let layers = [];
+        let energyChart = null;
+        let strainChart = null;
+
+        // --- PRESET DATA ---
+        const resinPresets = {
+            "LY556": { rho: 1.18, Em: 2.9, Tg: 160, desc: "Standard High-Temp Epoxy" },
+            "DBF": { rho: 1.19, Em: 2.8, Tg: 67, desc: "Tough RT Epoxy" },
+            "L5": { rho: 1.20, Em: 4.0, Tg: 48, desc: "Rigidizable Polyurethane" },
+            "L6": { rho: 1.15, Em: 0.01, Tg: 22, desc: "Elastomeric (Rubber)" },
+            "Generic": { rho: 1.17, Em: 3.5, Tg: 100, desc: "Generic Space Epoxy" }
+        };
+
+        function setResin(key) {
+            const data = resinPresets[key];
+            if (!data) return;
+            document.getElementById('rho_m').value = data.rho;
+            document.getElementById('Em').value = data.Em;
+            document.getElementById('temp_tg').value = data.Tg;
+            // Trigger calculation
+            calculate();
+        }
+
+
+        function loadUserConfig() {
+            // Set Materials
+            document.querySelector('select').value = "LY556";
+            setResin("LY556");
+
+            // Set Geometry
+            document.getElementById('width').value = 30;
+            document.getElementById('R_trans').value = 11;
+            document.getElementById('rollDia').value = 30;
+            document.getElementById('boomLength').value = 1.0; // Default if not specified
+
+            // Set Experimental
+            document.getElementById('exp_d').value = 40;
+            document.getElementById('exp_mass').value = 85;
+
+            // Set Layers: +/-45 deg, t=0.17 each (Total 0.34)
+            layers = [
+                { angle: 45, type: 'UD', t: 0.17 },
+                { angle: -45, type: 'UD', t: 0.17 }
+            ];
+
+            // Update UI
+            renderLayers();
+            drawDiagrams(); // This triggers calculate()
+        }
+
+        // --- VISUALIZATION FUNCTIONS ---
+        function drawDiagrams() {
+            const width = parseFloat(document.getElementById('width').value);
+            const R = parseFloat(document.getElementById('R_trans').value);
+            const rollD = parseFloat(document.getElementById('rollDia').value);
+
+            // 1. Draw Cross Section (The Smile)
+            const geoSvg = document.getElementById('geoSvg');
+            geoSvg.innerHTML = ''; // Clear
+
+            // Calculate subtended angle beta = width / R (radians)
+            const beta = width / R;
+            const betaDeg = (beta * 180) / Math.PI;
+            document.getElementById('geoInfo').innerHTML = `Arc: ${betaDeg.toFixed(1)}° <br> (Source: Brinkmeyer Fig 2)`;
+
+            // SVG Path
+            const scale = 100 / (width * 0.8);
+            const pathR = R * scale;
+
+            // Draw Center Point
+            const cx = 100;
+            const cy = 20 + pathR * 0.5;
+
+            // Start/End points
+            const dx = pathR * Math.sin(beta / 2);
+            const dy = pathR * Math.cos(beta / 2);
+
+            const startX = cx - dx;
+            const startY = cy - (pathR - dy);
+            const endX = cx + dx;
+            const endY = startY;
+
+            let pathStr = `<path d="M ${startX} ${startY} A ${pathR} ${pathR} 0 0 0 ${endX} ${endY}" stroke="#38bdf8" stroke-width="4" fill="none" />`;
+
+            // Add Radius Line
+            pathStr += `<line x1="${cx}" y1="${cy - pathR}" x2="${cx}" y2="${cy - pathR + pathR}" stroke="#475569" stroke-dasharray="4" />`;
+            // Use lighter text for dark theme
+            pathStr += `<text x="${cx + 5}" y="${cy - pathR / 2}" font-size="10" fill="#94a3b8">R=${R}</text>`;
+
+            geoSvg.innerHTML = pathStr;
+
+            // 2. Draw Roll (The Coil)
+            const rollSvg = document.getElementById('rollSvg');
+            const rScale = 80 / rollD;
+            const rVis = (rollD / 2) * rScale;
+            rollSvg.innerHTML = `
+                <circle cx="60" cy="60" r="${rVis}" stroke="#94a3b8" stroke-width="3" fill="#1e293b" />
+                <line x1="60" y1="60" x2="${60 + rVis}" y2="60" stroke="#ef4444" />
+                <text x="60" y="55" font-size="10" fill="#ef4444" text-anchor="middle">D=${rollD}</text>
+            `;
+
+            drawStack();
+
+            // CRITICAL FIX: Ensure calculation runs when geometry changes
+            calculate();
+        }
+
+        function drawStack() {
+            const svg = document.getElementById('stackSvg');
+            svg.innerHTML = '';
+            if (layers.length === 0) return;
+
+            let x = 10;
+            const totalW = layers.reduce((acc, l) => acc + l.t, 0);
+
+            // Center the stack
+            let currentX = (svg.clientWidth - (totalW * 50)) / 2; // Rough scale
+            if (currentX < 10) currentX = 10;
+
+            layers.forEach(l => {
+                const w = l.t * 100;
+                // Updated colors for dark theme
+                const color = l.type === 'UD' ? '#3b82f6' : '#eab308'; // Blue 500 / Yellow 500
+
+                svg.innerHTML += `
+                    <rect x="${currentX}" y="10" width="${w}" height="40" fill="${color}" stroke="#1e293b" stroke-width="1"/>
+                    <text x="${currentX + w / 2}" y="35" font-size="10" text-anchor="middle" fill="#0f172a">${l.angle}°</text>
+                `;
+                currentX += w;
+            });
+        }
+
+        // --- LOGIC ---
+        function loadPreset(name) {
+            layers = [];
+            if (name === 'yours') {
+                layers.push({ angle: 45, type: 'PW', t: 0.1 });
+                layers.push({ angle: 0, type: 'UD', t: 0.17 });
+                layers.push({ angle: -45, type: 'PW', t: 0.1 });
+            } else if (name === 'yao') {
+                layers.push({ angle: 45, type: 'PW', t: 0.08 });
+                layers.push({ angle: 0, type: 'UD', t: 0.08 });
+                layers.push({ angle: 45, type: 'PW', t: 0.08 });
+            }
+            renderLayers();
+            drawDiagrams();
+            calculate();
+        }
+
+        function addLayer() {
+            const ang = parseFloat(document.getElementById('addAngle').value);
+            const t = parseFloat(document.getElementById('addThick').value);
+            const type = document.getElementById('addType').value;
+            if (!isNaN(ang) && !isNaN(t)) {
+                layers.push({ angle: ang, t: t, type: type });
+                renderLayers();
+                drawDiagrams();
+            }
+        }
+
+        function removeLayer(i) {
+            layers.splice(i, 1);
+            renderLayers();
+            drawDiagrams();
+        }
+
+        function renderLayers() {
+            const tbody = document.getElementById('layerBody');
+            tbody.innerHTML = '';
+            let sumT = 0;
+            layers.forEach((l, i) => {
+                sumT += l.t;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${l.angle}°</td>
+                        <td><span class="badge ${l.type === 'UD' ? 'badge-ud' : 'badge-pw'}">${l.type}</span></td>
+                        <td>${l.t}</td>
+                        <td><button class="btn-del" onclick="removeLayer(${i})">x</button></td>
+                    </tr>
+                `;
+            });
+            document.getElementById('totalThick').innerText = sumT.toFixed(3);
+        }
+
+        function calculate() {
+            if (layers.length === 0) return;
+
+            // 1. GET MATERIAL PROPERTIES (Resin & Fiber)
+            const rho_m_g = parseFloat(document.getElementById('rho_m').value); // g/cm3
+            const Em_input_GPa = parseFloat(document.getElementById('Em').value); // GPa
+            const rho_f_g = parseFloat(document.getElementById('rho_f').value);
+            const Ef_GPa = parseFloat(document.getElementById('Ef').value);
+
+            // Defaults if inputs missing
+            let Em = (isNaN(Em_input_GPa) ? 3.5 : Em_input_GPa) * 1e9; // Pa
+            const Ef = (isNaN(Ef_GPa) ? 240 : Ef_GPa) * 1e9; // Pa
+            const rho_m = (isNaN(rho_m_g) ? 1.2 : rho_m_g) * 1000; // kg/m3
+            const rho_f = (isNaN(rho_f_g) ? 1.76 : rho_f_g) * 1000; // kg/m3
+
+            // --- NEW: Temperature Modeling (Source: Brinkmeyer/Murphey TTS Concept) ---
+            const T_op = parseFloat(document.getElementById('temp_op').value);
+            const T_tg = parseFloat(document.getElementById('temp_tg').value);
+
+            // Model: Stiffness drops as T approaches Tg.
+            // Empirical fit based on Brinkmeyer Fig 5 (35% drop at high temp)
+            // We assume Em is nominal at 25C.
+
+            let temp_factor = 1.0;
+            const delta_T = T_op - 25; // Difference from room temp
+
+            if (T_op >= T_tg) {
+                // Above Tg, resin becomes rubbery (very low modulus)
+                // Source 546: L6 resin (rubbery) has modulus ~10MPa vs L5 (glassy) ~2GPa
+                temp_factor = 0.01; // drastic drop
+            } else {
+                // Below Tg: Viscoelastic softening
+                // Simple linear degradation model for design estimation
+                // losing ~0.8% stiffness per degree C increase is typical for epoxies approaching Tg
+                if (delta_T > 0) {
+                    // Hotter than 25C
+                    temp_factor = 1 - (0.008 * delta_T);
+                } else {
+                    // Colder than 25C (Stiffer)
+                    // Composites get slightly stiffer in cold, but less dramatic than heat softening
+                    temp_factor = 1 + (0.002 * Math.abs(delta_T));
+                }
+            }
+
+            // Clamp factor to realistic bounds (e.g. don't go below 1% or above 150%)
+            temp_factor = Math.max(0.01, Math.min(1.5, temp_factor));
+
+            // Calculate Effective Resin Modulus
+            Em = Em * temp_factor;
+
+            // Display the effective modulus
+            const emEffEl = document.getElementById('resEmEff');
+            if (emEffEl) emEffEl.innerText = (Em / 1e9).toFixed(2) + " GPa";
+
+            // Gather Geometry Inputs
+            const width_mm = parseFloat(document.getElementById('width').value);
+            const width = width_mm / 1000;
+            const R_trans = parseFloat(document.getElementById('R_trans').value) / 1000;
+            const rollDia = parseFloat(document.getElementById('rollDia').value) / 1000;
+
+            // 2. BUILD LAMINATE STIFFNESS (CLT)
+            let D11 = 0, D22 = 0, D12 = 0;
+            let totalMassPerArea = 0;
+            const h = layers.reduce((sum, l) => sum + l.t, 0) / 1000;
+            let z = -h / 2;
+
+            layers.forEach(l => {
+                // Ply Properties based on type and volume fraction
+                // Standard assumptions: UD: Vf=60%, Woven: Vf=50%
+                const Vf = (l.type === 'UD') ? 0.60 : 0.50;
+                const rho_ply = (Vf * rho_f) + ((1 - Vf) * rho_m);
+
+                // Stiffness (Rule of Mixtures)
+                // E1 = Vf*Ef + Vm*Em
+                const E1 = Vf * Ef + (1 - Vf) * Em;
+                let E2, G12, nu12;
+
+                if (l.type === 'UD') {
+                    // Halpin-Tsai approx for E2 in UD
+                    E2 = Em * (1 + 2 * Vf) / (1 - Vf);
+                    G12 = Em * (1 + Vf) / (1 - Vf); // Approx
+                    nu12 = 0.3;
+                } else {
+                    // Woven (Naik Model approx) - Reduced stiffness due to crimp
+                    // const k_crimp = 0.5; 
+                    // E1 = (Vf*Ef + (1-Vf)*Em) * 0.8; // Woven efficiency
+                    // Keeping simple model for now to match previous logic but using calculated E1
+                    E2 = E1;
+                    G12 = 4e9; // Typical woven shear
+                    nu12 = 0.05;
+                }
+
+                // Q Matrix
+                const nu21 = (E2 / E1) * nu12;
+                const denom = 1 - nu12 * nu21;
+                const Q11 = E1 / denom;
+                const Q22 = E2 / denom;
+                const Q12 = (nu12 * E2) / denom;
+                const Q66 = G12;
+
+                // Rotate
+                const rad = l.angle * Math.PI / 180;
+                const c = Math.cos(rad), s = Math.sin(rad);
+                const c2 = c * c, s2 = s * s, c4 = c2 * c2, s4 = s2 * s2;
+
+                const Qb11 = Q11 * c4 + 2 * (Q12 + 2 * Q66) * s2 * c2 + Q22 * s4;
+                const Qb22 = Q11 * s4 + 2 * (Q12 + 2 * Q66) * s2 * c2 + Q22 * c4;
+                const Qb12 = (Q11 + Q22 - 4 * Q66) * s2 * c2 + Q12 * (s2 * s2 + c2 * c2);
+
+                const t_m = l.t / 1000;
+                const z_next = z + t_m;
+
+                // Integrate D
+                const geom = (Math.pow(z_next, 3) - Math.pow(z, 3)) / 3;
+                D11 += Qb11 * geom;
+                D22 += Qb22 * geom;
+                D12 += Qb12 * geom;
+
+                // Mass accumulation
+                totalMassPerArea += rho_ply * t_m;
+
+                z = z_next;
+            });
+
+            // Standard Results
+            const r_roll = rollDia / 2;
+            const strain = (h / 2) * (1 / r_roll) * 100;
+            const M = (D11 * (1 / r_roll) + D12 * (-1 / R_trans)) * width;
+            const r_nat = R_trans * (D11 / D22);
+
+            // --- ADVANCED DYNAMICS ---
+
+            // 1. Calculate Linear Density (w)
+            // Base composite mass
+            let w_linear = totalMassPerArea * width; // kg/m
+
+            // Add embedded wires if selected
+            if (document.getElementById('embedWires').checked) {
+                // 4 wires, 44 AWG (0.05mm diam), Copper density ~8960 kg/m3
+                const r_wire = 0.000025; // m
+                const area_wire = Math.PI * r_wire * r_wire;
+                const added_mass = 4 * area_wire * 8960;
+                w_linear += added_mass;
+            }
+
+            // 2. Beam Stiffness EI (Global)
+            // Effective Young's Modulus of laminate Ex = 12*D11 / t^3
+            const Ex_eff = (12 * D11) / Math.pow(h, 3);
+
+            // Geometric Inertia I of the deployable boom (thin shell arc)
+            const shape = document.getElementById('geoShape').value;
+            let shapeFactor = (shape === 'parabolic') ? 0.22 : 0.15; // NASA/Yao factor
+
+            // Refine shape factor based on "opening angle" (flatness)
+            // But constant approximation is robust for standard booms (beta ~ 90-180deg)
+            const I_global = shapeFactor * Math.pow(R_trans, 3) * h; // m4
+            const Global_EI = Ex_eff * I_global;
+
+            // 3. Frequency Calculation
+            // Cantilever 1st Mode: f = (3.52 / 2pi) * sqrt( EI / w L^4 )
+            const L = parseFloat(document.getElementById('boomLength').value);
+            const freq = (3.516 / (2 * Math.PI)) * Math.sqrt(Global_EI / (w_linear * Math.pow(L, 4)));
+
+            // 5. UPDATE UI
+
+            // --- NEW: STRUCTURAL & DEFLECTION MODELING ---
+            // Source: Murphey et al. Eq 5 (Euler) and Beam Theory
+
+            // 1. Get Load Inputs
+            const tipMass_g = parseFloat(document.getElementById('tipLoad').value);
+            const gFactor = parseFloat(document.getElementById('gForce').value);
+            const P_tip = (tipMass_g / 1000) * 9.81 * gFactor; // Load in Newtons
+
+            // 2. Beam Deflection (Cantilever)
+            // Formula: delta = (F * L^3) / (3 * EI_global)
+            // We utilize Global_EI calculated in the Frequency section
+            // Global_EI = Ex_eff * I_deployed
+
+            const deflect_m = (P_tip * Math.pow(L, 3)) / (3 * Global_EI);
+            const deflect_mm = deflect_m * 1000;
+
+            // 3. Max Bending Moment at Root
+            const M_root = P_tip * L; // N*m
+
+            // 4. Max Fiber Stress at Root
+            // sigma = (M * y) / I
+            // y_max is roughly the 'depth' of the boom cross section.
+            // For a semi-circle/parabola, depth ~ R_trans (approx)
+            const y_max = R_trans;
+            const sigma_root = (M_root * y_max) / I_global; // Pascals
+
+            // 5. Snap-Through Moment (Opposite Sense Bending)
+            // Source: Murphey et al. Eq 17 (corrected for opposite sense)
+            // M_snap approx D22 * Width? No, Eq 17 is M = D11*k + 2D12*k + D22*k
+            // This represents the moment required to flatten the cross-section (brazier moment).
+            // Simplified approximation for slit tube snap-through:
+            // M_snap approx (D22 / R) * Width_factor 
+            // Actually, Murphey Eq 17 gives the moment to roll "opposite sense" (against curvature).
+            // k_snap = 1/R (flattening curvature).
+            // M_snap_unit = D22 * (1/R) (dominated by transverse stiffness D22)
+            // Total Snap Moment = M_snap_unit * width_m
+            const M_snap = (D22 * (1 / R_trans)) * width; // N*m
+
+            // 6. Critical Axial Buckling Load (Euler)
+            // Source: Murphey et al. Eq 5: P = (pi^2 * EI) / L^2
+            // For cantilever column (Effective length K=2): P = (pi^2 * EI) / (2L)^2 = (pi^2*EI)/(4L^2)
+            // Correction: For cantilever with free end, K=2, so (KL)^2 = 4L^2.
+            const P_buckle = (Math.pow(Math.PI, 2) * Global_EI) / (4 * Math.pow(L, 2));
+
+            // 7. Update UI Results
+            document.getElementById('resDeflect').innerText = deflect_mm.toFixed(1) + " mm";
+            document.getElementById('resStress').innerText = (sigma_root / 1e6).toFixed(1) + " MPa";
+
+            // Display Moments in N*cm for readability
+            document.getElementById('resSnap').innerText = (M_snap * 100).toFixed(1) + " N·cm";
+            document.getElementById('resBuckle').innerText = P_buckle.toFixed(2) + " N";
+
+            // Safety Color Coding
+            const snapElem = document.getElementById('resSnap');
+            if (M_root > M_snap) {
+                snapElem.style.color = "red";
+                snapElem.innerText += " (FAIL)";
+            } else {
+                snapElem.style.color = "green";
+            }
+
+            // 8. Draw Visualizer
+            drawBeam(L, deflect_m * 100, M_root / M_snap); // Scale deflection for visibility
+
+            // --- NEW: DUAL BOOM BLANKET CALCULATOR ---
+            const blanket_gsm = parseFloat(document.getElementById('blanketRho').value); // g/m^2
+            const tension_per_m = parseFloat(document.getElementById('reqTension').value); // N/m width
+
+            // 2. Calculate Boom Buckling Capacity (Compression)
+            // Source: Murphey et al. Eq 5. P_crit = (pi^2 * EI) / (Leff)^2
+            // For a solar array boom, it is usually pinned at the spreader bar and fixed at root.
+            // Conservative Effective Length factor K = 2 (Cantilever) or K=0.7 (Fixed-Pinned).
+            // Let's use K=1.2 as a realistic safety/boundary estimate for a flight system.
+            const K_factor = 1.2;
+            const P_crit_one_boom = (Math.pow(Math.PI, 2) * Global_EI) / Math.pow(K_factor * L, 2);
+
+            // Safety Factor (NASA standard often 1.5 - 2.0 for stability)
+            const SF_buckle = 1.5;
+            const P_safe_one_boom = P_crit_one_boom / SF_buckle;
+
+            // 3. System Capacity (Two Booms)
+            // The two booms share the tension load of the blanket.
+            const Total_Max_Tension = 2 * P_safe_one_boom; // Newtons
+
+            // 4. Solve for Max Blanket Dimensions
+            // Total Tension = Width * Tension_per_meter
+            // Therefore: Max_Width = Total_Max_Tension / Tension_per_meter
+            let max_width_m = Total_Max_Tension / tension_per_m;
+
+            // 5. Calculate Max Mass
+            // Mass = Area * Density = (Length * Max_Width) * gsm
+            const max_area = max_width_m * L;
+            const max_mass_g = max_area * blanket_gsm;
+
+            // 6. Update UI
+            document.getElementById('resMaxTen').innerText = Total_Max_Tension.toFixed(1) + " N";
+            document.getElementById('resMaxMass').innerText = (max_mass_g / 1000).toFixed(2) + " kg";
+            document.getElementById('resMaxWidth').innerText = (max_width_m * 1000).toFixed(0) + " mm";
+
+            // 7. Draw Diagram
+            drawArray(max_width_m, L);
+
+            document.getElementById('resFreq').innerText = freq.toFixed(2) + " Hz";
+            document.getElementById('resMass').innerText = (w_linear * 1000).toFixed(1) + " g/m";
+            document.getElementById('resEI').innerText = Global_EI.toFixed(4);
+
+            // Display Standard Results
+            document.getElementById('resStrain').innerText = strain.toFixed(2) + "%";
+            const stat = document.getElementById('resStatus');
+            if (strain > 1.5) stat.innerHTML = "<span class='status-danger'>Risk (>1.5%)</span>";
+            else stat.innerHTML = "<span class='status-safe'>Safe</span>";
+
+            document.getElementById('resTorque').innerText = (M * 1000).toFixed(1);
+
+            let natText = (r_nat * 1000 * 2).toFixed(0) + " mm";
+            if (D11 > D22 * 1.5) natText = "None (Self-Deploying)";
+            document.getElementById('resNatRad').innerText = natText;
+
+            // Plots
+            plotEnergy(D11, D12, D22, R_trans);
+            const expPoint = calculateValidation(D11, h * 1000, width);
+            plotStrainValidation(D11, h * 1000, expPoint);
+            plotAdvancedGraphs(D11, D22, R_trans, width, layers, parseFloat(document.getElementById('addThick').value), Ef);
+        }
+
+        function plotEnergy(D11, D12, D22, R_trans) {
+            const ctx = document.getElementById('energyChart').getContext('2d');
+            const data = [], labels = [];
+            for (let d = 20; d <= 300; d += 5) {
+                const r = d / 1000 / 2;
+                const kx = 1 / r;
+                const ky = -1 / R_trans;
+                const U = 0.5 * (D11 * kx * kx + 2 * D12 * kx * ky + D22 * ky * ky);
+                data.push(U);
+                labels.push(d);
+            }
+            if (energyChart) energyChart.destroy();
+            energyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Strain Energy',
+                        data: data,
+                        borderColor: '#38bdf8', // Sky 400
+                        borderWidth: 2,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'Diameter (mm)' } },
+                        y: { title: { display: true, text: 'Energy' } }
+                    }
+                }
+            });
+        }
+
+        function calculateValidation(D11, total_h_mm, width_m) {
+            const d_mm = parseFloat(document.getElementById('exp_d').value);
+            const mass_g = parseFloat(document.getElementById('exp_mass').value);
+
+            if (isNaN(d_mm) || isNaN(mass_g) || d_mm === 0) return;
+
+            const d = d_mm / 1000;
+            const P = (mass_g / 1000) * 9.81;
+            const t = total_h_mm / 1000;
+
+            const EI_exp = (P * Math.pow(d, 2)) / 20.3483;
+            const EI_theo = D11 * width_m;
+            const k_exp = 2.3963 / d;
+            const dia_exp_mm = (2 / k_exp) * 1000;
+            const strain_exp_pct = (t / 2) * k_exp * 100;
+
+            document.getElementById('exp_EI').innerText = (EI_exp * 1000).toFixed(1) + " N·mm²";
+            document.getElementById('theo_EI').innerText = (EI_theo * 1000).toFixed(1) + " N·mm²";
+
+            return { x: dia_exp_mm, y: strain_exp_pct };
+        }
+
+        function plotStrainValidation(D11, total_h_mm, expPoint) {
+            const ctx = document.getElementById('strainChart').getContext('2d');
+            const t = total_h_mm / 1000;
+
+            const labels = [];
+            const dataStrain = [];
+            const limitStrain = [];
+            const limitVal = 1.5;
+
+            for (let d = 15; d <= 200; d += 5) {
+                labels.push(d);
+                const r = (d / 1000) / 2;
+                const k = 1 / r;
+                const s = (t / 2) * k * 100;
+                dataStrain.push(s);
+                limitStrain.push(limitVal);
+            }
+
+            const datasets = [
+                {
+                    label: 'Theoretical Strain',
+                    data: dataStrain,
+                    borderColor: '#94a3b8',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    order: 2
+                },
+                {
+                    label: 'Failure Limit',
+                    data: limitStrain,
+                    borderColor: '#ef4444',
+                    borderWidth: 1,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    order: 3
+                }
+            ];
+
+            if (expPoint) {
+                datasets.push({
+                    label: 'Your Platen Test',
+                    data: [{ x: expPoint.x, y: expPoint.y }],
+                    backgroundColor: '#f97316',
+                    borderColor: '#c2410c',
+                    borderWidth: 2,
+                    pointRadius: 8,
+                    type: 'scatter',
+                    order: 1
+                });
+            }
+
+            if (strainChart) strainChart.destroy();
+
+            strainChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    },
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            title: { display: true, text: 'Roll Diameter (mm)' },
+                            min: 15,
+                            max: 200
+                        },
+                        y: {
+                            title: { display: true, text: 'Fiber Strain (%)' },
+                            min: 0
+                        }
+                    }
+                }
+            });
+        }
+
+        function plotAdvancedGraphs(D11, D22, R_trans, width, layers, t_ply, Ef_input) {
+            const timeLabels = ['1 Hour', '1 Day', '1 Week', '1 Month', '6 Months'];
+            const torqueData = [];
+            const relaxFactors = [0.95, 0.88, 0.82, 0.75, 0.65];
+
+            const r_roll = parseFloat(document.getElementById('rollDia').value) / 2000;
+            const kx = 1 / r_roll;
+
+            relaxFactors.forEach(factor => {
+                const D11_relaxed = D11 * (0.9 + (0.1 * factor));
+                const M_t = (D11_relaxed * kx) * width;
+                torqueData.push(M_t * 1000);
+            });
+
+            const ctxR = document.getElementById('relaxChart').getContext('2d');
+            if (window.relaxChartInst) window.relaxChartInst.destroy();
+            window.relaxChartInst = new Chart(ctxR, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [{
+                        label: 'Deployment Torque (Nmm)',
+                        data: torqueData,
+                        borderColor: '#ec4899', // Pink
+                        backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Torque (Nmm)' } } }
+                }
+            });
+
+            // Sensitivity Chart
+            const angles = [];
+            const radData = [];
+            const Em = 3.5e9;
+
+            for (let ang = 30; ang <= 60; ang += 2) {
+                angles.push(ang);
+                let simD11 = 0, simD22 = 0;
+                let z = -(layers.length * t_ply) / 2000;
+
+                layers.forEach((l, i) => {
+                    let simAngle = l.angle;
+                    if (i === 0 || i === layers.length - 1) {
+                        simAngle = (l.angle < 0) ? -ang : ang;
+                    }
+                    const rad = simAngle * Math.PI / 180;
+                    const c = Math.cos(rad), s = Math.sin(rad);
+                    const c2 = c * c, s2 = s * s, c4 = c2 * c2, s4 = s2 * s2;
+                    const Vf = 0.60;
+                    const E1 = Vf * Ef_input + (1 - Vf) * Em;
+                    const E2 = 10e9; const nu12 = 0.3; const G12 = 5e9;
+                    const Q11 = E1; const Q22 = E2; const Q12 = nu12 * E2; const Q66 = G12;
+                    const Qb11 = Q11 * c4 + 2 * (Q12 + 2 * Q66) * s2 * c2 + Q22 * s4;
+                    const Qb22 = Q11 * s4 + 2 * (Q12 + 2 * Q66) * s2 * c2 + Q22 * c4;
+                    const t_m = l.t / 1000;
+                    const geom = (Math.pow(z + t_m, 3) - Math.pow(z, 3)) / 3;
+                    simD11 += Qb11 * geom;
+                    simD22 += Qb22 * geom;
+                    z += t_m;
+                });
+                const simNatRad = (R_trans) * (simD11 / simD22);
+                radData.push(simNatRad * 1000);
+            }
+
+            const ctxA = document.getElementById('angleChart').getContext('2d');
+            if (window.angleChartInst) window.angleChartInst.destroy();
+            window.angleChartInst = new Chart(ctxA, {
+                type: 'line',
+                data: {
+                    labels: angles,
+                    datasets: [{
+                        label: 'Natural Roll Radius (mm)',
+                        data: radData,
+                        borderColor: '#a855f7', // Purple
+                        borderDash: [5, 5],
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'Skin Angle (deg)' } },
+                        y: { title: { display: true, text: 'Nat. Radius (mm)' } }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    xMin: document.getElementById('addAngle').value || 45,
+                                    xMax: document.getElementById('addAngle').value || 45,
+                                    borderColor: '#cbd5e1',
+                                    borderWidth: 1,
+                                    label: { content: 'Current', enabled: true, color: '#0f172a', backgroundColor: '#cbd5e1' }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function drawBeam(length, deflection, riskFactor) {
+            const c = document.getElementById('beamCanvas');
+            const ctx = c.getContext('2d');
+            const w = c.width;
+            const h = c.height;
+
+            // Clear
+            ctx.clearRect(0, 0, w, h);
+
+            // Setup
+            const startX = 40;
+            const startY = h - 20; // Root position
+            const beamLenPx = w - 60;
+            const endX = startX + beamLenPx;
+
+            // Scale deflection (exaggerated for visuals)
+            // Map deflection input (which is abstract scaled) to pixels
+            // Let's cap max visual deflection at 80px
+            let defPx = deflection * 200; // Arbitrary scale factor
+            if (defPx > 80) defPx = 80;
+            const endY = startY + defPx;
+
+            // Draw Wall (Root)
+            ctx.beginPath();
+            ctx.moveTo(startX, startY - 40);
+            ctx.lineTo(startX, startY + 40);
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "#555";
+            ctx.stroke();
+
+            // Draw Beam (Curve)
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            // Quadratic curve to simulate bending
+            // Control point moves half distance X, but only slight Y
+            ctx.quadraticCurveTo(startX + beamLenPx * 0.5, startY, endX, endY);
+
+            // Color based on risk (Green -> Yellow -> Red)
+            if (riskFactor > 1.0) ctx.strokeStyle = "#d32f2f"; // Fail
+            else if (riskFactor > 0.7) ctx.strokeStyle = "#fbc02d"; // Warning
+            else ctx.strokeStyle = "#388e3c"; // Safe
+
+            ctx.lineWidth = 6;
+            ctx.stroke();
+
+            // Draw Payload
+            ctx.fillStyle = "#1976d2";
+            ctx.fillRect(endX - 10, endY, 20, 20);
+
+            // Text
+            ctx.fillStyle = "#888"; // Adjusted for dark theme visibility
+            ctx.font = "12px Arial";
+            ctx.fillText("Root", startX - 30, startY + 5);
+            ctx.fillText("Tip Load", endX - 20, endY + 35);
+        }
+
+        function drawArray(maxWidth, length) {
+            const c = document.getElementById('arrayCanvas');
+            const ctx = c.getContext('2d');
+            const w = c.width;
+            const h = c.height;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Scale for visual
+            // Assume max width to display is 2 meters
+            let scaleX = (w - 40) / 2.0;
+            if (maxWidth > 2.0) scaleX = (w - 40) / maxWidth;
+
+            const drawW = maxWidth * scaleX;
+            const centerX = w / 2;
+            const boom1X = centerX - drawW / 2;
+            const boom2X = centerX + drawW / 2;
+
+            // Draw Booms (Top View)
+            ctx.fillStyle = "#333";
+            ctx.fillRect(boom1X, 10, 6, h - 20); // Boom 1
+            ctx.fillRect(boom2X, 10, 6, h - 20); // Boom 2
+
+            // Draw Blanket (Blue Solar)
+            ctx.fillStyle = "rgba(33, 150, 243, 0.3)";
+            ctx.strokeStyle = "#2196f3";
+            ctx.fillRect(boom1X + 3, 10, drawW - 6, h - 20);
+            ctx.strokeRect(boom1X + 3, 10, drawW - 6, h - 20);
+
+            // Draw Tension Arrows (Forces acting on booms)
+            ctx.strokeStyle = "#bf360c";
+            ctx.lineWidth = 2;
+
+            // Arrows pushing booms IN (Reaction to tension)
+            // Left Boom Arrow
+            ctx.beginPath(); ctx.moveTo(boom1X + 20, h / 2); ctx.lineTo(boom1X + 5, h / 2); ctx.stroke();
+            // Right Boom Arrow
+            ctx.beginPath(); ctx.moveTo(boom2X - 20, h / 2); ctx.lineTo(boom2X - 5, h / 2); ctx.stroke();
+
+            ctx.fillStyle = "#bf360c";
+            ctx.font = "10px Arial";
+            ctx.fillText("Tension", centerX - 15, h / 2 - 5);
+        }
+
+        // Init
+        loadPreset('yours');
+    </script>
+    <script src="../js/logging.js"></script>
+</body>
+
+</html>

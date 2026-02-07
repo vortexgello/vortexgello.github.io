@@ -4,11 +4,189 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zenith Boom | Vortex Store</title>
+  <title>Deployable Boom | Vortex Store</title>
   <meta name="description" content="Lightweight, bistable composite deployable boom for CubeSats.">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="images/favicon.png">
+  <style>
+    /* Product Page Specific Styles */
+    .product-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      padding: 4rem 0;
+      align-items: start;
+    }
 
+    .product-gallery {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .main-image {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      margin-bottom: 1rem;
+      background: #000;
+    }
+
+    .image-thumbnails {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .thumbnail {
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      width: 100%;
+      opacity: 0.7;
+      transition: all 0.2s;
+    }
+
+    .thumbnail:hover,
+    .thumbnail.active {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+
+    .product-info h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+
+    .product-price {
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .product-description-short {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .btn-primary {
+      background: var(--text-main);
+      color: var(--bg-body);
+      padding: 1rem 2rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      text-align: center;
+      flex: 1;
+      border: 1px solid var(--text-main);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg-body);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      padding: 1rem 2rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      text-align: center;
+      flex: 1;
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--text-main);
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+
+    .specs-table td {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-muted);
+    }
+
+    .specs-table td:first-child {
+      font-weight: 600;
+      color: var(--text-main);
+      width: 40%;
+    }
+
+    .accordion {
+      border-top: 1px solid var(--border-light);
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .accordion-header {
+      width: 100%;
+      padding: 1.5rem 0;
+      background: none;
+      border: none;
+      text-align: left;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-header::after {
+      content: '+';
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+
+    .accordion-item.active .accordion-header::after {
+      content: '-';
+    }
+
+    .accordion-content {
+      display: none;
+      padding-bottom: 1.5rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .accordion-item.active .accordion-content {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .product-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .product-gallery {
+        position: static;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -16,11 +194,6 @@
   <header class="site-header">
     <div class="container header-content">
       <a href="index.html" class="site-title">Vortex</a>
-      <button class="menu-toggle" aria-label="Toggle Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
       <nav class="site-nav">
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -38,22 +211,20 @@
 
       <!-- Left Column: Gallery -->
       <div class="product-gallery">
-        <img src="pages/images/booms_updated_1.jpg" alt="Deployable Boom" class="main-image" id="mainImage">
+        <img src="pages/images/booms_new_1.jpg" alt="Deployable Boom" class="main-image" id="mainImage">
         <div class="image-thumbnails">
-          <img src="pages/images/booms_updated_1.jpg" class="thumbnail active" onclick="changeImage(this)">
-          <img src="pages/images/booms_updated_2.jpg" class="thumbnail" onclick="changeImage(this)">
-          <img src="pages/images/booms_updated_3.jpg" class="thumbnail" onclick="changeImage(this)">
-          <img src="images/boom_weight_compare.jpg" class="thumbnail" onclick="changeImage(this)">
+          <img src="pages/images/booms_new_1.jpg" class="thumbnail active" onclick="changeImage(this)">
+          <img src="pages/images/booms_new_2.jpg" class="thumbnail" onclick="changeImage(this)">
         </div>
       </div>
 
       <!-- Right Column: Info -->
       <div class="product-info">
         <nav style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
-          <a href="index.html">Store</a> / Zenith Boom
+          <a href="index.html">Store</a> / Deployable Boom
         </nav>
 
-        <h1>Zenith Boom</h1>
+        <h1>Bistable Composite Boom</h1>
         <span class="product-price">Custom Order</span>
 
         <p class="product-description-short">
@@ -63,7 +234,7 @@
         </p>
 
         <div class="action-buttons">
-          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Zenith Boom" class="btn-primary">Request
+          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Deployable Booms" class="btn-primary">Request
             Quote</a>
           <a href="#specs" class="btn-outline">View Specs</a>
         </div>
@@ -73,26 +244,15 @@
             <button class="accordion-header">Product Description</button>
             <div class="accordion-content">
               <p>
-                The <strong>Zenith Bistable</strong> is our flagship high-performance deployable structure capable of
-                holding two stable configurations (coiled and extended) without the need for complex locking mechanisms.
-                Engineered with precision layup strategies and BhorForce® advanced composites, it delivers exceptional
-                reliability and mass efficiency. Achieving an exceptional <strong>Strength-to-Weight Ratio</strong>,
-                the standard 50cm variant weighs just ~10g yet supports a 120g payload (uniformly distributed)
-                delivering massive
-                performance for mass-constrained missions.
+                This project documents the hands-on development of a <strong>bistable composite boom</strong> a
+                structure
+                capable of holding two stable configurations (coiled and extended) without mechanisms.
+                Achieving bistability involved numerous iterations, with careful adjustment of layup strategy and curing
+                consistency.
               </p>
               <p style="margin-top: 1rem;">
                 Ideal for CubeSat antennas, solar sail deployment, and instrument booms where volume constraints are
                 critical.
-              </p>
-              <p style="margin-top: 1rem;">
-                <strong>Extreme Lightweight:</strong> Our booms are exceptionally light—the version shown here
-                is actually lighter than a 5 Rupee Indian coin, weighing just ~7.5g.
-              </p>
-              <p style="margin-top: 1rem;">
-                <strong>Zenith Deployment Boom:</strong> We also offer a non-bistable configuration optimized
-                with a strong built-in deployment bias. This variant provides enhanced stability and deployment force
-                for self-deployable applications, ensuring consistent extension when external restraint is released.
               </p>
             </div>
           </div>
@@ -101,13 +261,6 @@
             <button class="accordion-header">Specifications</button>
             <div class="accordion-content">
               <table class="specs-table">
-                <tr>
-                  <td>Variants</td>
-                  <td>
-                    <div style="margin-bottom: 0.5rem;"><strong>Zenith Bistable</strong> (Dual Stable States)</div>
-                    <div><strong>Zenith Deployment Boom</strong> (High Stored Energy)</div>
-                  </td>
-                </tr>
                 <tr>
                   <td>Material</td>
                   <td>UD Carbon Fiber (160 gsm) / Epoxy</td>
@@ -126,12 +279,7 @@
                 </tr>
                 <tr>
                   <td>Mass</td>
-                  <td>~10g (per 50cm for the shown version)</td>
-                </tr>
-                <tr>
-                  <td>Payload Capacity</td>
-                  <td>120g (1200% of Structural Mass)<br><span
-                      style="font-size: 0.8em; color: var(--text-muted);">(Uniformly Distributed Load)</span></td>
+                  <td>~5g (depending on length)</td>
                 </tr>
                 <tr>
                   <td>Cross-Section</td>
@@ -153,8 +301,6 @@
             </div>
           </div>
 
-
-
           <div class="accordion-item">
             <button class="accordion-header">Analysis Services</button>
             <div class="accordion-content">
@@ -168,6 +314,7 @@
                 <li>Tip Deflection Force</li>
                 <li>Snap-Through Moment</li>
                 <li>Stiffness & Deflection Modeling</li>
+                <li>Natural Frequency Analysis</li>
               </ul>
             </div>
           </div>
@@ -177,26 +324,6 @@
 
       </div>
     </div>
-
-    <section class="contact-section">
-      <h2>Get in Touch</h2>
-
-      <div class="contact-bio">
-        <h3>Rahul Yadgirkar</h3>
-        <p>
-          Mechanical Engineer specializing in designing robust mechanisms, deployable structures, and precision systems
-          for space applications.
-        </p>
-      </div>
-
-      <p class="contact-cta-text">
-        Interested in our mechanisms? Contact us for custom orders, quotes, or collaboration inquiries.
-      </p>
-      <div class="contact-buttons">
-        <a href="mailto:rahul.yadgirkar@gmail.com" class="btn-primary">Email Us</a>
-        <a href="https://www.linkedin.com/in/rahul-yadgirkar/" target="_blank" class="btn-outline">LinkedIn</a>
-      </div>
-    </section>
 
   </main>
 
@@ -221,25 +348,8 @@
         item.classList.toggle('active');
       });
     });
-
-    // Mobile Menu Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const siteHeader = document.querySelector('.site-header');
-    const navLinks = document.querySelectorAll('.site-nav a');
-
-    menuToggle.addEventListener('click', () => {
-      siteHeader.classList.toggle('nav-open');
-      document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
-    });
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        siteHeader.classList.remove('nav-open');
-        document.body.style.overflow = '';
-      });
-    });
   </script>
-  <script src="js/logging.js"></script>
+
 </body>
 
 </html>
