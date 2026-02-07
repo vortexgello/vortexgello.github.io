@@ -458,31 +458,41 @@
                     </div>
                 </div>
 
-                <!-- DUAL BOOM SOLAR BLANKET PANEL -->
+                <!-- DUAL BOOM SOLAR BLANKET & AREA PANEL -->
                 <div class="panel" style="border-left: 5px solid #ff5722;">
-                    <h2 style="color: #e64a19;">5. Dual-Boom Solar Array</h2>
+                    <h2 style="color: #e64a19;">5. Solar Blanket Sizing</h2>
                     <p style="font-size:0.85em; color:#666;">
-                        Calculates max blanket size based on Boom Buckling Limit.<br>
-                        Ref: Murphey et al. (Compressive Load) & ROSA Architecture.
+                        Calculates max area based on boom buckling limit (ROSA Style).<br>
+                        Ref: Source 609 (ROSA) & Murphey et al.
                     </p>
 
                     <!-- VISUALIZER -->
-                    <div class="diagram-box" style="margin-bottom:15px; height:100px; position:relative;">
-                        <canvas id="arrayCanvas" width="300" height="90"></canvas>
+                    <div class="diagram-box" style="margin-bottom:15px; height:120px; position:relative;">
+                        <canvas id="arrayCanvas" width="300" height="110"></canvas>
                     </div>
 
                     <div class="row">
                         <div style="flex:1">
-                            <label>Blanket Density (gsm)</label>
-                            <input type="number" id="blanketRho" value="500" placeholder="e.g. 1000 for cell+kapton"
-                                oninput="calculate()">
-                            <span style="font-size:0.75em; color:var(--text-muted);">PV + Substrate</span>
+                            <label>Req. Tension (N/m)</label>
+                            <input type="number" id="reqTension" value="20" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">Typ. 15-40 N/m</span>
                         </div>
                         <div style="flex:1">
-                            <label>Req. Tension (N/m)</label>
-                            <input type="number" id="reqTension" value="20" placeholder="Typ. 10-50"
-                                oninput="calculate()">
-                            <span style="font-size:0.75em; color:var(--text-muted);">To prevent flutter</span>
+                            <label>Blanket Mass (gsm)</label>
+                            <input type="number" id="blanketRho" value="700" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">PV + Kapton</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Cell Efficiency (%)</label>
+                            <input type="number" id="cellEff" value="28" step="1" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Solar Flux (W/m²)</label>
+                            <input type="number" id="solarFlux" value="1366" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">LEO/GEO Avg</span>
                         </div>
                     </div>
 
@@ -490,19 +500,25 @@
                         style="background: rgba(255, 87, 34, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
                         <div class="row">
                             <div style="flex:1">
-                                <label style="color:#bf360c;">Max Tension Load</label>
-                                <div class="res-val" id="resMaxTen" style="color:#bf360c;">--</div>
-                                <div style="font-size:0.7em;">(2x Booms Buckling Limit)</div>
+                                <label style="color:#bf360c;">Max Blanket Width</label>
+                                <div class="res-val" id="resMaxWidth" style="color:#bf360c;">--</div>
                             </div>
                             <div style="flex:1">
-                                <label style="color:#bf360c;">Max Blanket Mass</label>
-                                <div class="res-val" id="resMaxMass">--</div>
-                                <div style="font-size:0.7em;">@ Max Width</div>
+                                <label style="color:#bf360c;">Max Blanket Area</label>
+                                <div class="res-val" id="resMaxArea">--</div>
                             </div>
                         </div>
-                        <div style="margin-top:5px; border-top:1px solid #ffccbc; padding-top:5px;">
-                            <label style="color:#bf360c;">Max Allowed Width:</label> <b id="resMaxWidth"
-                                style="color:var(--text-main);">--</b>
+                        <div style="border-top:1px solid #ffccbc; margin:5px 0;"></div>
+                        <div class="row">
+                            <div style="flex:1">
+                                <label>Total Mass (Blanket)</label>
+                                <div class="res-val" id="resMaxMass" style="font-size:1.0em;">--</div>
+                            </div>
+                            <div style="flex:1">
+                                <label>Power Output</label>
+                                <div class="res-val" id="resPower" style="font-size:1.0em; color:#2e7d32;">--</div>
+                                <div style="font-size:0.7em;">(Peak Watts)</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1135,43 +1151,55 @@
             // 8. Draw Visualizer
             drawBeam(L, deflect_m * 100, M_root / M_snap); // Scale deflection for visibility
 
-            // --- NEW: DUAL BOOM BLANKET CALCULATOR ---
-            const blanket_gsm = parseFloat(document.getElementById('blanketRho').value); // g/m^2
-            const tension_per_m = parseFloat(document.getElementById('reqTension').value); // N/m width
+            // --- NEW: SOLAR BLANKET AREA & POWER ---
+
+            // 1. Get Inputs
+            const blanket_gsm = parseFloat(document.getElementById('blanketRho').value);
+            const tension_per_m = parseFloat(document.getElementById('reqTension').value);
+            const cell_eff = parseFloat(document.getElementById('cellEff').value) / 100.0;
+            const flux = parseFloat(document.getElementById('solarFlux').value);
 
             // 2. Calculate Boom Buckling Capacity (Compression)
-            // Source: Murphey et al. Eq 5. P_crit = (pi^2 * EI) / (Leff)^2
-            // For a solar array boom, it is usually pinned at the spreader bar and fixed at root.
-            // Conservative Effective Length factor K = 2 (Cantilever) or K=0.7 (Fixed-Pinned).
-            // Let's use K=1.2 as a realistic safety/boundary estimate for a flight system.
+            // Ref: Murphey et al. Eq 5. P_crit = (pi^2 * EI) / (Leff)^2
+            // ROSA booms are cantilevered from root, but the blanket tension acts like a distributed load 
+            // or a tip load depending on cross-strapping. 
+            // Conservative Euler Column approach: K=2 (Cantilever) is safe. 
+            // However, ROSA uses a spreader bar, creating a "guided cantilever" or Fixed-Free condition.
+            // We stick with K=1.2 as a realistic flight hardware estimate (imperfect fixity).
             const K_factor = 1.2;
             const P_crit_one_boom = (Math.pow(Math.PI, 2) * Global_EI) / Math.pow(K_factor * L, 2);
 
-            // Safety Factor (NASA standard often 1.5 - 2.0 for stability)
+            // Safety Factor (Standard NASA SF for Stability is 1.4 - 2.0 for stability)
             const SF_buckle = 1.5;
             const P_safe_one_boom = P_crit_one_boom / SF_buckle;
 
-            // 3. System Capacity (Two Booms)
-            // The two booms share the tension load of the blanket.
-            const Total_Max_Tension = 2 * P_safe_one_boom; // Newtons
+            // 3. Solve for Max Geometry
+            // The tension creates compression in the booms. 
+            // Total Tension Supported = 2 booms * P_safe
+            // Width = Total Tension / Tension_per_meter
+            const total_tension_capacity = 2 * P_safe_one_boom;
+            let max_width_m = total_tension_capacity / tension_per_m;
 
-            // 4. Solve for Max Blanket Dimensions
-            // Total Tension = Width * Tension_per_meter
-            // Therefore: Max_Width = Total_Max_Tension / Tension_per_meter
-            let max_width_m = Total_Max_Tension / tension_per_m;
+            // Cap width at something reasonable (e.g., 10m) to prevent infinity if tension is 0
+            if (max_width_m > 20) max_width_m = 20;
 
-            // 5. Calculate Max Mass
-            // Mass = Area * Density = (Length * Max_Width) * gsm
-            const max_area = max_width_m * L;
-            const max_mass_g = max_area * blanket_gsm;
+            // 4. Calculate Area and Mass
+            const max_area_m2 = max_width_m * L;
+            const total_blanket_mass_kg = max_area_m2 * (blanket_gsm / 1000);
+
+            // 5. Calculate Power
+            // Power = Area * Flux * Efficiency * Packing_Factor (assume 0.9 active area)
+            const packing_factor = 0.90;
+            const total_power_watts = max_area_m2 * flux * cell_eff * packing_factor;
 
             // 6. Update UI
-            document.getElementById('resMaxTen').innerText = Total_Max_Tension.toFixed(1) + " N";
-            document.getElementById('resMaxMass').innerText = (max_mass_g / 1000).toFixed(2) + " kg";
             document.getElementById('resMaxWidth').innerText = (max_width_m * 1000).toFixed(0) + " mm";
+            document.getElementById('resMaxArea').innerText = max_area_m2.toFixed(2) + " m²";
+            document.getElementById('resMaxMass').innerText = total_blanket_mass_kg.toFixed(2) + " kg";
+            document.getElementById('resPower').innerText = total_power_watts.toFixed(0) + " W";
 
-            // 7. Draw Diagram
-            drawArray(max_width_m, L);
+            // 7. Update Diagram (Pass Power to visualize it)
+            drawArray(max_width_m, L, total_power_watts);
 
             document.getElementById('resFreq').innerText = freq.toFixed(2) + " Hz";
             document.getElementById('resMass').innerText = (w_linear * 1000).toFixed(1) + " g/m";
@@ -1505,7 +1533,7 @@
             ctx.fillText("Tip Load", endX - 20, endY + 35);
         }
 
-        function drawArray(maxWidth, length) {
+        function drawArray(maxWidth, length, power) {
             const c = document.getElementById('arrayCanvas');
             const ctx = c.getContext('2d');
             const w = c.width;
@@ -1513,40 +1541,46 @@
 
             ctx.clearRect(0, 0, w, h);
 
-            // Scale for visual
-            // Assume max width to display is 2 meters
-            let scaleX = (w - 40) / 2.0;
-            if (maxWidth > 2.0) scaleX = (w - 40) / maxWidth;
+            // Auto-scale
+            let scaleX = (w - 60) / (maxWidth + 0.5);
+            if (scaleX > 100) scaleX = 100; // max px per meter
 
             const drawW = maxWidth * scaleX;
             const centerX = w / 2;
             const boom1X = centerX - drawW / 2;
             const boom2X = centerX + drawW / 2;
 
-            // Draw Booms (Top View)
+            // Draw Booms
             ctx.fillStyle = "#333";
-            ctx.fillRect(boom1X, 10, 6, h - 20); // Boom 1
-            ctx.fillRect(boom2X, 10, 6, h - 20); // Boom 2
+            ctx.fillRect(boom1X, 10, 8, h - 20);
+            ctx.fillRect(boom2X, 10, 8, h - 20);
 
-            // Draw Blanket (Blue Solar)
-            ctx.fillStyle = "rgba(33, 150, 243, 0.3)";
-            ctx.strokeStyle = "#2196f3";
-            ctx.fillRect(boom1X + 3, 10, drawW - 6, h - 20);
-            ctx.strokeRect(boom1X + 3, 10, drawW - 6, h - 20);
+            // Draw Blanket
+            const grad = ctx.createLinearGradient(boom1X, 0, boom2X, 0);
+            grad.addColorStop(0, "rgba(25, 118, 210, 0.6)");
+            grad.addColorStop(0.5, "rgba(33, 150, 243, 0.8)");
+            grad.addColorStop(1, "rgba(25, 118, 210, 0.6)");
 
-            // Draw Tension Arrows (Forces acting on booms)
-            ctx.strokeStyle = "#bf360c";
-            ctx.lineWidth = 2;
+            ctx.fillStyle = grad;
+            ctx.fillRect(boom1X + 4, 10, drawW - 4, h - 20);
 
-            // Arrows pushing booms IN (Reaction to tension)
-            // Left Boom Arrow
-            ctx.beginPath(); ctx.moveTo(boom1X + 20, h / 2); ctx.lineTo(boom1X + 5, h / 2); ctx.stroke();
-            // Right Boom Arrow
-            ctx.beginPath(); ctx.moveTo(boom2X - 20, h / 2); ctx.lineTo(boom2X - 5, h / 2); ctx.stroke();
+            // Grid lines (Solar Cells)
+            ctx.strokeStyle = "rgba(255,255,255,0.3)";
+            ctx.lineWidth = 1;
+            for (let i = 10; i < h - 20; i += 20) {
+                ctx.beginPath(); ctx.moveTo(boom1X + 4, i); ctx.lineTo(boom2X + 4, i); ctx.stroke();
+            }
 
+            // Dimensions Text
             ctx.fillStyle = "#bf360c";
-            ctx.font = "10px Arial";
-            ctx.fillText("Tension", centerX - 15, h / 2 - 5);
+            ctx.font = "bold 12px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText((maxWidth).toFixed(2) + " m", centerX, h - 5);
+
+            // Power Text Overlay
+            ctx.fillStyle = "#fff";
+            ctx.font = "bold 14px Arial";
+            ctx.fillText(Math.round(power) + " W", centerX, h / 2);
         }
 
         // Init
