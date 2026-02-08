@@ -4,31 +4,102 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store | Vortex</title>
-    <meta name="description" content="Vortex Store - Mechanisms and Booms">
+    <title>Store | Quad Dimensions</title>
+    <meta name="description" content="Quad Dimensions Store - Mechanisms and Booms">
     <link rel="stylesheet" href="../styles.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <style>
         /* Store specific overrides */
         .store-hero {
-            min-height: 40vh;
             padding: var(--space-xl) 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             animation: fadeIn 1s ease-out;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        .brand-lockup {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .brand-main {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-logo {
+            height: 90px;
+            width: auto;
+        }
+
+        .brand-text-group {
+            text-align: left;
+        }
+
+        .brand-title-hero {
+            font-family: 'Michroma', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #0066FF;
+            /* Solid Vibrant Blue */
+            font-style: italic;
+            margin: 0;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .brand-divider {
+            height: 1px;
+            background: rgba(56, 189, 248, 0.3);
+            margin: 0.4rem 0;
+            width: 100%;
+        }
+
+        .brand-subtitle {
+            font-family: 'Michroma', sans-serif;
+            font-size: clamp(0.75rem, 2vw, 1.2rem);
+            color: var(--accent);
+            margin: 0;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+        }
+
+        .brand-info {
+            max-width: 700px;
+            margin-top: 1rem;
+        }
+
+        .info-highlight {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-description {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .brand-main {
+                flex-direction: column;
+                gap: 1rem;
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .brand-text-group {
+                text-align: center;
+            }
+
+            .hero-logo {
+                height: 60px;
             }
         }
 
@@ -171,7 +242,10 @@
 
     <header class="site-header">
         <div class="container header-content">
-            <a href="../index.html" class="site-title">Vortex</a>
+            <a href="../index.html" class="site-title has-logo">
+                <img src="../images/quad_dimensions_logo.png" alt="QD">
+                Quad Dimensions
+            </a>
             <button class="menu-toggle" aria-label="Toggle Menu">
                 <span></span>
                 <span></span>
@@ -191,13 +265,19 @@
     <main class="container">
 
         <section class="store-hero">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Space <span class="highlight-gradient">Store</span>
-                </h1>
-                <p class="hero-subtitle">
-                    High-quality mechanisms and booms for CubeSats and space applications.
-                </p>
+            <div class="brand-lockup">
+                <div class="brand-main">
+                    <img src="../images/quad_dimensions_logo.png" alt="Logo" class="hero-logo">
+                    <div class="brand-text-group">
+                        <h1 class="brand-title-hero">QUAD DIMENSIONS</h1>
+                    </div>
+                </div>
+                <div class="brand-info">
+                    <p class="info-highlight">Precision Space Mechanisms & Systems.</p>
+                    <p class="info-description">
+                        Designing and delivering world-class deployable technology for satellite and research missions.
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -303,7 +383,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Vortex.</p>
+            <p>&copy; 2026 Quad Dimensions.</p>
         </div>
     </footer>
 

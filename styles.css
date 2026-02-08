@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Michroma&display=swap');
 
 /* Modern CSS Reset & Variables */
 :root {
@@ -212,6 +212,25 @@ p {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.site-title.has-logo {
+  font-family: 'Michroma', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  gap: 0.75rem;
+}
+
+.site-title img {
+  height: 2rem;
+  width: auto;
+  display: block;
+}
+
+.site-title.has-logo::before {
+  display: none;
 }
 
 .site-title::before {
