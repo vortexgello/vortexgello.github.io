@@ -216,10 +216,12 @@ p {
 
 .site-title.has-logo {
   font-family: 'Michroma', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 700;
+  /* Increased for that heavy Microgramma look */
   font-style: italic;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  /* Slightly wider tracking */
   gap: 0.75rem;
 }
 
@@ -898,8 +900,7 @@ p {
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
   margin-bottom: 1rem;
-  background: #ffffff;
-  padding: var(--space-md);
+  background: transparent;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -912,8 +913,7 @@ p {
 .thumbnail {
   aspect-ratio: 1;
   object-fit: contain;
-  background: #ffffff;
-  padding: 5px;
+  background: transparent;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
   cursor: pointer;
@@ -1080,7 +1080,6 @@ p {
 
   .main-image {
     aspect-ratio: 1/1;
-    padding: var(--space-sm);
   }
 
   .product-info h1 {
