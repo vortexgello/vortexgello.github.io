@@ -94,39 +94,19 @@
 
         input,
         select {
-            padding: 10px 12px;
+            padding: 8px;
             border: 1px solid var(--border-light);
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-main);
             border-radius: var(--radius-md);
             width: 100%;
             box-sizing: border-box;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-            padding-right: 40px;
-        }
-
-        option {
-            background-color: #0f172a;
-            color: var(--text-main);
-            padding: 10px;
         }
 
         input:focus,
         select:focus {
             outline: none;
             border-color: var(--accent);
-            background: rgba(15, 23, 42, 0.8);
-            box-shadow: 0 0 0 2px var(--accent-glow);
         }
 
         .row {
@@ -282,133 +262,72 @@
             <!-- LEFT COLUMN: Inputs -->
             <div>
                 <!-- MATERIAL SYSTEM -->
-                <!-- STOWAGE LIFE & RELAXATION -->
-                <div class="panel" style="border-left: 4px solid #ff9800;">
-                    <h2 style="color:#e65100;">1. Stowage Life & Relaxation</h2>
-                    <p style="font-size:0.8em; color:#666;">
-                        Models viscoelastic stiffness loss over time.<br>
-                        Ref: Brinkmeyer et al. (Prony Series).
-                    </p>
-
+                <div class="panel" style="border-left: 4px solid #673ab7;">
+                    <h2 style="color:#673ab7;">1. Material System</h2>
                     <div class="row">
                         <div style="flex:1">
-                            <label>Resin System</label>
-                            <select id="materialPreset" onchange="setResin(this.value)">
-                                <option value="Generic">Generic (3.5 GPa)</option>
-                                <option value="LY556">LY556 (Standard)</option>
-                                <option value="DBF">DBF (Tough)</option>
-                                <option value="L5">L5 (NASA Rigid)</option>
-                                <option value="L6">L6 (Rubber)</option>
+                            <label>Resin Type</label>
+                            <select onchange="setResin(this.value)"
+                                style="width:100%; padding:8px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light); color:var(--text-main); border-radius:4px; appearance:none;">
+                                <option value="LY556" style="background:#1e293b; color:#cbd5e1;" selected>LY556 / HY951
+                                    (Space Std)</option>
+                                <option value="DBF" style="background:#1e293b; color:#cbd5e1;">Araldite DBF (Tough)
+                                </option>
+                                <option value="L5" style="background:#1e293b; color:#cbd5e1;">L5 (Rigidizable PU)
+                                </option>
+                                <option value="L6" style="background:#1e293b; color:#cbd5e1;">L6 (Rubber/Hinge)</option>
+                                <option value="Generic" style="background:#1e293b; color:#cbd5e1;">Generic Epoxy
+                                </option>
                             </select>
                         </div>
                     </div>
-
-                    <!-- Base Matrix Properties (Hidden defaults) -->
-                    <div style="display:none;">
-                        <input type="number" id="Em" value="2.9">
-                        <input type="number" id="rho_m" value="1.18">
-                        <input type="number" id="Ef" value="240">
-                        <input type="number" id="rho_f" value="1.76">
-                        <input type="number" id="temp_tg" value="67">
-                    </div>
-
                     <div class="row">
                         <div style="flex:1">
-                            <label>Stowage Temp (°C)</label>
-                            <input type="number" id="temp_stow" value="25" oninput="calculate()">
+                            <label>Resin Density (g/cm³)</label>
+                            <input type="number" id="rho_m" value="1.18" step="0.01" oninput="calculate()">
+                            <div style="font-size:0.75em; color:var(--text-muted);">Ref: LY556 Datasheet</div>
                         </div>
                         <div style="flex:1">
-                            <label>Stowage Time (Days)</label>
-                            <input type="number" id="time_stow" value="30" oninput="calculate()">
+                            <label>Resin Modulus (GPa)</label>
+                            <input type="number" id="Em" value="2.9" step="0.1" oninput="calculate()">
+                            <div style="font-size:0.75em; color:var(--text-muted);">Ref: Cured w/ XB3473</div>
                         </div>
                     </div>
-
-                    <!-- RELAXATION CHART -->
-                    <div class="diagram-box" style="margin-top:10px; height:180px; position:relative;">
-                        <canvas id="relaxChart"></canvas>
-                    </div>
-
-                    <div class="row" style="margin-top:10px;">
-                        <div style="flex:1">
-                            <label>Retained Stiffness</label>
-                            <div class="res-val" id="resRetain" style="color:#e65100;">-- %</div>
-                        </div>
-                        <div style="flex:1">
-                            <label>Deploy Force (End)</label>
-                            <div class="res-val" id="resForceEnd">-- N</div>
-                        </div>
-                    </div>
-                    <div id="failWarning"
-                        style="color:red; font-weight:bold; font-size:0.85em; display:none; margin-top:5px;">
-                        ⚠️ DEPLOYMENT FAILURE LIKELY
-                    </div>
-                </div>
-
-                <!-- 2. LAMINATE DESIGN (Moved Up) -->
-                <div class="panel">
-                    <h2>2. Laminate Design</h2>
-                    <div class="diagram-container">
-                        <div class="diagram-box">
-                            <span class="diag-label">Stack Visualizer</span>
-                            <svg id="stackSvg" width="100%" height="60"></svg>
-                        </div>
-                    </div>
-
                     <div class="row">
                         <div style="flex:1">
-                            <label>Angle</label>
-                            <input type="number" id="addAngle" placeholder="±45" value="0">
+                            <label>Fiber Modulus (GPa)</label>
+                            <input type="number" id="Ef" value="240" oninput="calculate()">
                         </div>
                         <div style="flex:1">
-                            <label>Type</label>
-                            <select id="addType">
-                                <option value="UD">UD Tape</option>
-                                <option value="PW">Woven</option>
-                            </select>
+                            <label>Fiber Density (g/cm³)</label>
+                            <input type="number" id="rho_f" value="1.76" oninput="calculate()">
+                        </div>
+                    </div>
+
+                    <div class="row"
+                        style="margin-top:10px; border-top:1px dashed var(--border-light); padding-top:10px;">
+                        <div style="flex:1">
+                            <label>Operational Temp (°C)</label>
+                            <input type="number" id="temp_op" value="25" step="5" onchange="calculate()">
                         </div>
                         <div style="flex:1">
-                            <label>Thick (mm)</label>
-                            <input type="number" id="addThick" value="0.17" step="0.01">
+                            <label>Resin Tg (°C)</label>
+                            <input type="number" id="temp_tg" value="100" step="5" onchange="calculate()">
+                            <div style="font-size:0.75em; color:var(--text-muted);">Approx. limit</div>
                         </div>
                     </div>
-                    <button class="btn-add" onclick="addLayer()">+ Add Layer</button>
-
-                    <div style="margin-top: 10px; max-height: 200px; overflow-y: auto;">
-                        <table class="layer-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Angle</th>
-                                    <th>Type</th>
-                                    <th>Thick</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="layerBody"></tbody>
-                        </table>
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Effective Resin Modulus</label>
+                            <div class="res-val" id="resEmEff" style="font-size:1.1em; color:var(--text-main);">-- GPa
+                            </div>
+                        </div>
                     </div>
-                    <p style="text-align:right; font-size:0.9em; margin-top:5px; color: var(--text-muted);">
-                        Total t:
-                        <strong id="totalThick" style="color:var(--text-main);">0.00</strong> mm
-                    </p>
-
-                    <div style="margin-top:10px; display:flex; gap:5px;">
-                        <button onclick="loadPreset('yours')"
-                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
-                            160gsm Hybrid</button>
-                        <button onclick="loadPreset('yao')"
-                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
-                            Yao/NASA</button>
-                    </div>
-                    <button onclick="loadUserConfig()"
-                        style="width:100%; margin-top:5px; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; font-weight:bold; font-size:0.9em; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">
-                        Load Custom Config (LY556 30mm)
-                    </button>
                 </div>
 
                 <!-- Visual Geometry Inputs -->
                 <div class="panel">
-                    <h2>3. Boom Geometry</h2>
+                    <h2>2. Boom Geometry</h2>
                     <div class="row">
                         <div style="flex:1">
                             <label>Flat Width (b) [mm]</label>
@@ -429,7 +348,7 @@
 
                 <!-- DYNAMICS & ADVANCED GEOMETRY -->
                 <div class="panel" style="border-left: 5px solid #a855f7;">
-                    <h2 style="color: #a855f7; border-bottom-color: #a855f7;">4. Dynamics & Advanced Shape</h2>
+                    <h2 style="color: #a855f7; border-bottom-color: #a855f7;">3. Dynamics & Advanced Shape</h2>
 
                     <div class="row">
                         <div style="flex:1">
@@ -483,7 +402,7 @@
 
                 <!-- STRUCTURAL PERFORMANCE PANEL -->
                 <div class="panel" style="border-left: 5px solid #d32f2f;">
-                    <h2 style="color: #d32f2f;">5. Structural Performance</h2>
+                    <h2 style="color: #d32f2f;">4. Structural Performance</h2>
                     <p style="font-size:0.85em; color:#666;">
                         Load bearing analysis for deployed cantilever state.<br>
                         Ref: Murphey et al. Eq. 5 (Buckling) & Yao et al. (Stiffness).
@@ -541,7 +460,7 @@
 
                 <!-- DUAL BOOM SOLAR BLANKET & AREA PANEL -->
                 <div class="panel" style="border-left: 5px solid #ff5722;">
-                    <h2 style="color: #e64a19;">6. Solar Blanket Sizing</h2>
+                    <h2 style="color: #e64a19;">5. Solar Blanket Sizing</h2>
                     <p style="font-size:0.85em; color:#666;">
                         Calculates max area based on boom buckling limit (ROSA Style).<br>
                         Ref: Source 609 (ROSA) & Murphey et al.
@@ -604,64 +523,71 @@
                     </div>
                 </div>
 
-                <!-- STOWED PACKAGING & SPIRAL PANEL -->
-                <div class="panel" style="border-left: 5px solid #2e7d32;">
-                    <h2 style="color: #2e7d32; border-bottom-color: #2e7d32;">7. Stowed Packaging</h2>
-                    <p style="font-size:0.85em; color:#666;">
-                        Simulates volume and hub sizing based on "Natural Roll" concepts.<br>
-                        Ref: Footdale & Murphey (Source 392 & 412).
-                    </p>
-
-                    <div class="diagram-box" style="margin-bottom:15px; height:180px; position:relative;">
-                        <canvas id="spiralCanvas" width="300" height="170"></canvas>
+                <!-- Laminate Stack -->
+                <div class="panel">
+                    <h2>2. Laminate Design</h2>
+                    <div class="diagram-container">
+                        <div class="diagram-box">
+                            <span class="diag-label">Stack Visualizer</span>
+                            <svg id="stackSvg" width="100%" height="60"></svg>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div style="flex:1">
-                            <label>Hub Diameter (mm)</label>
-                            <input type="number" id="hubDia" value="30" oninput="calculate()">
+                            <label>Angle</label>
+                            <input type="number" id="addAngle" placeholder="±45" value="0">
                         </div>
                         <div style="flex:1">
-                            <label>Limit (Box Size) [mm]</label>
-                            <input type="number" id="boxLimit" value="95" oninput="calculate()">
+                            <label>Type</label>
+                            <select id="addType">
+                                <option value="UD">UD Tape</option>
+                                <option value="PW">Woven</option>
+                            </select>
+                        </div>
+                        <div style="flex:1">
+                            <label>Thick (mm)</label>
+                            <input type="number" id="addThick" value="0.17" step="0.01">
                         </div>
                     </div>
+                    <button class="btn-add" onclick="addLayer()">+ Add Layer</button>
 
-                    <button class="btn-calc" onclick="matchHubToNatural()"
-                        style="margin-top:5px; padding:8px; font-size:0.9em; background:#43a047; color:white;">
-                        Auto-Size Hub to Natural Roll
+                    <div style="margin-top: 10px; max-height: 200px; overflow-y: auto;">
+                        <table class="layer-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Angle</th>
+                                    <th>Type</th>
+                                    <th>Thick</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="layerBody"></tbody>
+                        </table>
+                    </div>
+                    <p style="text-align:right; font-size:0.9em; margin-top:5px; color: var(--text-muted);">Total t:
+                        <strong id="totalThick" style="color:var(--text-main);">0.00</strong> mm
+                    </p>
+
+                    <div style="margin-top:10px; display:flex; gap:5px;">
+                        <button onclick="loadPreset('yours')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
+                            160gsm Hybrid</button>
+                        <button onclick="loadPreset('yao')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
+                            Yao/NASA</button>
+                    </div>
+                    <button onclick="loadUserConfig()"
+                        style="width:100%; margin-top:5px; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; font-weight:bold; font-size:0.9em; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">
+                        Load Custom Config (LY556 30mm)
                     </button>
-
-                    <div
-                        style="background: rgba(46, 125, 50, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
-                        <div class="row">
-                            <div style="flex:1">
-                                <label style="color:#2e7d32;">Natural Roll Dia</label>
-                                <div class="res-val" id="resNatRoll" style="color:#2e7d32;">--</div>
-                            </div>
-                            <div style="flex:1">
-                                <label style="color:#2e7d32;">Spiral OD</label>
-                                <div class="res-val" id="resSpiralOD">--</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="billowWarning"
-                        style="color:red; font-weight:bold; font-size:0.85em; display:none; margin-top:5px;">
-                        ⚠️ BILLOWING RISK: Hub &lt; Natural Roll
-                    </div>
-                    <div id="packWarning"
-                        style="color:red; font-weight:bold; font-size:0.85em; display:none; margin-top:5px;">
-                        ⚠️ PACKAGING LIMIT EXCEEDED
-                    </div>
                 </div>
-
 
                 <!-- EXPERIMENTAL VALIDATION PANEL -->
                 <div class="panel" style="border-top: 4px solid #f97316;">
-                    <h2 style="color: #f97316; border-bottom-color: #f97316;">8. Experimental Validation</h2>
-                    <p style="font-size:0.85em; color:var(--text-muted);">Enter Platen Test (Squeeze) data to
-                        see if
+                    <h2 style="color: #f97316; border-bottom-color: #f97316;">3. Experimental Validation</h2>
+                    <p style="font-size:0.85em; color:var(--text-muted);">Enter Platen Test (Squeeze) data to see if
                         your physical boom
                         matches theory.</p>
 
@@ -725,8 +651,7 @@
                         </div>
                         <div style="flex:1">
                             <label>Natural Radius</label>
-                            <div class="res-val" id="resNatRad" style="font-size:1.1em; margin-top:5px;">--
-                            </div>
+                            <div class="res-val" id="resNatRad" style="font-size:1.1em; margin-top:5px;">--</div>
                         </div>
                     </div>
                 </div>
@@ -738,8 +663,7 @@
                         <canvas id="energyChart"></canvas>
                     </div>
                     <p style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
-                        Theory: Minima in this curve represent stable states. If it slopes down to the right,
-                        the boom
+                        Theory: Minima in this curve represent stable states. If it slopes down to the right, the boom
                         self-deploys.
                     </p>
                 </div>
@@ -758,7 +682,17 @@
                     </p>
                 </div>
 
-
+                <!-- ADVANCED ANALYSIS PANELS -->
+                <div class="panel">
+                    <h2>Stowage Life (Viscoelasticity)</h2>
+                    <div class="chart-box">
+                        <canvas id="relaxChart"></canvas>
+                    </div>
+                    <p style="font-size:0.85em; color:var(--text-muted);">
+                        Estimated torque loss over time (based on Brinkmeyer Epoxy Model at 60°C).
+                        <strong style="color:#ef4444;">Warning:</strong> If torque hits 0, boom will stall.
+                    </p>
+                </div>
 
                 <div class="panel">
                     <h2>Design Sensitivity (Angle Tuning)</h2>
@@ -766,8 +700,7 @@
                         <canvas id="angleChart"></canvas>
                     </div>
                     <p style="font-size:0.85em; color:var(--text-muted);">
-                        How changing your skin angle (currently <span id="currAngleDisp">45</span>°) affects the
-                        natural
+                        How changing your skin angle (currently <span id="currAngleDisp">45</span>°) affects the natural
                         roll size.
                     </p>
                 </div>
@@ -820,25 +753,18 @@
         function setResin(key) {
             const data = resinPresets[key];
             if (!data) return;
-            const rho_m = document.getElementById('rho_m');
-            const Em = document.getElementById('Em');
-            const Tg = document.getElementById('temp_tg');
-
-            if (rho_m) rho_m.value = data.rho;
-            if (Em) Em.value = data.Em;
-            if (Tg) Tg.value = data.Tg;
-
+            document.getElementById('rho_m').value = data.rho;
+            document.getElementById('Em').value = data.Em;
+            document.getElementById('temp_tg').value = data.Tg;
+            // Trigger calculation
             calculate();
         }
 
 
         function loadUserConfig() {
             // Set Materials
-            const presetEl = document.getElementById('materialPreset');
-            if (presetEl) {
-                presetEl.value = "LY556";
-                setResin("LY556");
-            }
+            document.querySelector('select').value = "LY556";
+            setResin("LY556");
 
             // Set Geometry
             document.getElementById('width').value = 30;
@@ -1000,67 +926,61 @@
             if (layers.length === 0) return;
 
             // 1. GET MATERIAL PROPERTIES (Resin & Fiber)
-            const rho_m_g = parseFloat(document.getElementById('rho_m').value);
-            const Em_nominal_GPa = parseFloat(document.getElementById('Em').value);
+            const rho_m_g = parseFloat(document.getElementById('rho_m').value); // g/cm3
+            const Em_input_GPa = parseFloat(document.getElementById('Em').value); // GPa
             const rho_f_g = parseFloat(document.getElementById('rho_f').value);
             const Ef_GPa = parseFloat(document.getElementById('Ef').value);
 
-            const Em_nominal = (isNaN(Em_nominal_GPa) ? 2.9 : Em_nominal_GPa) * 1e9;
-            const Ef = (isNaN(Ef_GPa) ? 240 : Ef_GPa) * 1e9;
-            const rho_m = (isNaN(rho_m_g) ? 1.18 : rho_m_g) * 1000;
-            const rho_f = (isNaN(rho_f_g) ? 1.76 : rho_f_g) * 1000;
+            // Defaults if inputs missing
+            let Em = (isNaN(Em_input_GPa) ? 3.5 : Em_input_GPa) * 1e9; // Pa
+            const Ef = (isNaN(Ef_GPa) ? 240 : Ef_GPa) * 1e9; // Pa
+            const rho_m = (isNaN(rho_m_g) ? 1.2 : rho_m_g) * 1000; // kg/m3
+            const rho_f = (isNaN(rho_f_g) ? 1.76 : rho_f_g) * 1000; // kg/m3
 
-            const T_stow = parseFloat(document.getElementById('temp_stow').value);
-            const days_stow = parseFloat(document.getElementById('time_stow').value);
-            const t_seconds = days_stow * 24 * 3600;
+            // --- NEW: Temperature Modeling (Source: Brinkmeyer/Murphey TTS Concept) ---
+            const T_op = parseFloat(document.getElementById('temp_op').value);
+            const T_tg = parseFloat(document.getElementById('temp_tg').value);
 
-            // --- VISCOELASTIC MODEL (Source: Brinkmeyer Table 3) ---
-            const Tg = parseFloat(document.getElementById('temp_tg').value) || 67.0;
+            // Model: Stiffness drops as T approaches Tg.
+            // Empirical fit based on Brinkmeyer Fig 5 (35% drop at high temp)
+            // We assume Em is nominal at 25C.
 
-            let severity_factor = 0;
-            if (T_stow < 25) severity_factor = 0.1;
-            else if (T_stow < 40) severity_factor = 0.3;
-            else if (T_stow < 60) severity_factor = 0.8;
-            else severity_factor = 1.2;
+            let temp_factor = 1.0;
+            const delta_T = T_op - 25; // Difference from room temp
 
-            const prony = [
-                { e: 0.013, tau: 2.64 },
-                { e: 0.062, tau: 16.3 },
-                { e: 0.094, tau: 266 },
-                { e: 0.219, tau: 4790 },
-                { e: 0.150, tau: 100000 }
-            ];
-
-            let decay_sum = 0;
-            prony.forEach(p => {
-                const w = p.e * severity_factor;
-                decay_sum += w * (1 - Math.exp(-t_seconds / p.tau));
-            });
-
-            let retention = 1 - decay_sum;
-            if (retention < 0.01) retention = 0.01;
-
-            const Em = Em_nominal * retention;
-
-            // UI Updates
-            document.getElementById('resRetain').innerText = (retention * 100).toFixed(1) + " %";
-
-            // Plot the curve
-            drawRelaxation(prony, severity_factor, t_seconds);
-
-            // Failure Warning
-            const warnFail = document.getElementById('failWarning');
-            if (warnFail) {
-                if (retention < 0.4) warnFail.style.display = 'block';
-                else warnFail.style.display = 'none';
+            if (T_op >= T_tg) {
+                // Above Tg, resin becomes rubbery (very low modulus)
+                // Source 546: L6 resin (rubbery) has modulus ~10MPa vs L5 (glassy) ~2GPa
+                temp_factor = 0.01; // drastic drop
+            } else {
+                // Below Tg: Viscoelastic softening
+                // Simple linear degradation model for design estimation
+                // losing ~0.8% stiffness per degree C increase is typical for epoxies approaching Tg
+                if (delta_T > 0) {
+                    // Hotter than 25C
+                    temp_factor = 1 - (0.008 * delta_T);
+                } else {
+                    // Colder than 25C (Stiffer)
+                    // Composites get slightly stiffer in cold, but less dramatic than heat softening
+                    temp_factor = 1 + (0.002 * Math.abs(delta_T));
+                }
             }
+
+            // Clamp factor to realistic bounds (e.g. don't go below 1% or above 150%)
+            temp_factor = Math.max(0.01, Math.min(1.5, temp_factor));
+
+            // Calculate Effective Resin Modulus
+            Em = Em * temp_factor;
+
+            // Display the effective modulus
+            const emEffEl = document.getElementById('resEmEff');
+            if (emEffEl) emEffEl.innerText = (Em / 1e9).toFixed(2) + " GPa";
 
             // Gather Geometry Inputs
             const width_mm = parseFloat(document.getElementById('width').value);
             const width = width_mm / 1000;
             const R_trans = parseFloat(document.getElementById('R_trans').value) / 1000;
             const rollDia = parseFloat(document.getElementById('rollDia').value) / 1000;
-
 
             // 2. BUILD LAMINATE STIFFNESS (CLT)
             let D11 = 0, D22 = 0, D12 = 0;
@@ -1130,15 +1050,7 @@
             const r_roll = rollDia / 2;
             const strain = (h / 2) * (1 / r_roll) * 100;
             const M = (D11 * (1 / r_roll) + D12 * (-1 / R_trans)) * width;
-            const r_nat_m = R_trans * (D11 / D22);
-            const d_nat_mm = r_nat_m * 2 * 1000;
-            calculated_natural_roll_dia = d_nat_mm; // Global for button
-
-            // Deployment Force at Tip
-            const forceEnd = M / r_roll;
-            document.getElementById('resForceEnd').innerText = forceEnd.toFixed(2) + " N";
-            document.getElementById('resNatRoll').innerText = d_nat_mm.toFixed(1) + " mm";
-
+            const r_nat = R_trans * (D11 / D22);
 
             // --- ADVANCED DYNAMICS ---
 
@@ -1301,19 +1213,9 @@
 
             document.getElementById('resTorque').innerText = (M * 1000).toFixed(1);
 
-            let natText = (r_nat_m * 1000 * 2).toFixed(0) + " mm";
+            let natText = (r_nat * 1000 * 2).toFixed(0) + " mm";
             if (D11 > D22 * 1.5) natText = "None (Self-Deploying)";
             document.getElementById('resNatRad').innerText = natText;
-
-            // --- SPIRAL PACKAGING ---
-            const hubInput = parseFloat(document.getElementById('hubDia').value);
-            const billowWarn = document.getElementById('billowWarning');
-            if (billowWarn) {
-                if (hubInput < d_nat_mm * 0.95) billowWarn.style.display = 'block';
-                else billowWarn.style.display = 'none';
-            }
-            drawStowedSpiral(L, h * 1000);
-
 
             // Plots
             plotEnergy(D11, D12, D22, R_trans);
@@ -1680,145 +1582,6 @@
             ctx.font = "bold 14px Arial";
             ctx.fillText(Math.round(power) + " W", centerX, h / 2);
         }
-
-        let calculated_natural_roll_dia = 0;
-
-        function matchHubToNatural() {
-            if (calculated_natural_roll_dia > 0) {
-                document.getElementById('hubDia').value = calculated_natural_roll_dia.toFixed(1);
-                calculate();
-            } else {
-                alert("Calculate properties first.");
-            }
-        }
-
-        function drawRelaxation(prony, severity, current_t) {
-            const ctx = document.getElementById('relaxChart').getContext('2d');
-            const data = [];
-            for (let logT = 0; logT <= 7.2; logT += 0.2) {
-                const t = Math.pow(10, logT);
-                let sum = 0;
-                prony.forEach(p => {
-                    const w = p.e * severity;
-                    sum += w * (1 - Math.exp(-t / p.tau));
-                });
-                data.push({ x: t, y: (1 - sum) * 100 });
-            }
-
-            if (window.relaxChartInst) window.relaxChartInst.destroy();
-            window.relaxChartInst = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Retention (%)',
-                        data: data,
-                        borderColor: '#e65100',
-                        borderWidth: 2,
-                        pointRadius: 0,
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            type: 'logarithmic',
-                            title: { display: true, text: 'Time (s)', color: '#94a3b8' },
-                            min: 1, max: 20000000,
-                            grid: { color: '#1e293b' },
-                            ticks: { color: '#94a3b8' }
-                        },
-                        y: {
-                            min: 0, max: 100,
-                            title: { display: true, text: '%', color: '#94a3b8' },
-                            grid: { color: '#1e293b' },
-                            ticks: { color: '#94a3b8' }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        annotation: {
-                            annotations: {
-                                line1: {
-                                    type: 'line',
-                                    xMin: current_t,
-                                    xMax: current_t,
-                                    borderColor: 'red',
-                                    borderWidth: 2,
-                                    label: { content: 'Stowed', enabled: true, position: 'end' }
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function drawStowedSpiral(L_meters, t_mm) {
-            const hubDia_mm = parseFloat(document.getElementById('hubDia').value) || 25;
-            const boxLimit_mm = parseFloat(document.getElementById('boxLimit').value) || 95;
-            const canvas = document.getElementById('spiralCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width, h = canvas.height;
-            ctx.clearRect(0, 0, w, h);
-
-            const packing_eff = 0.70;
-            const effective_t = t_mm / packing_eff;
-            const r_hub = hubDia_mm / 2;
-            const L_mm = L_meters * 1000;
-            const area_boom = L_mm * effective_t;
-            const area_hub = Math.PI * r_hub * r_hub;
-            const r_outer = Math.sqrt((area_boom + area_hub) / Math.PI);
-            const spiral_od = r_outer * 2;
-            const turns = (r_outer - r_hub) / effective_t;
-
-            const resOD = document.getElementById('resSpiralOD');
-            if (resOD) resOD.innerText = spiral_od.toFixed(1) + " mm";
-
-            const warn = document.getElementById('packWarning');
-            if (warn) {
-                if (spiral_od > boxLimit_mm) {
-                    warn.style.display = "block";
-                    if (resOD) resOD.style.color = "red";
-                } else {
-                    warn.style.display = "none";
-                    if (resOD) resOD.style.color = "#2e7d32";
-                }
-            }
-
-            const cx = w / 2, cy = h / 2;
-            const max_dim = Math.max(boxLimit_mm, spiral_od) * 1.1;
-            const px_per_mm = Math.min(w, h) / max_dim;
-
-            ctx.beginPath();
-            ctx.arc(cx, cy, (boxLimit_mm / 2) * px_per_mm, 0, 2 * Math.PI);
-            ctx.strokeStyle = "#444";
-            ctx.setLineDash([5, 5]);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            ctx.beginPath();
-            ctx.arc(cx, cy, r_hub * px_per_mm, 0, 2 * Math.PI);
-            ctx.fillStyle = "#333";
-            ctx.fill();
-            ctx.strokeStyle = "#666";
-            ctx.stroke();
-
-            const b = effective_t / (2 * Math.PI);
-            const max_theta = turns * 2 * Math.PI;
-            ctx.beginPath();
-            ctx.moveTo(cx + r_hub * px_per_mm, cy);
-            for (let theta = 0; theta <= max_theta; theta += 0.1) {
-                const r_curr = r_hub + (b * theta);
-                ctx.lineTo(cx + r_curr * Math.cos(theta) * px_per_mm, cy + r_curr * Math.sin(theta) * px_per_mm);
-            }
-            ctx.strokeStyle = "#4caf50";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-
 
         // Init
         loadPreset('yours');

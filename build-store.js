@@ -30,6 +30,9 @@ assets.forEach(asset => {
     copyRecursive(path.join(__dirname, asset), path.join(distDir, asset));
 });
 
+// 1.5 Copy Datasheets from store folder
+copyRecursive(path.join(storeDir, 'Datasheets'), path.join(distDir, 'Datasheets'));
+
 // 2. Process Store HTML files
 // Move store/*.html -> dist/*.html and rewrite paths
 fs.readdirSync(storeDir).forEach(file => {

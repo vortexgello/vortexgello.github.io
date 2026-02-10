@@ -25,6 +25,11 @@
   <header class="site-header">
     <div class="container header-content">
       <a href="../index.html" class="site-title">Vortex</a>
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <nav class="site-nav">
         <ul>
           <li><a href="../index.html">Projects</a></li>
@@ -55,6 +60,13 @@
           <a href="https://youtu.be/Q8kXZm-U-z4?list=LL&t=135" target="_blank" class="text-link">International Space
             Station's iROSA (Roll-Out Solar Array)</a> technology.
         </p>
+
+        <figure class="full-width-image">
+          <img src="boom2-img/ROSA.png" alt="Roll-Out Solar Array Render"
+            style="border-radius: var(--radius-lg); width: 100%;">
+          <figcaption style="margin-top: 0.5rem; color: var(--text-muted); text-align: center;">Conceptual render of
+            the Horizon Array (ROSA) deployment.</figcaption>
+        </figure>
 
         <figure class="full-width-image">
           <img src="boom2-img/65cm-mechanism.jpeg" alt="Roll-Out Solar Array Mechanism"
@@ -151,6 +163,26 @@
     </div>
   </footer>
 
+  <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const siteHeader = document.querySelector('.site-header');
+    const navLinks = document.querySelectorAll('.site-nav a');
+
+    menuToggle.addEventListener('click', () => {
+      siteHeader.classList.toggle('nav-open');
+      document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        siteHeader.classList.remove('nav-open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+
+  <script src="../js/logging.js"></script>
 </body>
 
 </html>
