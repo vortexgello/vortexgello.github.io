@@ -2,21 +2,6 @@
 <html lang="en">
 
 <head>
-<script>
-(function() {
-  const p = "Vortex2026!";
-  if (sessionStorage.getItem('v_auth') === 'true') return;
-  const input = prompt("Access Restricted. Enter Password:");
-  if (input === p) {
-    sessionStorage.setItem('v_auth', 'true');
-  } else {
-    document.documentElement.innerHTML = "<html><body style='background:#0f172a;color:#ef4444;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;flex-direction:column;'><h1>403 Forbidden</h1><p>Incorrect credentials.</p><a href='/index.html' style='color:#38bdf8;margin-top:20px;text-decoration:none;'>&larr; Return Home</a></body></html>";
-    window.stop();
-    throw new Error('Unauthorized access');
-  }
-})();
-</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSC Boom Calculator | Vortex</title>
@@ -31,20 +16,77 @@
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <link rel="stylesheet" href="../styles.css">
     <style>
         /* Tool-Specific Styles Override */
         /* Re-implement grid layout within container */
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 20px;
-            margin-top: 20px;
+        :root {
+            --grid-columns: 1;
+            --container-max-width: 1200px;
         }
 
-        @media (max-width: 900px) {
-            .calculator-grid {
-                grid-template-columns: 1fr;
+        .masonry-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+            align-items: start;
+        }
+
+        /* Removed .panel-column as we are flattening the DOM */
+
+        .content-wrapper {
+            max-width: var(--container-max-width) !important;
+            transition: max-width 0.3s ease;
+            margin: 0 auto;
+        }
+
+        /* Layout Controls Styling */
+        .layout-controls {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            backdrop-filter: blur(12px);
+        }
+
+        .layout-btn-group {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            gap: 4px;
+        }
+
+        .layout-btn {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 6px 12px;
+            font-size: 0.85em;
+        }
+
+        .layout-btn.active {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .width-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 600px) {
+            .masonry-wrapper {
+                flex-direction: column;
             }
         }
 
@@ -54,10 +96,46 @@
             padding: 20px;
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-light);
-            margin-bottom: 20px;
+            margin-bottom: 0px;
+            /* Removed for better grid consistency */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             box-shadow: var(--shadow-sm);
+            border-left: 5px solid transparent;
+            /* Standardize accent border */
+        }
+
+        /* Functional Color Categories */
+        .panel-input {
+            border-left-color: #3b82f6 !important;
+        }
+
+        .panel-input h2 {
+            color: #3b82f6 !important;
+        }
+
+        .panel-output {
+            border-left-color: #22c55e !important;
+        }
+
+        .panel-output h2 {
+            color: #22c55e !important;
+        }
+
+        .panel-viz {
+            border-left-color: #06b6d4 !important;
+        }
+
+        .panel-viz h2 {
+            color: #06b6d4 !important;
+        }
+
+        .panel-analysis {
+            border-left-color: #f97316 !important;
+        }
+
+        .panel-analysis h2 {
+            color: #f97316 !important;
         }
 
         .panel h2 {
@@ -66,6 +144,75 @@
             font-size: 1.2rem;
             color: var(--text-main);
             margin-top: 0;
+        }
+
+        /* Collapsible & Rearrangeable Panels */
+        .panel {
+            position: relative;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+        }
+
+        .panel-header h2 {
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+            flex-grow: 1;
+        }
+
+        .drag-handle {
+            cursor: grab;
+            margin-right: 15px;
+            color: var(--text-muted);
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.3rem;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            height: 20px;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .toggle-icon {
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .panel-collapsed .panel-body {
+            display: none;
+        }
+
+        .panel-collapsed .panel-header {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .panel-collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .sortable-ghost {
+            opacity: 0.3;
+            background: var(--accent) !important;
+            border: 2px dashed var(--accent);
+        }
+
+        .panel-body {
+            transition: opacity 0.3s ease;
         }
 
         /* Diagrams */
@@ -298,12 +445,18 @@
             </p>
         </header>
 
-        <div class="calculator-grid">
-            <!-- LEFT COLUMN: Inputs -->
-            <div>
-                <!-- MATERIAL SYSTEM -->
-                <div class="panel" style="border-left: 4px solid #673ab7;">
-                    <h2 style="color:#673ab7;">1. Material System</h2>
+        <!-- LAYOUT SETTINGS PANEL REMOVED (Simplification) -->
+
+        <div id="panels-container" class="masonry-wrapper">
+            <!-- PANELS (Flattened) -->
+            <!-- 1. MATERIAL SYSTEM (INPUT) -->
+            <div id="panel-material" class="panel panel-input">
+                <div class="panel-header" onclick="togglePanel('panel-material')">
+                    <span class="drag-handle">⠿</span>
+                    <h2>Material System</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="panel-body">
                     <div class="row">
                         <div style="flex:1">
                             <label>Resin Type</label>
@@ -379,18 +532,17 @@
                             <div style="font-size:0.75em; color:var(--text-muted);">Approx. limit</div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div style="flex:1">
-                            <label>Effective Resin Modulus</label>
-                            <div class="res-val" id="resEmEff" style="font-size:1.1em; color:var(--text-main);">-- GPa
-                            </div>
-                        </div>
-                    </div>
                 </div>
+            </div>
 
-                <!-- Visual Geometry Inputs -->
-                <div class="panel">
-                    <h2>2. Boom Geometry</h2>
+            <!-- 2. BOOM GEOMETRY (INPUT) -->
+            <div id="panel-geometry" class="panel panel-input">
+                <div class="panel-header" onclick="togglePanel('panel-geometry')">
+                    <span class="drag-handle">⠿</span>
+                    <h2>Boom Geometry</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="panel-body">
                     <div class="row">
                         <div style="flex:1">
                             <label>Flat Width (b) [mm]</label>
@@ -408,10 +560,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Laminate Stack -->
-                <div class="panel">
-                    <h2>3. Laminate Design</h2>
+            <!-- 3. LAMINATE DESIGN (INPUT) -->
+            <div id="panel-laminate" class="panel panel-input">
+                <div class="panel-header" onclick="togglePanel('panel-laminate')">
+                    <span class="drag-handle">⠿</span>
+                    <h2>Laminate Design</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="panel-body">
                     <div class="diagram-container">
                         <div class="diagram-box">
                             <span class="diag-label">Stack Visualizer</span>
@@ -452,7 +610,8 @@
                             <tbody id="layerBody"></tbody>
                         </table>
                     </div>
-                    <p style="text-align:right; font-size:0.9em; margin-top:5px; color: var(--text-muted);">Total t:
+                    <p style="text-align:right; font-size:0.9em; margin-top:5px; color: var(--text-muted);">
+                        Total t:
                         <strong id="totalThick" style="color:var(--text-main);">0.00</strong> mm
                     </p>
 
@@ -486,63 +645,83 @@
                     </button>
                 </div>
 
-                <!-- DYNAMICS & ADVANCED GEOMETRY -->
-                <div class="panel" style="border-left: 5px solid #a855f7;">
-                    <h2 style="color: #a855f7; border-bottom-color: #a855f7;">4. Dynamics & Frequency</h2>
-
-                    <div class="row">
-                        <div style="flex:1">
-                            <label>Boom Length (L) [m]</label>
-                            <input type="number" id="boomLength" value="1.2" oninput="calculate()">
-                        </div>
-                        <div style="flex:1">
-                            <label>Cross-Section Shape</label>
-                            <select id="geoShape" onchange="calculate()">
-                                <option value="circular">Circular Arc</option>
-                                <option value="parabolic">Parabolic (NASA/Yao)</option>
-                            </select>
-                        </div>
+                <!-- 4. DYNAMICS (INPUT) -->
+                <div id="panel-dynamics" class="panel panel-input">
+                    <div class="panel-header" onclick="togglePanel('panel-dynamics')">
+                        <span class="drag-handle">⠿</span>
+                        <h2>Deployment Force</h2>
+                        <span class="toggle-icon">▼</span>
                     </div>
+                    <div class="panel-body">
 
-                    <!-- Embedded Wires Option -->
-                    <div style="margin-top:10px; background:rgba(168, 85, 247, 0.1); padding:8px; border-radius:4px;">
-                        <label style="display:flex; align-items:center; cursor:pointer;">
-                            <input type="checkbox" id="embedWires" onchange="calculate()"
-                                style="width: auto; margin-right: 8px;">
-                            <span>Embed 44-AWG Copper Wires (x4)</span>
-                        </label>
-                        <div style="font-size:0.8em; color:#a855f7; margin-left:24px;">
-                            Ref: Yao et al. (Adds ~0.05mm thickness)
-                        </div>
-                    </div>
-
-                    <div style="margin-top:15px;">
-                        <label>Vibration Analysis</label>
-                        <div class="row" style="margin-top:5px; align-items:flex-start;">
+                        <div class="row">
                             <div style="flex:1">
-                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">1st Natural
-                                    Frequency</span>
-                                <div class="res-val" id="resFreq" style="color:#a855f7; font-size:1.6em;">-- Hz</div>
+                                <label>Boom Length (L) [m]</label>
+                                <input type="number" id="boomLength" value="1.2" oninput="calculate()">
                             </div>
                             <div style="flex:1">
-                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">Linear
-                                    Density</span>
-                                <div class="res-val" id="resMass" style="font-size:1.1em; color:var(--text-main);">--
-                                    g/m</div>
+                                <h2>Cross-Section Properties</h2>
+                                <select id="geoShape" onchange="calculate()">
+                                    <option value="circular">Circular Arc</option>
+                                    <option value="parabolic">Parabolic (NASA/Yao)</option>
+                                </select>
                             </div>
                         </div>
-                        <div style="margin-top:5px;">
-                            <span style="font-size:0.85em; display:block; color:var(--text-muted);">Bending Stiffness
-                                (EI)</span>
-                            <div class="res-val" id="resEI" style="font-size:1.1em; color:var(--text-main);">--</div>
-                            <div style="font-size:0.75em; color:var(--text-muted);">N·m² (Global)</div>
+
+                        <!-- Embedded Wires Option -->
+                        <div
+                            style="margin-top:10px; background:rgba(168, 85, 247, 0.1); padding:8px; border-radius:4px;">
+                            <label style="display:flex; align-items:center; cursor:pointer;">
+                                <input type="checkbox" id="embedWires" onchange="calculate()"
+                                    style="width: auto; margin-right: 8px;">
+                                <span>Embed 44-AWG Copper Wires (x4)</span>
+                            </label>
+                            <div style="font-size:0.8em; color:#a855f7; margin-left:24px;">
+                                Ref: Yao et al. (Adds ~0.05mm thickness)
+                            </div>
+                        </div>
+
+                        <div style="margin-top:15px;">
+                            <label>Vibration Analysis</label>
+                            <div class="row" style="margin-top:5px; align-items:flex-start;">
+                                <div style="flex:1">
+                                    <span style="font-size:0.85em; display:block; color:var(--text-muted);">1st
+                                        Natural
+                                        Frequency</span>
+                                    <div class="res-val" id="resFreq" style="color:#a855f7; font-size:1.6em;">--
+                                        Hz</div>
+                                </div>
+                                <div style="flex:1">
+                                    <span style="font-size:0.85em; display:block; color:var(--text-muted);">Linear
+                                        Density</span>
+                                    <div class="res-val" id="resMass" style="font-size:1.1em; color:var(--text-main);">
+                                        --
+                                        g/m</div>
+                                </div>
+                            </div>
+                            <div style="margin-top:5px;">
+                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">Bending
+                                    Stiffness
+                                    (EI)</span>
+                                <div class="res-val" id="resEI" style="font-size:1.1em; color:var(--text-main);">--
+                                </div>
+                                <div style="font-size:0.75em; color:var(--text-muted);">N·m² (Global)</div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- STRUCTURAL PERFORMANCE PANEL -->
                 </div>
+            </div>
 
-                <!-- STRUCTURAL PERFORMANCE PANEL -->
-                <div class="panel" style="border-left: 5px solid #d32f2f;">
-                    <h2 style="color: #d32f2f;">5. Structural Performance</h2>
+            <!-- 5. STRUCTURAL PERFORMANCE (ANALYSIS) -->
+            <div id="panel-structural" class="panel panel-analysis">
+                <div class="panel-header" onclick="togglePanel('panel-structural')">
+                    <span class="drag-handle">⠿</span>
+                    <h2>Structural Performance</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="panel-body">
                     <p style="font-size:0.85em; color:#666;">
                         Load bearing analysis for deployed cantilever state.<br>
                         Ref: Murphey et al. Eq. 5 (Buckling) & Yao et al. (Stiffness).
@@ -585,7 +764,8 @@
                             <div style="flex:1">
                                 <label>Coiling Torque (Opposite)</label>
                                 <div class="res-val" id="resMopper" style="font-size:1.1em;">--</div>
-                                <div id="resStability" style="font-size:0.75em; color:var(--text-muted);">Stability: --
+                                <div id="resStability" style="font-size:0.75em; color:var(--text-muted);">
+                                    Stability: --
                                 </div>
                             </div>
                             <div style="flex:1">
@@ -601,12 +781,14 @@
                                 <label>Crit. Buckling</label>
                                 <div class="res-val" id="resBuckle" style="font-size:1.1em; color:var(--text-main);">--
                                 </div>
-                                <div style="font-size:0.75em; color:var(--text-muted);">(Axial Load [N])</div>
+                                <div style="font-size:0.75em; color:var(--text-muted);">(Axial Load [N])
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="tip-box">
-                        <strong>Design Tip:</strong> A Stability Ratio of <strong>6-10%</strong> is the Goldilocks
+                        <strong>Design Tip:</strong> A Stability Ratio of <strong>6-10%</strong> is the
+                        Goldilocks
                         zone. It ensures the boom stays coiled without help but retains enough energy to
                         self-deploy.
                         <br><br>
@@ -614,14 +796,22 @@
                         • <strong>6-10%:</strong> Ideal Bistable Hybrid.<br>
                         • <strong>&gt; 12%:</strong> Monostable (will snap open).
                         <br><br>
-                        <i style="font-size:0.9em;">Note: UD (Tape) cores increase longitudinal stiffness ($D_{11}$),
-                            which pushes the ratio HIGHER. Woven skins are often used to achieve lower ratios.</i>
+                        <i style="font-size:0.9em;">Note: UD (Tape) cores increase longitudinal stiffness
+                            ($D_{11}$),
+                            which pushes the ratio HIGHER. Woven skins are often used to achieve lower
+                            ratios.</i>
                     </div>
                 </div>
+            </div>
 
-                <!-- DUAL BOOM SOLAR BLANKET & AREA PANEL -->
-                <div class="panel" style="border-left: 5px solid #ff5722;">
-                    <h2 style="color: #e64a19;">6. Solar Blanket Sizing</h2>
+            <!-- 6. SOLAR BLANKET SIZING (ANALYSIS) -->
+            <div id="panel-solar" class="panel panel-analysis">
+                <div class="panel-header" onclick="togglePanel('panel-solar')">
+                    <span class="drag-handle">⠿</span>
+                    <h2>Solar Blanket Sizing</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="panel-body">
                     <p style="font-size:0.85em; color:#666;">
                         Calculates max area based on boom buckling limit (ROSA Style).<br>
                         Ref: Source 609 (ROSA) & Murphey et al.
@@ -678,180 +868,249 @@
                             <div style="flex:1">
                                 <label>Power Output</label>
                                 <div class="res-val" id="resPower" style="font-size:1.0em; color:#2e7d32;">--</div>
-                                <div style="font-size:0.7em;">(Peak Watts)</div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- EXPERIMENTAL VALIDATION PANEL -->
-                <div class="panel" style="border-top: 4px solid #f97316;">
-                    <h2 style="color: #f97316; border-bottom-color: #f97316;">7. Experimental Validation</h2>
-                    <p style="font-size:0.85em; color:var(--text-muted);">Enter Platen Test (Squeeze) data to see if
-                        your physical boom
-                        matches theory.</p>
-
-                    <div class="row">
-                        <div style="flex:1">
-                            <label>Platen Dist (d) [mm]</label>
-                            <input type="number" id="exp_d" value="40" placeholder="Gap" oninput="calculate()">
-                        </div>
-                        <div style="flex:1">
-                            <label>Load (P) [grams]</label>
-                            <input type="number" id="exp_mass" value="500" placeholder="Scale reading"
-                                oninput="calculate()">
-                        </div>
-                    </div>
-
-                    <div
-                        style="background: rgba(249, 115, 22, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
-                        <label style="color:#f97316;">Experimental Stiffness (EI)</label>
-                        <div class="res-val" id="exp_EI" style="color:#f97316;">--</div>
-                        <div style="font-size:0.8em; color:var(--text-muted);">Theoretical: <span id="theo_EI">--</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- RIGHT COLUMN: Visualization & Results -->
-            <div>
-                <!-- Geometric Diagrams -->
-                <div class="panel">
-                    <h2>8. Geometry Visualizer</h2>
-                    <div class="diagram-container">
-                        <!-- Cross Section View -->
-                        <div class="diagram-box">
-                            <span class="diag-label">Deployed Cross-Section</span>
-                            <svg id="geoSvg" width="200" height="120"></svg>
-                            <div id="geoInfo" style="font-size:0.85em; color:var(--text-muted); margin-top:5px;"></div>
-                        </div>
-                        <!-- Rolled View -->
-                        <div class="diagram-box">
-                            <span class="diag-label">Stowed (Rolled)</span>
-                            <svg id="rollSvg" width="120" height="120"></svg>
-                            <div id="rollInfo" style="font-size:0.85em; color:var(--text-muted); margin-top:5px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Numerical Results -->
-                <div class="panel">
-                    <h2>9. Analysis Summary</h2>
-                    <div style="display: flex; gap: 15px;">
-                        <div style="flex:1">
-                            <label>Fiber Strain</label>
-                            <div class="res-val" id="resStrain">--</div>
-                            <div id="resStatus"></div>
-                        </div>
-                        <div style="flex:1">
-                            <label>Deploy Torque</label>
-                            <div class="res-val" id="resTorque">--</div>
-                            <div style="font-size:0.8em; color:var(--text-muted)">N·mm</div>
-                        </div>
-                        <div style="flex:1">
-                            <label>Natural Radius</label>
-                            <div class="res-val" id="resNatRad" style="font-size:1.1em; margin-top:5px;">--</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Energy Plot -->
-                <div class="panel">
-                    <h2>10. Strain Energy Landscape</h2>
-                    <div class="chart-box">
-                        <canvas id="energyChart"></canvas>
-                    </div>
-                    <p style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
-                        Theory: Minima in this curve represent stable states. If it slopes down to the right, the boom
-                        self-deploys.
-                    </p>
-                </div>
-
-                <!-- VALIDATION CHART -->
-                <div class="panel">
-                    <h2>11. Safety & Validation</h2>
-                    <div class="chart-box">
-                        <canvas id="strainChart"></canvas>
-                    </div>
-                    <p style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
-                        <strong style="color:#f97316;">Orange Dot:</strong> Your test point. If it's
-                        <strong>below</strong>
-                        the blue line, your boom is stiffer than predicted (check resin/thickness). If
-                        <strong>above</strong>, it's softer.
-                    </p>
-                </div>
-
-                <!-- STOWAGE LIFE PANEL -->
-                <div class="panel">
-                    <h2>12. Precision Stowage Life (TTS)</h2>
-                    <p style="font-size:0.85em; color:var(--text-muted); margin-bottom:10px;">
-                        Dynamic <strong>Time-Temperature Superposition</strong> model.<br>
-                        Ref: Brinkmeyer et al. (Prony Series Relaxation).
-                    </p>
-
-                    <div class="row">
-                        <div style="flex:1">
-                            <label>Stowage Temp (°C)</label>
-                            <input type="number" id="stowageTemp" value="25" oninput="calculate()">
-                        </div>
-                        <div style="flex:1">
-                            <label>Torque Margin (SF)</label>
-                            <input type="number" id="torqueMargin" value="3.0" step="0.1" oninput="calculate()">
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-top:10px;">
-                        <div style="flex:1">
-                            <label>Mission Duration (Days)</label>
-                            <input type="number" id="missionDays" value="30" oninput="calculate()">
-                        </div>
-                        <div style="flex:1">
-                            <label>Mission Safety</label>
-                            <div id="missionStatus"
-                                style="font-weight:bold; padding:4px 8px; border-radius:4px; text-align:center; font-size:0.9em; margin-top:4px;">
-                                --</div>
-                        </div>
-                    </div>
-
-                    <div
-                        style="background: rgba(56, 189, 248, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                    <!-- 6b. DEFLECTION CHECK (NEW) -->
+                    <div style="margin-top: 15px; border-top: 1px dashed var(--border-light); padding-top: 10px;">
+                        <h4 style="margin: 0 0 10px 0; color: var(--text-main); font-size: 0.95em;">Deflection Check
+                            (Deployed)</h4>
                         <div class="row">
                             <div style="flex:1">
-                                <label>Relaxation Limit</label>
-                                <div id="resRelaxLimit"
-                                    style="font-size:0.9em; font-weight:bold; color:var(--text-main);">--</div>
-                                <div style="font-size:0.7em; color:var(--text-muted);">Min. Stall Torque</div>
+                                <label>Blanket Mass (kg)</label>
+                                <input type="number" id="blanketMass" value="0.2" step="0.01" oninput="calculate()">
+                                <span style="font-size:0.75em; color:var(--text-muted);">Total Payload</span>
                             </div>
                             <div style="flex:1">
-                                <label style="color:#38bdf8;">Predicted Stall Date</label>
-                                <div class="res-val" id="resStowageLife" style="font-size:1.2em; color:#38bdf8;">--
-                                </div>
+                                <label>Max Deflection (mm)</label>
+                                <input type="number" id="maxDeflection" value="10" step="1" oninput="calculate()">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 5px;">
+                            <div style="flex:1">
+                                <label>Predicted Tip Deflection</label>
+                                <div class="res-val" id="resDeflection">--</div>
+                            </div>
+                            <div style="flex:1">
+                                <label>Status</label>
+                                <div class="res-val" id="resDeflectionStatus">--</div>
+                            </div>
+                        </div>
+                        <div id="deflectionAdvice"
+                            style="font-size: 0.8em; margin-top: 5px; color: var(--text-muted); font-style: italic;">
+                        </div>
+                    </div>
+                    --
+                </div>
+                <div style="font-size:0.7em;">(Peak Watts)</div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <!-- 7. EXPERIMENTAL VALIDATION (INPUT) -->
+        <div id="panel-experimental" class="panel panel-input">
+            <div class="panel-header" onclick="togglePanel('panel-experimental')">
+                <span class="drag-handle">⠿</span>
+                <h2>Experimental Validation</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="panel-body">
+                <p style="font-size:0.85em; color:var(--text-muted);">Enter Platen Test (Squeeze) data
+                    to see if your physical boom matches theory.</p>
+
+                <div class="row">
+                    <div style="flex:1">
+                        <label>Platen Dist (d) [mm]</label>
+                        <input type="number" id="exp_d" value="40" placeholder="Gap" oninput="calculate()">
+                    </div>
+                    <div style="flex:1">
+                        <label>Load (P) [grams]</label>
+                        <input type="number" id="exp_mass" value="500" placeholder="Scale reading"
+                            oninput="calculate()">
+                    </div>
+                </div>
+
+                <div style="background: rgba(249, 115, 22, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                    <label style="color:#f97316;">Experimental Stiffness (EI)</label>
+                    <div class="res-val" id="exp_EI" style="color:#f97316;">--</div>
+                    <div style="font-size:0.8em; color:var(--text-muted);">Theoretical: <span id="theo_EI">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 8. GEOMETRY VISUALIZER (VIZ) -->
+        <div id="panel-geometry-viz" class="panel panel-viz">
+            <div class="panel-header" onclick="togglePanel('panel-geometry-viz')">
+                <span class="drag-handle">⠿</span>
+                <h2>Geometry Visualizer</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="panel-body">
+                <div class="diagram-container">
+                    <!-- Cross Section View -->
+                    <div class="diagram-box">
+                        <span class="diag-label">Deployed Cross-Section</span>
+                        <svg id="geoSvg" width="200" height="120"></svg>
+                        <div id="geoInfo" style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
+                        </div>
+                    </div>
+                    <!-- Rolled View -->
+                    <div class="diagram-box">
+                        <span class="diag-label">Stowed (Rolled)</span>
+                        <svg id="rollSvg" width="120" height="120"></svg>
+                        <div id="rollInfo" style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. ANALYSIS SUMMARY (OUTPUT) -->
+        <div id="panel-summary" class="panel panel-output">
+            <div class="panel-header" onclick="togglePanel('panel-summary')">
+                <span class="drag-handle">⠿</span>
+                <h2>Analysis Summary</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="panel-body">
+                <div style="display: flex; gap: 15px;">
+                    <div style="flex:1">
+                        <label>Fiber Strain</label>
+                        <div class="res-val" id="resStrain">--</div>
+                        <div id="resStatus"></div>
+                    </div>
+                    <div style="flex:1">
+                        <label>Deploy Torque</label>
+                        <div class="res-val" id="resTorque">--</div>
+                        <div style="font-size:0.8em; color:var(--text-muted)">N·mm</div>
+                    </div>
+                    <div style="flex:1">
+                        <label>Natural Radius</label>
+                        <div class="res-val" id="resNatRad" style="font-size:1.1em; margin-top:5px;">--
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. STRAIN ENERGY LANDSCAPE (VIZ) -->
+        <div id="panel-energy-plot" class="panel panel-viz">
+            <div class="panel-header" onclick="togglePanel('panel-energy-plot')">
+                <span class="drag-handle">⠿</span>
+                <h2>Strain Energy Landscape</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="panel-body">
+                <div class="chart-box">
+                    <canvas id="energyChart"></canvas>
+                </div>
+                <p style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
+                    Theory: Minima in this curve represent stable states. If it slopes down to
+                    the right, the boom self-deploys.
+                </p>
+            </div>
+        </div>
+
+        <!-- 11. SAFETY & VALIDATION (VIZ) -->
+        <div id="panel-safety" class="panel panel-viz">
+            <div class="panel-header" onclick="togglePanel('panel-safety')">
+                <span class="drag-handle">⠿</span>
+                <h2>Safety & Validation</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="panel-body">
+                <div class="chart-box">
+                    <canvas id="strainChart"></canvas>
+                </div>
+                <p style="font-size:0.85em; color:var(--text-muted); margin-top:5px;">
+                    <strong style="color:#f97316;">Orange Dot:</strong> Your test point. If it's
+                    <strong>below</strong> the blue line, your boom is stiffer than predicted
+                    (check resin/thickness). If <strong>above</strong>, it's softer.
+                </p>
+            </div>
+        </div>
+
+        <!-- 12. PRECISION STOWAGE LIFE (ANALYSIS) -->
+        <div id="panel-tts" class="panel panel-analysis">
+            <div class="panel-header" onclick="togglePanel('panel-tts')">
+                <span class="drag-handle">⠿</span>
+                <h2>Precision Stowage Life (TTS)</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="panel-body">
+                <p style="font-size:0.85em; color:var(--text-muted); margin-bottom:10px;">
+                    Dynamic <strong>Time-Temperature Superposition</strong> model.<br>
+                    Ref: Brinkmeyer et al. (Prony Series Relaxation).
+                </p>
+                <div class="row">
+                    <div style="flex:1">
+                        <label>Stowage Temp (°C)</label>
+                        <input type="number" id="stowageTemp" value="25" oninput="calculate()">
+                    </div>
+                    <div style="flex:1">
+                        <label>Torque Margin (SF)</label>
+                        <input type="number" id="torqueMargin" value="3.0" step="0.1" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div style="flex:1">
+                        <label>Mission Duration (Days)</label>
+                        <input type="number" id="missionDays" value="30" oninput="calculate()">
+                    </div>
+                    <div style="flex:1">
+                        <label>Mission Safety</label>
+                        <div id="missionStatus"
+                            style="font-weight:bold; padding:4px 8px; border-radius:4px; text-align:center; font-size:0.9em; margin-top:4px;">
+                            --</div>
+                    </div>
+                </div>
+                <div style="background: rgba(56, 189, 248, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Relaxation Limit</label>
+                            <div id="resRelaxLimit" style="font-size:0.9em; font-weight:bold; color:var(--text-main);">
+                                --</div>
+                            <div style="font-size:0.7em; color:var(--text-muted);">Min. Stall
+                                Torque</div>
+                        </div>
+                        <div style="flex:1">
+                            <label style="color:#38bdf8;">Predicted Stall Date</label>
+                            <div class="res-val" id="resStowageLife" style="font-size:1.2em; color:#38bdf8;">--
                             </div>
                         </div>
                     </div>
-
-                    <div class="chart-box" style="margin-top:15px;">
-                        <canvas id="relaxChart"></canvas>
-                    </div>
-                    <div id="brinkmeyerWarning" class="tip-box"
-                        style="display:none; background:rgba(239, 68, 68, 0.1); border-left-color:#ef4444; color:#ef4444;">
-                        <strong>WARNING:</strong> Storage temperature is within 20°C of Resin Tg. Creep failure is
-                        imminent!
-                    </div>
                 </div>
-
-                <div class="panel">
-                    <h2>13. Design Sensitivity</h2>
-                    <div class="chart-box">
-                        <canvas id="angleChart"></canvas>
-                    </div>
-                    <p style="font-size:0.85em; color:var(--text-muted);">
-                        How changing your skin angle (currently <span id="currAngleDisp">45</span>°) affects the natural
-                        roll size.
-                    </p>
+                <div class="chart-box" style="margin-top:15px;">
+                    <canvas id="relaxChart"></canvas>
+                </div>
+                <div id="brinkmeyerWarning" class="tip-box"
+                    style="display:none; background:rgba(239, 68, 68, 0.1); border-left-color:#ef4444; color:#ef4444;">
+                    <strong>WARNING:</strong> Storage temperature is within 20°C of Resin Tg.
+                    Creep failure is imminent!
                 </div>
             </div>
+        </div>
+
+        <!-- 13. DESIGN SENSITIVITY (VIZ) -->
+        <div id="panel-sensitivity" class="panel panel-viz">
+            <div class="panel-header" onclick="togglePanel('panel-sensitivity')">
+                <span class="drag-handle">⠿</span>
+                <h2>Design Sensitivity</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="panel-body">
+                <div class="chart-box">
+                    <canvas id="angleChart"></canvas>
+                </div>
+                <p style="font-size:0.85em; color:var(--text-muted);">
+                    How changing your skin angle (currently <span id="currAngleDisp">45</span>°)
+                    affects the natural roll size.
+                </p>
+            </div>
+        </div>
         </div>
     </main>
 
@@ -862,6 +1121,74 @@
     </footer>
 
     <script>
+        // --- LAYOUT MANAGEMENT (Simplified) ---
+        // No complex column logic. Just Save/Load panel order and collapsed state.
+
+        function togglePanel(panelId) {
+            const panel = document.getElementById(panelId);
+            panel.classList.toggle('panel-collapsed');
+            savePanelStates();
+        }
+
+        function savePanelStates() {
+            const container = document.getElementById('panels-container');
+            const panelData = [];
+
+            Array.from(container.children).forEach(panel => {
+                if (panel.classList.contains('panel')) {
+                    panelData.push({
+                        id: panel.id,
+                        collapsed: panel.classList.contains('panel-collapsed')
+                    });
+                }
+            });
+
+            localStorage.setItem('calc_panel_states_v2', JSON.stringify(panelData));
+        }
+
+        function loadPanelStates() {
+            const saved = localStorage.getItem('calc_panel_states_v2');
+            if (!saved) return;
+
+            try {
+                const panelData = JSON.parse(saved);
+                const container = document.getElementById('panels-container');
+                const panelMap = {};
+
+                // Map existing panels
+                Array.from(container.children).forEach(p => {
+                    if (p.id) panelMap[p.id] = p;
+                });
+
+                // Re-append in saved order
+                panelData.forEach(data => {
+                    const panel = panelMap[data.id];
+                    if (panel) {
+                        if (data.collapsed) panel.classList.add('panel-collapsed');
+                        else panel.classList.remove('panel-collapsed');
+                        container.appendChild(panel); // Moves it to the end (reordering)
+                    }
+                });
+            } catch (e) {
+                console.error("Load Error", e);
+            }
+        }
+
+        function initSortable() {
+            new Sortable(document.getElementById('panels-container'), {
+                animation: 150,
+                handle: '.drag-handle',
+                ghostClass: 'sortable-ghost',
+                onEnd: savePanelStates
+            });
+        }
+
+        // Initialize on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPanelStates();
+            initSortable();
+        });
+
         // Set Chart.js Defaults for Dark Theme
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.borderColor = '#1e293b';
@@ -1481,6 +1808,46 @@
             // 7. Update Diagram (Pass Power to visualize it)
             drawArray(max_width_m, L, total_power_watts);
 
+            // 8. Solar Blanket Deflection Check
+            const blanket_mass_kg = parseFloat(document.getElementById('blanketMass').value);
+            const max_def_mm = parseFloat(document.getElementById('maxDeflection').value);
+
+            // Ex_eff is in Pa. Convert to GPa.
+            const E_axial_GPa = Ex_eff / 1e9;
+
+            // L is in meters. R_trans is in meters. h is in meters.
+            // Function expects: L_m, R_mm, t_mm, E_GPa, mass_kg
+            const check = check_solar_blanket_deflection(
+                L,
+                R_trans * 1000,
+                h * 1000,
+                E_axial_GPa,
+                blanket_mass_kg
+            );
+
+            // Update UI
+            const resDef = document.getElementById('resDeflection');
+            const resStat = document.getElementById('resDeflectionStatus');
+            const resAdv = document.getElementById('deflectionAdvice');
+
+            if (resDef && resStat) {
+                resDef.innerText = check.deflection_mm.toFixed(1) + " mm";
+
+                if (check.deflection_mm > max_def_mm) {
+                    resStat.innerHTML = "<span style='color:#ef4444; font-weight:bold;'>FAIL</span>";
+                    resAdv.innerHTML = "<span style='color:#ef4444;'>⚠ Too flexible! Increase Radius (R).</span>";
+                    // Highlight Geometry Panel
+                    const panelGeo = document.getElementById('panel-geometry');
+                    if (panelGeo) panelGeo.style.borderLeft = "5px solid #ef4444";
+                } else {
+                    resStat.innerHTML = "<span style='color:#22c55e; font-weight:bold;'>PASS</span>";
+                    resAdv.innerHTML = "<span style='color:#22c55e;'>✓ Stiffness is adequate.</span>";
+                    // Reset Geometry Panel
+                    const panelGeo = document.getElementById('panel-geometry');
+                    if (panelGeo) panelGeo.style.borderLeft = "";
+                }
+            }
+
             document.getElementById('resFreq').innerText = freq.toFixed(2) + " Hz";
             document.getElementById('resMass').innerText = (w_linear * 1000).toFixed(1) + " g/m";
             document.getElementById('resEI').innerText = Global_EI.toFixed(4);
@@ -1616,43 +1983,50 @@
                 });
             }
 
-            if (strainChart) strainChart.destroy();
-
-            strainChart = new Chart(ctx, {
+            if (window.strainChart) window.strainChart.destroy();
+            window.strainChart = new Chart(ctx, {
                 type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                },
+                data: { labels: labels, datasets: datasets },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'nearest',
-                        axis: 'x',
-                        intersect: false
-                    },
-                    plugins: {
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        }
-                    },
                     scales: {
-                        x: {
-                            type: 'linear',
-                            title: { display: true, text: 'Roll Diameter (mm)' },
-                            min: 15,
-                            max: 200
-                        },
-                        y: {
-                            title: { display: true, text: 'Fiber Strain (%)' },
-                            min: 0
-                        }
+                        x: { title: { display: true, text: 'Coil Diameter (mm)' } },
+                        y: { title: { display: true, text: 'Strain (%)' }, min: 0, max: 2.5 }
                     }
                 }
             });
         }
+
+        // --- NEW: Solar Blanket Deflection Check ---
+        function check_solar_blanket_deflection(L_m, R_mm, t_mm, E_GPa, mass_kg) {
+            // 1. Convert units to Base (Meters, Pascals)
+            const R = R_mm / 1000.0;
+            const t = t_mm / 1000.0;
+            const E = E_GPa * 1e9;
+
+            // 2. Calculate Global Moment of Inertia (I) for deployed semi-circle
+            // I approx 0.3 * R^3 * t
+            const I_global = 0.3 * Math.pow(R, 3) * t;
+            const EI_global = E * I_global;
+
+            // 3. Calculate Load (Distributed)
+            const gravity = 9.81;
+            const total_weight_N = mass_kg * gravity;
+            const q = total_weight_N / L_m; // N/m
+
+            // 4. Calculate Deflection (Cantilever with distributed load)
+            // Delta = (q * L^4) / (8 * EI)
+            const deflection_m = (q * Math.pow(L_m, 4)) / (8 * EI_global);
+            const deflection_mm = deflection_m * 1000.0;
+
+            return {
+                deflection_mm: deflection_mm,
+                EI: EI_global
+            };
+        }
+
+
 
         function getPronyStiffness(t_sec, shift_factor) {
             // Brinkmeyer et al. Prony Series (Source 367)

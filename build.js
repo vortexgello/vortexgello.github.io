@@ -47,7 +47,8 @@ const PUBLIC_PAGES = [
     'pages/covid-distance-alarm.html',
     'pages/kart.html',
     'pages/penplotter.html',
-    'pages/steps.html'
+    'pages/steps.html',
+    'pages/calc.html'
 ];
 
 const password = process.env.INTERNAL_PAGE_PASSWORD || 'Vortex2026!';
