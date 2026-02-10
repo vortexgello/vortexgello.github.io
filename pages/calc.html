@@ -446,7 +446,8 @@
                                 <label>Snap Moment</label>
                                 <div class="res-val" id="resSnap" style="font-size:1.1em; color:var(--text-main);">--
                                 </div>
-                                <div style="font-size:0.75em; color:var(--text-muted);">(Opposite Sense)</div>
+                                <div id="resSense" style="font-size:0.75em; color:var(--text-muted);">(Opposite Sense)
+                                </div>
                             </div>
                             <div style="flex:1">
                                 <label>Crit. Buckling</label>
@@ -792,51 +793,101 @@
             const width = parseFloat(document.getElementById('width').value);
             const R = parseFloat(document.getElementById('R_trans').value);
             const rollD = parseFloat(document.getElementById('rollDia').value);
+            const L = parseFloat(document.getElementById('boomLength').value) * 1000; // mm
+            const h = parseFloat(document.getElementById('totalThick').innerText) || 0.3; // mm
 
             // 1. Draw Cross Section (The Smile)
             const geoSvg = document.getElementById('geoSvg');
             geoSvg.innerHTML = ''; // Clear
 
-            // Calculate subtended angle beta = width / R (radians)
+            if (width > 2 * Math.PI * R) {
+                geoSvg.innerHTML = `<text x="100" y="60" fill="#ef4444" font-size="12" text-anchor="middle" font-weight="bold">Error: Width > Circumference</text>`;
+                document.getElementById('geoInfo').innerHTML = `<span style="color:#ef4444">Geometric Error</span>`;
+                return;
+            }
+
             const beta = width / R;
             const betaDeg = (beta * 180) / Math.PI;
             document.getElementById('geoInfo').innerHTML = `Arc: ${betaDeg.toFixed(1)}° <br> (Source: Brinkmeyer Fig 2)`;
 
-            // SVG Path
-            const scale = 100 / (width * 0.8);
+            // Arc geometry
+            // arc_w = 2 * R * sin(beta/2)
+            // arc_h = R * (1 - cos(beta/2))
+            const arcW = 2 * R * Math.sin(beta / 2);
+            const arcH = R * (1 - Math.cos(beta / 2));
+
+            // Constrain within 200x120 box with 20px padding
+            const availW = 160;
+            const availH = 80;
+            const scale = Math.min(availW / arcW, availH / arcH);
             const pathR = R * scale;
+            const drawW = arcW * scale;
+            const drawH = arcH * scale;
 
-            // Draw Center Point
+            // Center of the circle in SVG coords
             const cx = 100;
-            const cy = 20 + pathR * 0.5;
+            const cy_bottom = 100; // Position bottom of arc at y=100
+            const cY = cy_bottom - pathR;
 
-            // Start/End points
-            const dx = pathR * Math.sin(beta / 2);
-            const dy = pathR * Math.cos(beta / 2);
+            // Start/End points (Angles for smile: PI - beta/2 to PI + beta/2)
+            const angStart = Math.PI - beta / 2;
+            const angEnd = Math.PI + beta / 2;
 
-            const startX = cx - dx;
-            const startY = cy - (pathR - dy);
-            const endX = cx + dx;
-            const endY = startY;
+            const startX = cx + pathR * Math.sin(angStart);
+            const startY = cY - pathR * Math.cos(angStart);
+            const endX = cx + pathR * Math.sin(angEnd);
+            const endY = cY - pathR * Math.cos(angEnd);
 
-            let pathStr = `<path d="M ${startX} ${startY} A ${pathR} ${pathR} 0 0 0 ${endX} ${endY}" stroke="#38bdf8" stroke-width="4" fill="none" />`;
+            const largeArcFlag = beta > Math.PI ? 1 : 0;
+            const sweepFlag = 1;
+
+            let pathStr = `<path d="M ${startX} ${startY} A ${pathR} ${pathR} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="#38bdf8" stroke-width="4" fill="none" />`;
 
             // Add Radius Line
-            pathStr += `<line x1="${cx}" y1="${cy - pathR}" x2="${cx}" y2="${cy - pathR + pathR}" stroke="#475569" stroke-dasharray="4" />`;
-            // Use lighter text for dark theme
-            pathStr += `<text x="${cx + 5}" y="${cy - pathR / 2}" font-size="10" fill="#94a3b8">R=${R}</text>`;
+            pathStr += `<line x1="${cx}" y1="${cY}" x2="${cx}" y2="${cy_bottom}" stroke="#475569" stroke-dasharray="4" />`;
+            pathStr += `<text x="${cx + 5}" y="${cY + pathR / 2}" font-size="10" fill="#94a3b8">R=${R}</text>`;
 
             geoSvg.innerHTML = pathStr;
 
-            // 2. Draw Roll (The Coil)
+            // 2. Draw Roll (The Coil / Spiral)
             const rollSvg = document.getElementById('rollSvg');
-            const rScale = 80 / rollD;
-            const rVis = (rollD / 2) * rScale;
-            rollSvg.innerHTML = `
-                <circle cx="60" cy="60" r="${rVis}" stroke="#94a3b8" stroke-width="3" fill="#1e293b" />
-                <line x1="60" y1="60" x2="${60 + rVis}" y2="60" stroke="#ef4444" />
+            rollSvg.innerHTML = '';
+
+            const r0 = rollD / 2;
+            const a = h / (2 * Math.PI);
+            // L = r0*theta + a*theta^2 / 2
+            // Solve for theta: a/2 * theta^2 + r0 * theta - L = 0
+            const thetaMax = (-r0 + Math.sqrt(r0 * r0 + 2 * (h / (2 * Math.PI)) * L)) / (h / (2 * Math.PI));
+            const turns = thetaMax / (2 * Math.PI);
+
+            // Scale spiral to fit 120x120
+            const outerR = r0 + a * thetaMax;
+            const rollScale = 50 / outerR; // max radius 50px
+            const cxRoll = 60, cyRoll = 60;
+
+            // Mandrel circle
+            rollSvg.innerHTML += `<circle cx="${cxRoll}" cy="${cyRoll}" r="${r0 * rollScale}" stroke="#475569" fill="#1e293b" stroke-width="1" />`;
+
+            // Draw spiral path (High Resolution)
+            let d = "";
+            const steps = Math.max(500, Math.ceil(turns * 200)); // Increase resolution for smooth spiral
+            for (let i = 0; i <= steps; i++) {
+                const t = (thetaMax * i) / steps;
+                const r = (r0 + a * t) * rollScale;
+                const sx = cxRoll + r * Math.sin(t);
+                const sy = cyRoll - r * Math.cos(t);
+                d += (i === 0 ? "M" : "L") + ` ${sx.toFixed(2)} ${sy.toFixed(2)}`;
+            }
+            rollSvg.innerHTML += `<path d="${d}" stroke="#38bdf8" stroke-width="2" fill="none" stroke-linecap="round" />`;
+
+            // Add Dimension info
+            rollSvg.innerHTML += `
+                <line x1="${cxRoll}" y1="${cyRoll}" x2="${cxRoll + outerR * rollScale}" y2="${cyRoll}" stroke="#ef4444" stroke-opacity="0.5" />
+                <text x="60" y="115" font-size="10" fill="#94a3b8" text-anchor="middle">Turns: ${turns.toFixed(1)}</text>
                 <text x="60" y="55" font-size="10" fill="#ef4444" text-anchor="middle">D=${rollD}</text>
             `;
+
+            document.getElementById('rollInfo').innerHTML = `Thickness: ${h}mm <br> Length: ${(L / 1000).toFixed(2)}m`;
 
             drawStack();
 
@@ -1135,18 +1186,31 @@
             document.getElementById('resDeflect').innerText = deflect_mm.toFixed(1) + " mm";
             document.getElementById('resStress').innerText = (sigma_root / 1e6).toFixed(1) + " MPa";
 
-            // Display Moments in N*cm for readability
-            document.getElementById('resSnap').innerText = (M_snap * 100).toFixed(1) + " N·cm";
-            document.getElementById('resBuckle').innerText = P_buckle.toFixed(2) + " N";
+            // Bending Sense Detection:
+            // Downward (P_tip > 0) = Opposite Sense (Flattening)
+            // Upward (P_tip < 0) = Equal Sense (Deepening)
+            const isOppositeSense = P_tip > 0;
+            const senseLabel = isOppositeSense ? "(Opposite Sense)" : "(Equal Sense)";
 
-            // Safety Color Coding
+            // Display Moments in N*cm for readability
             const snapElem = document.getElementById('resSnap');
-            if (M_root > M_snap) {
-                snapElem.style.color = "red";
-                snapElem.innerText += " (FAIL)";
+            const senseElem = document.getElementById('resSense');
+            if (senseElem) senseElem.innerText = senseLabel;
+
+            if (isOppositeSense) {
+                if (Math.abs(M_root) > M_snap) {
+                    snapElem.style.color = "#ef4444";
+                    snapElem.innerText = (M_snap * 100).toFixed(1) + " N·cm (FAIL)";
+                } else {
+                    snapElem.style.color = "#22c55e";
+                    snapElem.innerText = (M_snap * 100).toFixed(1) + " N·cm (Safe)";
+                }
             } else {
-                snapElem.style.color = "green";
+                snapElem.style.color = "#38bdf8";
+                snapElem.innerText = "N/A (Upward)";
             }
+
+            document.getElementById('resBuckle').innerText = P_buckle.toFixed(2) + " N";
 
             // 8. Draw Visualizer
             drawBeam(L, deflect_m * 100, M_root / M_snap); // Scale deflection for visibility
@@ -1488,21 +1552,22 @@
 
             // Setup
             const startX = 40;
-            const startY = h - 20; // Root position
-            const beamLenPx = w - 60;
+            const startY = h / 2; // Center root vertically to allow ± deflection
+            const beamLenPx = w - 80;
             const endX = startX + beamLenPx;
 
             // Scale deflection (exaggerated for visuals)
-            // Map deflection input (which is abstract scaled) to pixels
-            // Let's cap max visual deflection at 80px
+            // Clamp visual deflection to fit within canvas height (± from center)
+            const maxDefPx = (h / 2) - 20;
             let defPx = deflection * 200; // Arbitrary scale factor
-            if (defPx > 80) defPx = 80;
+            if (defPx > maxDefPx) defPx = maxDefPx;
+            if (defPx < -maxDefPx) defPx = -maxDefPx;
             const endY = startY + defPx;
 
             // Draw Wall (Root)
             ctx.beginPath();
-            ctx.moveTo(startX, startY - 40);
-            ctx.lineTo(startX, startY + 40);
+            ctx.moveTo(startX, startY - 30);
+            ctx.lineTo(startX, startY + 30);
             ctx.lineWidth = 5;
             ctx.strokeStyle = "#555";
             ctx.stroke();

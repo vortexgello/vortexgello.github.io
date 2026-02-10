@@ -254,8 +254,6 @@
             </button>
             <nav class="site-nav">
                 <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../index.html#projects">Projects</a></li>
                     <li><a href="index.html" style="color: var(--accent);">Store</a></li>
                     <li><a href="../index.html#contact">Contact</a></li>
                 </ul>
@@ -278,6 +276,12 @@
                     <p class="info-description">
                         Designing and delivering world-class deployable technology for satellite and research missions.
                     </p>
+                    <div style="margin-top: 1.5rem;">
+                        <button id="btn-full-lineup" class="btn-outline"
+                            style="font-size: 0.9rem; padding: 0.6rem 1.5rem;">
+                            Download Full Lineup PDF
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -407,6 +411,13 @@
         });
     </script>
     <script src="../js/logging.js"></script>
+    <script src="../js/brochure-gen.js"></script>
+    <script>
+        // Initialize Full Lineup Button
+        // Note: Full Lineup doesn't have a generator yet, so it just links to the PDF in both modes.
+        // But we use the helper to maintain the "Production vs Dev" look if needed.
+        setupBrochureButton('btn-full-lineup', 'Full Lineup', 'Datasheets/Full-lineup.pdf');
+    </script>
 </body>
 
 </html>
