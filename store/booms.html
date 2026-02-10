@@ -12,6 +12,103 @@
 </head>
 
 <body>
+  <!-- Rich PDF Template (Hidden) -->
+  <div id="pdf-template">
+    <div class="pdf-page">
+      <div class="pdf-header">
+        <div class="header-logo">
+          <img src="../images/quad_dimensions_logo.png" alt="QD">
+          QUAD DIMENSIONS
+        </div>
+        <div class="header-title">Engineering Datasheet</div>
+      </div>
+
+      <div class="pdf-content">
+        <div class="left-col">
+          <div class="hero-image-container">
+            <img src="../pages/images/booms_updated_1.jpg" alt="Zenith Boom">
+          </div>
+          <div class="specs-box">
+            <h2>Specifications</h2>
+            <div class="spec-row">
+              <span class="spec-label">Material</span>
+              <span class="spec-value">UD Carbon Fiber</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Mechanism</span>
+              <span class="spec-value">Bistable / Strain Energy</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Stowed Form</span>
+              <span class="spec-value">Coiled</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Mass (50cm)</span>
+              <span class="spec-value">~10g</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Payload</span>
+              <span class="spec-value">120g (1200% Mass)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Cross-Section</span>
+              <span class="spec-value">20-50mm (Custom)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Op. Temp</span>
+              <span class="spec-value">-40°C to +80°C</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">TRL</span>
+              <span class="spec-value">4 (Lab Component)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-col">
+          <h1>Zenith Boom</h1>
+          <div class="tagline">Ultralight Bistable Composite Structure</div>
+          <div class="description">
+            <p>
+              The Zenith Bistable is our flagship high-performance deployable structure, capable of
+              holding two stable states (coiled and extended) without complex locks.
+            </p>
+            <p style="margin-top: 15px;">
+              Engineered with BhorForce® advanced composites, it delivers exceptional reliability.
+              The standard 50cm variant weighs just ~10g—lighter than a coin—yet supports a
+              120g payload, making it ideal for mass-constrained missions.
+            </p>
+          </div>
+
+          <div class="specs-box" style="margin-top: 20px;">
+            <h2>Key Features</h2>
+            <div class="spec-row">
+              <span class="spec-label">Technology</span>
+              <span class="spec-value">Bistable Composite</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Strength</span>
+              <span class="spec-value">High Stiffness-to-Weight</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Applications</span>
+              <span class="spec-value">Antennas, Sensors</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Variants</span>
+              <span class="spec-value">Bistable / Deployment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div>© 2026 Quad Dimensions</div>
+        <div>Precision Space Mechanisms & Systems</div>
+        <a href="https://store.quadd.in">store.quadd.in</a>
+      </div>
+    </div>
+  </div>
 
   <header class="site-header">
     <div class="container header-content">
@@ -68,6 +165,7 @@
         <div class="action-buttons">
           <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Zenith Boom" class="btn-primary">Request
             Quote</a>
+          <button id="btn-datasheet" class="btn-outline">Download Datasheet</button>
           <a href="#specs" class="btn-outline">View Specs</a>
         </div>
 
@@ -244,6 +342,12 @@
     });
   </script>
   <script src="../js/logging.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="../js/brochure-gen.js"></script>
+  <script>
+    // Initialize Hybrid Datasheet Button
+    setupBrochureButton('btn-datasheet', 'Zenith Boom', '../store/Datasheets/QD_Zenith_Boom_Brochure.pdf');
+  </script>
 </body>
 
 </html>

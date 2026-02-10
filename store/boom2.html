@@ -12,6 +12,103 @@
 </head>
 
 <body>
+  <!-- Rich PDF Template (Hidden) -->
+  <div id="pdf-template">
+    <div class="pdf-page">
+      <div class="pdf-header">
+        <div class="header-logo">
+          <img src="../images/quad_dimensions_logo.png" alt="QD">
+          QUAD DIMENSIONS
+        </div>
+        <div class="header-title">Engineering Datasheet</div>
+      </div>
+
+      <div class="pdf-content">
+        <div class="left-col">
+          <div class="hero-image-container">
+            <img src="../pages/boom2-img/ROSA.png" alt="Horizon Array">
+          </div>
+          <div class="specs-box">
+            <h2>Specifications</h2>
+            <div class="spec-row">
+              <span class="spec-label">Prototype Length</span>
+              <span class="spec-value">65 cm</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Architecture</span>
+              <span class="spec-value">Rolling Mandrel</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Power Transfer</span>
+              <span class="spec-value">Direct (No Slip Ring)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">System Mass</span>
+              <span class="spec-value">&lt; 250g (Est.)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Stowed Dims</span>
+              <span class="spec-value">300 x 50 x 50 mm</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Deployment</span>
+              <span class="spec-value">Self-Deployable</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Payload</span>
+              <span class="spec-value">~200g (Blanket)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Output</span>
+              <span class="spec-value">~80W</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-col">
+          <h1>Horizon Array</h1>
+          <div class="tagline">Next-Gen Roll-Out Solar Array</div>
+          <div class="description">
+            <p>
+              The Horizon Array is a deployable composite boom system inspired by the ISS iROSA.
+              Its rolling mandrel design saves critical volume while acting as a protective core
+              for the fragile solar blanket during launch.
+            </p>
+            <p style="margin-top: 15px;">
+              By eliminating slip rings and enabling multi-functional utility, this system
+              delivers high power density with simplified electrical architecture.
+            </p>
+          </div>
+
+          <div class="specs-box" style="margin-top: 20px;">
+            <h2>Key Features</h2>
+            <div class="spec-row">
+              <span class="spec-label">Mechanism</span>
+              <span class="spec-value">Bistable Composite</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Actuation</span>
+              <span class="spec-value">Burn Wire / Resistor</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Feedback</span>
+              <span class="spec-value">Limit Switch</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Variants</span>
+              <span class="spec-value">ROSA / FOSA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div>© 2026 Quad Dimensions</div>
+        <div>Precision Space Mechanisms & Systems</div>
+        <a href="https://store.quadd.in">store.quadd.in</a>
+      </div>
+    </div>
+  </div>
 
   <header class="site-header">
     <div class="container header-content">
@@ -67,6 +164,7 @@
         <div class="action-buttons">
           <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Horizon Array" class="btn-primary">Request
             Quote</a>
+          <button id="btn-datasheet" class="btn-outline">Download Datasheet</button>
           <a href="#specs" class="btn-outline">View Specs</a>
         </div>
 
@@ -257,6 +355,12 @@
     });
   </script>
   <script src="../js/logging.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="../js/brochure-gen.js"></script>
+  <script>
+    // Initialize Hybrid Datasheet Button
+    setupBrochureButton('btn-datasheet', 'Horizon Array', '../store/Datasheets/QD_Horizon_Array_Brochure.pdf');
+  </script>
 </body>
 
 </html>

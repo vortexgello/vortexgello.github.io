@@ -12,6 +12,104 @@
 </head>
 
 <body>
+    <!-- Rich PDF Template (Hidden) -->
+    <div id="pdf-template">
+        <div class="pdf-page">
+            <div class="pdf-header">
+                <div class="header-logo">
+                    <img src="../images/quad_dimensions_logo.png" alt="QD">
+                    QUAD DIMENSIONS
+                </div>
+                <div class="header-title">Engineering Datasheet</div>
+            </div>
+
+            <div class="pdf-content">
+                <div class="left-col">
+                    <div class="hero-image-container">
+                        <img src="../pages/solar-sail/quad_hub_render.png" alt="Aurora Sail">
+                    </div>
+                    <div class="specs-box">
+                        <h2>Specifications</h2>
+                        <div class="spec-row">
+                            <span class="spec-label">Configuration</span>
+                            <span class="spec-value">Tri-Boom</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Boom Material</span>
+                            <span class="spec-value">Composite Slit-Tube</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Stowed Volume</span>
+                            <span class="spec-value">~80mm Dia (Tuna Can)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Sail Area</span>
+                            <span class="spec-value">0.425 m² (Scalable)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Sail Material</span>
+                            <span class="spec-value">CP1 Polyimide</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Mass (System)</span>
+                            <span class="spec-value">140g (excl. motor)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Actuation</span>
+                            <span class="spec-value">NEMA 17 / BLDC</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">TRL</span>
+                            <span class="spec-value">4 (Validation)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-col">
+                    <h1>Aurora Sail</h1>
+                    <div class="tagline">Tri-Boom Solar Sail Mechanism</div>
+                    <div class="description">
+                        <p>
+                            The Aurora Sail is a precision-engineered deployment mechanism for high-area CubeSat solar
+                            sails.
+                            It utilizes a refined modular Tri-Boom architecture to maximize packing efficiency.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            By integrating precision carbon fiber stabilizers, the system provides a low-friction,
+                            high-reliability solution for deploying large-scale membranes in complex orbital
+                            environments.
+                        </p>
+                    </div>
+
+                    <div class="specs-box" style="margin-top: 20px;">
+                        <h2>Key Features</h2>
+                        <div class="spec-row">
+                            <span class="spec-label">Architecture</span>
+                            <span class="spec-value">Modular Tri-Boom</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Guide Rails</span>
+                            <span class="spec-value">3mm Carbon Fiber</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Actuation</span>
+                            <span class="spec-value">Burn Wire Release</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Feedback</span>
+                            <span class="spec-value">Limit Switch</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div>© 2026 Quad Dimensions</div>
+                <div>Precision Space Mechanisms & Systems</div>
+                <a href="https://store.quadd.in">store.quadd.in</a>
+            </div>
+        </div>
+    </div>
 
     <header class="site-header">
         <div class="container header-content">
@@ -70,6 +168,7 @@
                 <div class="action-buttons">
                     <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Solar Sail" class="btn-primary">Request
                         Quote</a>
+                    <button id="btn-datasheet" class="btn-outline">Download Datasheet</button>
                     <a href="#specs" class="btn-outline">View Specs</a>
                 </div>
 
@@ -296,6 +395,12 @@
         });
     </script>
     <script src="../js/logging.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../js/brochure-gen.js"></script>
+    <script>
+        // Initialize Hybrid Datasheet Button
+        setupBrochureButton('btn-datasheet', 'Aurora Sail', '../store/Datasheets/QD_Aurora_Sail_Brochure.pdf');
+    </script>
 </body>
 
 </html>
