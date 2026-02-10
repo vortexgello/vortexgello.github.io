@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+<script>
+(function() {
+  const p = "Vortex2026!";
+  if (sessionStorage.getItem('v_auth') === 'true') return;
+  const input = prompt("Access Restricted. Enter Password:");
+  if (input === p) {
+    sessionStorage.setItem('v_auth', 'true');
+  } else {
+    document.documentElement.innerHTML = "<html><body style='background:#0f172a;color:#ef4444;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;flex-direction:column;'><h1>403 Forbidden</h1><p>Incorrect credentials.</p><a href='/index.html' style='color:#38bdf8;margin-top:20px;text-decoration:none;'>&larr; Return Home</a></body></html>";
+    window.stop();
+    throw new Error('Unauthorized access');
+  }
+})();
+</script>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Food Gallery - Vortex">

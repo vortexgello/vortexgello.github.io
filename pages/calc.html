@@ -109,6 +109,17 @@
             border-color: var(--accent);
         }
 
+        select optgroup {
+            background: #1e293b;
+            color: #94a3b8;
+            font-weight: bold;
+        }
+
+        select option {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
         .row {
             display: flex;
             gap: 10px;
@@ -282,19 +293,12 @@
                         <div style="flex:1">
                             <label>Resin Type</label>
                             <select id="resinSelect" onchange="setResin(this.value)"
-                                style="width:100%; padding:8px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light); color:var(--text-main); border-radius:4px; appearance:none;">
-                                <option value="LY556" style="background:#1e293b; color:#cbd5e1;" selected>LY556 / XB3473
-                                    (High Tg)
-                                </option>
-                                <option value="HY951" style="background:#1e293b; color:#cbd5e1;">LY556 / HY951 (Space
-                                    Std)
-                                </option>
-                                <option value="DBF" style="background:#1e293b; color:#cbd5e1;">Araldite DBF (Tough)
-                                </option>
-                                <option value="L5" style="background:#1e293b; color:#cbd5e1;">L5 (Rigidizable PU)
-                                </option>
-                                <option value="Generic" style="background:#1e293b; color:#cbd5e1;">Generic Epoxy
-                                </option>
+                                style="width:100%; padding:8px; background:#1e2025; border:1px solid var(--border-light); color:var(--text-main); border-radius:4px;">
+                                <option value="LY556" selected>LY556 / XB3473 (High Tg)</option>
+                                <option value="HY951">LY556 / HY951 (Space Std)</option>
+                                <option value="DBF">Araldite DBF (Tough)</option>
+                                <option value="L5">L5 (Rigidizable PU)</option>
+                                <option value="Generic">Generic Epoxy</option>
                             </select>
                         </div>
                     </div>
@@ -302,10 +306,8 @@
                         <div style="flex:1">
                             <label>Fiber Grade</label>
                             <select id="fiberSelect" onchange="setFiber(this.value)"
-                                style="width:100%; padding:8px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light); color:var(--text-main); border-radius:4px; appearance:none;">
-                                <option value="BhorForce160" style="background:#1e293b; color:#cbd5e1;" selected>
-                                    BhorForce 160 (Zenith)
-                                </option>
+                                style="width:100%; padding:8px; background:#1e2025; border:1px solid var(--border-light); color:var(--text-main); border-radius:4px;">
+                                <option value="BhorForce160" selected>BhorForce 160 (Zenith)</option>
                                 <optgroup label="Carbon - Intermediate Modulus">
                                     <option value="IM7">HexTow IM7</option>
                                     <option value="T800H">Toray T800H</option>
@@ -765,16 +767,63 @@
                     </p>
                 </div>
 
-                <!-- ADVANCED ANALYSIS PANELS -->
+                <!-- STOWAGE LIFE PANEL -->
                 <div class="panel">
-                    <h2>12. Stowage Life</h2>
-                    <div class="chart-box">
+                    <h2>12. Precision Stowage Life (TTS)</h2>
+                    <p style="font-size:0.85em; color:var(--text-muted); margin-bottom:10px;">
+                        Dynamic <strong>Time-Temperature Superposition</strong> model.<br>
+                        Ref: Brinkmeyer et al. (Prony Series Relaxation).
+                    </p>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Stowage Temp (°C)</label>
+                            <input type="number" id="stowageTemp" value="25" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Torque Margin (SF)</label>
+                            <input type="number" id="torqueMargin" value="3.0" step="0.1" oninput="calculate()">
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:10px;">
+                        <div style="flex:1">
+                            <label>Mission Duration (Days)</label>
+                            <input type="number" id="missionDays" value="30" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Mission Safety</label>
+                            <div id="missionStatus"
+                                style="font-weight:bold; padding:4px 8px; border-radius:4px; text-align:center; font-size:0.9em; margin-top:4px;">
+                                --</div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: rgba(56, 189, 248, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <div class="row">
+                            <div style="flex:1">
+                                <label>Relaxation Limit</label>
+                                <div id="resRelaxLimit"
+                                    style="font-size:0.9em; font-weight:bold; color:var(--text-main);">--</div>
+                                <div style="font-size:0.7em; color:var(--text-muted);">Min. Stall Torque</div>
+                            </div>
+                            <div style="flex:1">
+                                <label style="color:#38bdf8;">Predicted Stall Date</label>
+                                <div class="res-val" id="resStowageLife" style="font-size:1.2em; color:#38bdf8;">--
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box" style="margin-top:15px;">
                         <canvas id="relaxChart"></canvas>
                     </div>
-                    <p style="font-size:0.85em; color:var(--text-muted);">
-                        Estimated torque loss over time (based on Brinkmeyer Epoxy Model at 60°C).
-                        <strong style="color:#ef4444;">Warning:</strong> If torque hits 0, boom will stall.
-                    </p>
+                    <div id="brinkmeyerWarning" class="tip-box"
+                        style="display:none; background:rgba(239, 68, 68, 0.1); border-left-color:#ef4444; color:#ef4444;">
+                        <strong>WARNING:</strong> Storage temperature is within 20°C of Resin Tg. Creep failure is
+                        imminent!
+                    </div>
                 </div>
 
                 <div class="panel">
@@ -1590,38 +1639,119 @@
             });
         }
 
+        function getPronyStiffness(t_sec, shift_factor) {
+            // Brinkmeyer et al. Prony Series (Source 367)
+            // Precision constants for T800H/Epoxy
+            const prony_weights = [0.013, 0.062, 0.094, 0.219]; // Weightings
+            const prony_taus = [2.64, 16.3, 266, 4790];         // s
+
+            const t_red = t_sec / shift_factor;
+            let decay = 0;
+            for (let i = 0; i < prony_weights.length; i++) {
+                decay += prony_weights[i] * (1 - Math.exp(-t_red / prony_taus[i]));
+            }
+            return 1.0 - decay;
+        }
+
         function plotAdvancedGraphs(D11, D22, R_trans, width, layers, t_ply, Ef_input) {
-            const timeLabels = ['1 Hour', '1 Day', '1 Week', '1 Month', '6 Months'];
+            // --- 1. PRECISION STOWAGE LIFE (BRINKMEYER TTS) ---
+            const T_stow = parseFloat(document.getElementById('stowageTemp').value);
+            const T_g = parseFloat(document.getElementById('temp_tg').value);
+            const margin = parseFloat(document.getElementById('torqueMargin').value);
+            const missionDays = parseFloat(document.getElementById('missionDays').value);
+            const T_ref = 60.0;
+
+            // Shift Factor (Arrhenius rule of thumb: rate doubles every 10C)
+            const shift = Math.pow(2.0, -(T_stow - T_ref) / 10.0);
+
+            // Failure Condition
+            const fail_ratio = 1.0 / margin;
+
+            // Check for Safe by Design (Max relaxation ~39%)
+            const max_relaxation = 0.013 + 0.062 + 0.094 + 0.219; // 0.388
+            const isSafeByDesign = (1.0 - fail_ratio) > max_relaxation;
+
+            const labels = ['1h', '1d', '1w', '1mo', '6mo', '1y', '5y', '10y'];
+            const seconds = [3600, 86400, 604800, 2592000, 15552000, 31104000, 155520000, 311040000];
+
             const torqueData = [];
-            const relaxFactors = [0.95, 0.88, 0.82, 0.75, 0.65];
+            const failData = [];
+            let predictedLife = isSafeByDesign ? "Indefinite (Safe)" : "> 10 Years";
+            let lifeInSeconds = 311040000; // default 10y
+            let foundFail = false;
 
-            const r_roll = parseFloat(document.getElementById('rollDia').value) / 2000;
-            const kx = 1 / r_roll;
+            seconds.forEach((s, idx) => {
+                const stiff_ratio = getPronyStiffness(s, shift);
+                torqueData.push(stiff_ratio * 100);
+                failData.push(fail_ratio * 100);
 
-            relaxFactors.forEach(factor => {
-                const D11_relaxed = D11 * (0.9 + (0.1 * factor));
-                const M_t = (D11_relaxed * kx) * width;
-                torqueData.push(M_t * 1000);
+                if (!isSafeByDesign && stiff_ratio <= fail_ratio && !foundFail) {
+                    predictedLife = "~ " + labels[idx];
+                    lifeInSeconds = s;
+                    foundFail = true;
+                }
             });
+
+            // Update UI Results
+            document.getElementById('resRelaxLimit').innerText = (fail_ratio * 100).toFixed(1) + "%";
+            document.getElementById('resStowageLife').innerText = predictedLife;
+
+            const mStatus = document.getElementById('missionStatus');
+            const missionSec = missionDays * 86400;
+
+            if (isSafeByDesign || lifeInSeconds > missionSec) {
+                mStatus.innerText = "SAFE";
+                mStatus.style.background = "#22c55e";
+                mStatus.style.color = "white";
+            } else {
+                mStatus.innerText = "DANGER";
+                mStatus.style.background = "#ef4444";
+                mStatus.style.color = "white";
+            }
+
+            const warn = document.getElementById('brinkmeyerWarning');
+            if (T_g - T_stow < 20) {
+                warn.style.display = "block";
+            } else {
+                warn.style.display = "none";
+            }
 
             const ctxR = document.getElementById('relaxChart').getContext('2d');
             if (window.relaxChartInst) window.relaxChartInst.destroy();
             window.relaxChartInst = new Chart(ctxR, {
                 type: 'line',
                 data: {
-                    labels: timeLabels,
-                    datasets: [{
-                        label: 'Deployment Torque (Nmm)',
-                        data: torqueData,
-                        borderColor: '#ec4899', // Pink
-                        backgroundColor: 'rgba(236, 72, 153, 0.1)',
-                        fill: true
-                    }]
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Torque Remaining (%)',
+                            data: torqueData,
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            borderWidth: 2,
+                            pointRadius: 4,
+                            fill: true
+                        },
+                        {
+                            label: 'Stall Limit',
+                            data: failData,
+                            borderColor: '#ef4444',
+                            borderDash: [5, 5],
+                            borderWidth: 1,
+                            pointRadius: 0
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Torque (Nmm)' } } }
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+                            title: { display: true, text: 'Torque (%)' }
+                        }
+                    }
                 }
             });
 

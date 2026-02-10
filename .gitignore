@@ -1,1 +1,4 @@
 store_media.zip
+.env
+dist
+node_modules

@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+<script>
+(function() {
+  const p = "Vortex2026!";
+  if (sessionStorage.getItem('v_auth') === 'true') return;
+  const input = prompt("Access Restricted. Enter Password:");
+  if (input === p) {
+    sessionStorage.setItem('v_auth', 'true');
+  } else {
+    document.documentElement.innerHTML = "<html><body style='background:#0f172a;color:#ef4444;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;flex-direction:column;'><h1>403 Forbidden</h1><p>Incorrect credentials.</p><a href='/index.html' style='color:#38bdf8;margin-top:20px;text-decoration:none;'>&larr; Return Home</a></body></html>";
+    window.stop();
+    throw new Error('Unauthorized access');
+  }
+})();
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSC Boom Calculator | Vortex</title>
@@ -107,6 +122,17 @@
         select:focus {
             outline: none;
             border-color: var(--accent);
+        }
+
+        select optgroup {
+            background: #1e293b;
+            color: #94a3b8;
+            font-weight: bold;
+        }
+
+        select option {
+            background: #1e293b;
+            color: #cbd5e1;
         }
 
         .row {
@@ -216,12 +242,26 @@
             position: relative;
         }
 
-        /* Specific text overrides for info boxes */
         #geoInfo,
         #rollInfo,
         #stackSvg text {
             fill: var(--text-muted);
             color: var(--text-muted);
+        }
+
+        .tip-box {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 3px solid #38bdf8;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            color: var(--text-muted);
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .tip-box strong {
+            color: #38bdf8;
         }
     </style>
 </head>
@@ -267,17 +307,40 @@
                     <div class="row">
                         <div style="flex:1">
                             <label>Resin Type</label>
-                            <select onchange="setResin(this.value)"
-                                style="width:100%; padding:8px; background:rgba(255,255,255,0.05); border:1px solid var(--border-light); color:var(--text-main); border-radius:4px; appearance:none;">
-                                <option value="LY556" style="background:#1e293b; color:#cbd5e1;" selected>LY556 / HY951
-                                    (Space Std)</option>
-                                <option value="DBF" style="background:#1e293b; color:#cbd5e1;">Araldite DBF (Tough)
-                                </option>
-                                <option value="L5" style="background:#1e293b; color:#cbd5e1;">L5 (Rigidizable PU)
-                                </option>
-                                <option value="L6" style="background:#1e293b; color:#cbd5e1;">L6 (Rubber/Hinge)</option>
-                                <option value="Generic" style="background:#1e293b; color:#cbd5e1;">Generic Epoxy
-                                </option>
+                            <select id="resinSelect" onchange="setResin(this.value)"
+                                style="width:100%; padding:8px; background:#1e2025; border:1px solid var(--border-light); color:var(--text-main); border-radius:4px;">
+                                <option value="LY556" selected>LY556 / XB3473 (High Tg)</option>
+                                <option value="HY951">LY556 / HY951 (Space Std)</option>
+                                <option value="DBF">Araldite DBF (Tough)</option>
+                                <option value="L5">L5 (Rigidizable PU)</option>
+                                <option value="Generic">Generic Epoxy</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px;">
+                        <div style="flex:1">
+                            <label>Fiber Grade</label>
+                            <select id="fiberSelect" onchange="setFiber(this.value)"
+                                style="width:100%; padding:8px; background:#1e2025; border:1px solid var(--border-light); color:var(--text-main); border-radius:4px;">
+                                <option value="BhorForce160" selected>BhorForce 160 (Zenith)</option>
+                                <optgroup label="Carbon - Intermediate Modulus">
+                                    <option value="IM7">HexTow IM7</option>
+                                    <option value="T800H">Toray T800H</option>
+                                    <option value="T1000G">Toray T1000G</option>
+                                </optgroup>
+                                <optgroup label="Carbon - High Modulus">
+                                    <option value="M55J">Toray M55J (Stiff/Brittle)</option>
+                                    <option value="M40J">Toray M40J</option>
+                                </optgroup>
+                                <optgroup label="Standard Modulus">
+                                    <option value="T300">Toray T300</option>
+                                    <option value="AS4">HexTow AS4</option>
+                                </optgroup>
+                                <optgroup label="Glass & Quartz">
+                                    <option value="S2">AGY S-2 Glass (High Strain)</option>
+                                    <option value="Astroquartz">Astroquartz II (RF-Trans)</option>
+                                    <option value="E-Glass">E-Glass</option>
+                                </optgroup>
                             </select>
                         </div>
                     </div>
@@ -312,7 +375,7 @@
                         </div>
                         <div style="flex:1">
                             <label>Resin Tg (°C)</label>
-                            <input type="number" id="temp_tg" value="100" step="5" onchange="calculate()">
+                            <input type="number" id="temp_tg" value="190" step="5" onchange="calculate()">
                             <div style="font-size:0.75em; color:var(--text-muted);">Approx. limit</div>
                         </div>
                     </div>
@@ -346,9 +409,86 @@
                     </div>
                 </div>
 
+                <!-- Laminate Stack -->
+                <div class="panel">
+                    <h2>3. Laminate Design</h2>
+                    <div class="diagram-container">
+                        <div class="diagram-box">
+                            <span class="diag-label">Stack Visualizer</span>
+                            <svg id="stackSvg" width="100%" height="60"></svg>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Angle</label>
+                            <input type="number" id="addAngle" placeholder="±45" value="0">
+                        </div>
+                        <div style="flex:1">
+                            <label>Type</label>
+                            <select id="addType">
+                                <option value="UD">UD Tape</option>
+                                <option value="PW">Woven</option>
+                            </select>
+                        </div>
+                        <div style="flex:1">
+                            <label>Thick (mm)</label>
+                            <input type="number" id="addThick" value="0.17" step="0.01">
+                        </div>
+                    </div>
+                    <button class="btn-add" onclick="addLayer()">+ Add Layer</button>
+
+                    <div style="margin-top: 10px; max-height: 200px; overflow-y: auto;">
+                        <table class="layer-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Angle</th>
+                                    <th>Type</th>
+                                    <th>Thick</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="layerBody"></tbody>
+                        </table>
+                    </div>
+                    <p style="text-align:right; font-size:0.9em; margin-top:5px; color: var(--text-muted);">Total t:
+                        <strong id="totalThick" style="color:var(--text-main);">0.00</strong> mm
+                    </p>
+
+                    <div style="margin-top:10px; display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+                        <button onclick="loadPreset('standard_flight')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); font-size:0.8em; border:1px solid var(--border-light);">Flight
+                            Std
+                            (Brinkmeyer)</button>
+                        <button onclick="loadPreset('nasa_hybrid')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); font-size:0.8em; border:1px solid var(--border-light);">NASA
+                            Hybrid
+                            (Yao)</button>
+                        <button onclick="loadPreset('optical_glass')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); font-size:0.8em; border:1px solid var(--border-light);">Optical
+                            Glass (S2)</button>
+                        <button onclick="loadPreset('high_force')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); font-size:0.8em; border:1px solid var(--border-light);">High
+                            Force
+                            (IM7)</button>
+                        <button onclick="loadPreset('woven_model')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); font-size:0.8em; border:1px solid var(--border-light);">Woven
+                            Model
+                            (Prigent)</button>
+                        <button onclick="loadPreset('pp_glass')"
+                            style="background:rgba(255,255,255,0.1); color:var(--text-main); font-size:0.8em; border:1px solid var(--border-light);">Research
+                            (PP/Glass)</button>
+                    </div>
+                    <button onclick="loadUserConfig()"
+                        style="width:100%; margin-top:5px; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; font-weight:bold; font-size:0.9em; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">
+                        Load Custom Config (LY556 30mm)
+                    </button>
+                </div>
+
                 <!-- DYNAMICS & ADVANCED GEOMETRY -->
                 <div class="panel" style="border-left: 5px solid #a855f7;">
-                    <h2 style="color: #a855f7; border-bottom-color: #a855f7;">3. Dynamics & Advanced Shape</h2>
+                    <h2 style="color: #a855f7; border-bottom-color: #a855f7;">4. Dynamics & Frequency</h2>
 
                     <div class="row">
                         <div style="flex:1">
@@ -402,7 +542,7 @@
 
                 <!-- STRUCTURAL PERFORMANCE PANEL -->
                 <div class="panel" style="border-left: 5px solid #d32f2f;">
-                    <h2 style="color: #d32f2f;">4. Structural Performance</h2>
+                    <h2 style="color: #d32f2f;">5. Structural Performance</h2>
                     <p style="font-size:0.85em; color:#666;">
                         Load bearing analysis for deployed cantilever state.<br>
                         Ref: Murphey et al. Eq. 5 (Buckling) & Yao et al. (Stiffness).
@@ -443,24 +583,45 @@
                         <div style="border-top:1px solid rgba(211, 47, 47, 0.2); margin:5px 0;"></div>
                         <div class="row">
                             <div style="flex:1">
-                                <label>Snap Moment</label>
-                                <div class="res-val" id="resSnap" style="font-size:1.1em; color:var(--text-main);">--
+                                <label>Coiling Torque (Opposite)</label>
+                                <div class="res-val" id="resMopper" style="font-size:1.1em;">--</div>
+                                <div id="resStability" style="font-size:0.75em; color:var(--text-muted);">Stability: --
                                 </div>
-                                <div style="font-size:0.75em; color:var(--text-muted);">(Opposite Sense)</div>
                             </div>
+                            <div style="flex:1">
+                                <label>Tube Rigidity (Equal)</label>
+                                <div class="res-val" id="resMequil" style="font-size:1.1em; color:var(--text-muted);">--
+                                </div>
+                                <div style="font-size:0.75em; color:var(--text-muted);">Units: N·cm</div>
+                            </div>
+                        </div>
+                        <div style="border-top:1px solid rgba(211, 47, 47, 0.2); margin:5px 0;"></div>
+                        <div class="row">
                             <div style="flex:1">
                                 <label>Crit. Buckling</label>
                                 <div class="res-val" id="resBuckle" style="font-size:1.1em; color:var(--text-main);">--
                                 </div>
-                                <div style="font-size:0.75em; color:var(--text-muted);">(Axial Load)</div>
+                                <div style="font-size:0.75em; color:var(--text-muted);">(Axial Load [N])</div>
                             </div>
                         </div>
+                    </div>
+                    <div class="tip-box">
+                        <strong>Design Tip:</strong> A Stability Ratio of <strong>6-10%</strong> is the Goldilocks
+                        zone. It ensures the boom stays coiled without help but retains enough energy to
+                        self-deploy.
+                        <br><br>
+                        • <strong>&lt; 4%:</strong> Strongly Bistable (might not self-deploy).<br>
+                        • <strong>6-10%:</strong> Ideal Bistable Hybrid.<br>
+                        • <strong>&gt; 12%:</strong> Monostable (will snap open).
+                        <br><br>
+                        <i style="font-size:0.9em;">Note: UD (Tape) cores increase longitudinal stiffness ($D_{11}$),
+                            which pushes the ratio HIGHER. Woven skins are often used to achieve lower ratios.</i>
                     </div>
                 </div>
 
                 <!-- DUAL BOOM SOLAR BLANKET & AREA PANEL -->
                 <div class="panel" style="border-left: 5px solid #ff5722;">
-                    <h2 style="color: #e64a19;">5. Solar Blanket Sizing</h2>
+                    <h2 style="color: #e64a19;">6. Solar Blanket Sizing</h2>
                     <p style="font-size:0.85em; color:#666;">
                         Calculates max area based on boom buckling limit (ROSA Style).<br>
                         Ref: Source 609 (ROSA) & Murphey et al.
@@ -523,70 +684,9 @@
                     </div>
                 </div>
 
-                <!-- Laminate Stack -->
-                <div class="panel">
-                    <h2>2. Laminate Design</h2>
-                    <div class="diagram-container">
-                        <div class="diagram-box">
-                            <span class="diag-label">Stack Visualizer</span>
-                            <svg id="stackSvg" width="100%" height="60"></svg>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div style="flex:1">
-                            <label>Angle</label>
-                            <input type="number" id="addAngle" placeholder="±45" value="0">
-                        </div>
-                        <div style="flex:1">
-                            <label>Type</label>
-                            <select id="addType">
-                                <option value="UD">UD Tape</option>
-                                <option value="PW">Woven</option>
-                            </select>
-                        </div>
-                        <div style="flex:1">
-                            <label>Thick (mm)</label>
-                            <input type="number" id="addThick" value="0.17" step="0.01">
-                        </div>
-                    </div>
-                    <button class="btn-add" onclick="addLayer()">+ Add Layer</button>
-
-                    <div style="margin-top: 10px; max-height: 200px; overflow-y: auto;">
-                        <table class="layer-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Angle</th>
-                                    <th>Type</th>
-                                    <th>Thick</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="layerBody"></tbody>
-                        </table>
-                    </div>
-                    <p style="text-align:right; font-size:0.9em; margin-top:5px; color: var(--text-muted);">Total t:
-                        <strong id="totalThick" style="color:var(--text-main);">0.00</strong> mm
-                    </p>
-
-                    <div style="margin-top:10px; display:flex; gap:5px;">
-                        <button onclick="loadPreset('yours')"
-                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
-                            160gsm Hybrid</button>
-                        <button onclick="loadPreset('yao')"
-                            style="background:rgba(255,255,255,0.1); color:var(--text-main); flex:1; font-size:0.8em; border:1px solid var(--border-light);">Load
-                            Yao/NASA</button>
-                    </div>
-                    <button onclick="loadUserConfig()"
-                        style="width:100%; margin-top:5px; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; font-weight:bold; font-size:0.9em; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">
-                        Load Custom Config (LY556 30mm)
-                    </button>
-                </div>
-
                 <!-- EXPERIMENTAL VALIDATION PANEL -->
                 <div class="panel" style="border-top: 4px solid #f97316;">
-                    <h2 style="color: #f97316; border-bottom-color: #f97316;">3. Experimental Validation</h2>
+                    <h2 style="color: #f97316; border-bottom-color: #f97316;">7. Experimental Validation</h2>
                     <p style="font-size:0.85em; color:var(--text-muted);">Enter Platen Test (Squeeze) data to see if
                         your physical boom
                         matches theory.</p>
@@ -618,7 +718,7 @@
             <div>
                 <!-- Geometric Diagrams -->
                 <div class="panel">
-                    <h2>Geometry Visualizer</h2>
+                    <h2>8. Geometry Visualizer</h2>
                     <div class="diagram-container">
                         <!-- Cross Section View -->
                         <div class="diagram-box">
@@ -637,7 +737,7 @@
 
                 <!-- Numerical Results -->
                 <div class="panel">
-                    <h2>Analysis Results</h2>
+                    <h2>9. Analysis Summary</h2>
                     <div style="display: flex; gap: 15px;">
                         <div style="flex:1">
                             <label>Fiber Strain</label>
@@ -658,7 +758,7 @@
 
                 <!-- Energy Plot -->
                 <div class="panel">
-                    <h2>Strain Energy Landscape</h2>
+                    <h2>10. Strain Energy Landscape</h2>
                     <div class="chart-box">
                         <canvas id="energyChart"></canvas>
                     </div>
@@ -670,7 +770,7 @@
 
                 <!-- VALIDATION CHART -->
                 <div class="panel">
-                    <h2>Safety & Validation (Strain vs. Dia)</h2>
+                    <h2>11. Safety & Validation</h2>
                     <div class="chart-box">
                         <canvas id="strainChart"></canvas>
                     </div>
@@ -682,20 +782,67 @@
                     </p>
                 </div>
 
-                <!-- ADVANCED ANALYSIS PANELS -->
+                <!-- STOWAGE LIFE PANEL -->
                 <div class="panel">
-                    <h2>Stowage Life (Viscoelasticity)</h2>
-                    <div class="chart-box">
+                    <h2>12. Precision Stowage Life (TTS)</h2>
+                    <p style="font-size:0.85em; color:var(--text-muted); margin-bottom:10px;">
+                        Dynamic <strong>Time-Temperature Superposition</strong> model.<br>
+                        Ref: Brinkmeyer et al. (Prony Series Relaxation).
+                    </p>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Stowage Temp (°C)</label>
+                            <input type="number" id="stowageTemp" value="25" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Torque Margin (SF)</label>
+                            <input type="number" id="torqueMargin" value="3.0" step="0.1" oninput="calculate()">
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:10px;">
+                        <div style="flex:1">
+                            <label>Mission Duration (Days)</label>
+                            <input type="number" id="missionDays" value="30" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <label>Mission Safety</label>
+                            <div id="missionStatus"
+                                style="font-weight:bold; padding:4px 8px; border-radius:4px; text-align:center; font-size:0.9em; margin-top:4px;">
+                                --</div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: rgba(56, 189, 248, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <div class="row">
+                            <div style="flex:1">
+                                <label>Relaxation Limit</label>
+                                <div id="resRelaxLimit"
+                                    style="font-size:0.9em; font-weight:bold; color:var(--text-main);">--</div>
+                                <div style="font-size:0.7em; color:var(--text-muted);">Min. Stall Torque</div>
+                            </div>
+                            <div style="flex:1">
+                                <label style="color:#38bdf8;">Predicted Stall Date</label>
+                                <div class="res-val" id="resStowageLife" style="font-size:1.2em; color:#38bdf8;">--
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box" style="margin-top:15px;">
                         <canvas id="relaxChart"></canvas>
                     </div>
-                    <p style="font-size:0.85em; color:var(--text-muted);">
-                        Estimated torque loss over time (based on Brinkmeyer Epoxy Model at 60°C).
-                        <strong style="color:#ef4444;">Warning:</strong> If torque hits 0, boom will stall.
-                    </p>
+                    <div id="brinkmeyerWarning" class="tip-box"
+                        style="display:none; background:rgba(239, 68, 68, 0.1); border-left-color:#ef4444; color:#ef4444;">
+                        <strong>WARNING:</strong> Storage temperature is within 20°C of Resin Tg. Creep failure is
+                        imminent!
+                    </div>
                 </div>
 
                 <div class="panel">
-                    <h2>Design Sensitivity (Angle Tuning)</h2>
+                    <h2>13. Design Sensitivity</h2>
                     <div class="chart-box">
                         <canvas id="angleChart"></canvas>
                     </div>
@@ -743,11 +890,26 @@
 
         // --- PRESET DATA ---
         const resinPresets = {
-            "LY556": { rho: 1.18, Em: 2.9, Tg: 160, desc: "Standard High-Temp Epoxy" },
+            "LY556": { rho: 1.18, Em: 2.8, Tg: 190, desc: "LY 556 / XB 3473 (Zenith)" },
+            "HY951": { rho: 1.18, Em: 2.9, Tg: 120, desc: "LY 556 / HY 951 (Standard)" },
             "DBF": { rho: 1.19, Em: 2.8, Tg: 67, desc: "Tough RT Epoxy" },
             "L5": { rho: 1.20, Em: 4.0, Tg: 48, desc: "Rigidizable Polyurethane" },
-            "L6": { rho: 1.15, Em: 0.01, Tg: 22, desc: "Elastomeric (Rubber)" },
             "Generic": { rho: 1.17, Em: 3.5, Tg: 100, desc: "Generic Space Epoxy" }
+        };
+
+        const fiberPresets = {
+            "BhorForce160": { E1: 294, rho: 1.81, e_comp: 1.5, desc: "T800 Grade Carbon" },
+            "IM7": { E1: 276, rho: 1.78, e_comp: 1.7 },
+            "IM10": { E1: 310, rho: 1.79, e_comp: 2.0 },
+            "T800H": { E1: 294, rho: 1.81, e_comp: 1.5 },
+            "T1000G": { E1: 294, rho: 1.80, e_comp: 1.7 },
+            "M55J": { E1: 540, rho: 1.91, e_comp: 0.4 },
+            "M40J": { E1: 377, rho: 1.77, e_comp: 1.1 },
+            "T300": { E1: 230, rho: 1.76, e_comp: 1.3 },
+            "AS4": { E1: 231, rho: 1.79, e_comp: 1.6 },
+            "S2": { E1: 85.5, rho: 2.46, e_comp: 4.4 },
+            "Astroquartz": { E1: 72.0, rho: 2.20, e_comp: 2.9 },
+            "E-Glass": { E1: 72.3, rho: 2.58, e_comp: 1.8 }
         };
 
         function setResin(key) {
@@ -756,7 +918,14 @@
             document.getElementById('rho_m').value = data.rho;
             document.getElementById('Em').value = data.Em;
             document.getElementById('temp_tg').value = data.Tg;
-            // Trigger calculation
+            calculate();
+        }
+
+        function setFiber(key) {
+            const data = fiberPresets[key];
+            if (!data) return;
+            document.getElementById('Ef').value = data.E1;
+            document.getElementById('rho_f').value = data.rho;
             calculate();
         }
 
@@ -792,51 +961,101 @@
             const width = parseFloat(document.getElementById('width').value);
             const R = parseFloat(document.getElementById('R_trans').value);
             const rollD = parseFloat(document.getElementById('rollDia').value);
+            const L = parseFloat(document.getElementById('boomLength').value) * 1000; // mm
+            const h = parseFloat(document.getElementById('totalThick').innerText) || 0.3; // mm
 
             // 1. Draw Cross Section (The Smile)
             const geoSvg = document.getElementById('geoSvg');
             geoSvg.innerHTML = ''; // Clear
 
-            // Calculate subtended angle beta = width / R (radians)
+            if (width > 2 * Math.PI * R) {
+                geoSvg.innerHTML = `<text x="100" y="60" fill="#ef4444" font-size="12" text-anchor="middle" font-weight="bold">Error: Width > Circumference</text>`;
+                document.getElementById('geoInfo').innerHTML = `<span style="color:#ef4444">Geometric Error</span>`;
+                return;
+            }
+
             const beta = width / R;
             const betaDeg = (beta * 180) / Math.PI;
             document.getElementById('geoInfo').innerHTML = `Arc: ${betaDeg.toFixed(1)}° <br> (Source: Brinkmeyer Fig 2)`;
 
-            // SVG Path
-            const scale = 100 / (width * 0.8);
+            // Arc geometry
+            // arc_w = 2 * R * sin(beta/2)
+            // arc_h = R * (1 - cos(beta/2))
+            const arcW = 2 * R * Math.sin(beta / 2);
+            const arcH = R * (1 - Math.cos(beta / 2));
+
+            // Constrain within 200x120 box with 20px padding
+            const availW = 160;
+            const availH = 80;
+            const scale = Math.min(availW / arcW, availH / arcH);
             const pathR = R * scale;
+            const drawW = arcW * scale;
+            const drawH = arcH * scale;
 
-            // Draw Center Point
+            // Center of the circle in SVG coords
             const cx = 100;
-            const cy = 20 + pathR * 0.5;
+            const cy_bottom = 100; // Position bottom of arc at y=100
+            const cY = cy_bottom - pathR;
 
-            // Start/End points
-            const dx = pathR * Math.sin(beta / 2);
-            const dy = pathR * Math.cos(beta / 2);
+            // Start/End points (Angles for smile: PI - beta/2 to PI + beta/2)
+            const angStart = Math.PI - beta / 2;
+            const angEnd = Math.PI + beta / 2;
 
-            const startX = cx - dx;
-            const startY = cy - (pathR - dy);
-            const endX = cx + dx;
-            const endY = startY;
+            const startX = cx + pathR * Math.sin(angStart);
+            const startY = cY - pathR * Math.cos(angStart);
+            const endX = cx + pathR * Math.sin(angEnd);
+            const endY = cY - pathR * Math.cos(angEnd);
 
-            let pathStr = `<path d="M ${startX} ${startY} A ${pathR} ${pathR} 0 0 0 ${endX} ${endY}" stroke="#38bdf8" stroke-width="4" fill="none" />`;
+            const largeArcFlag = beta > Math.PI ? 1 : 0;
+            const sweepFlag = 1;
+
+            let pathStr = `<path d="M ${startX} ${startY} A ${pathR} ${pathR} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="#38bdf8" stroke-width="4" fill="none" />`;
 
             // Add Radius Line
-            pathStr += `<line x1="${cx}" y1="${cy - pathR}" x2="${cx}" y2="${cy - pathR + pathR}" stroke="#475569" stroke-dasharray="4" />`;
-            // Use lighter text for dark theme
-            pathStr += `<text x="${cx + 5}" y="${cy - pathR / 2}" font-size="10" fill="#94a3b8">R=${R}</text>`;
+            pathStr += `<line x1="${cx}" y1="${cY}" x2="${cx}" y2="${cy_bottom}" stroke="#475569" stroke-dasharray="4" />`;
+            pathStr += `<text x="${cx + 5}" y="${cY + pathR / 2}" font-size="10" fill="#94a3b8">R=${R}</text>`;
 
             geoSvg.innerHTML = pathStr;
 
-            // 2. Draw Roll (The Coil)
+            // 2. Draw Roll (The Coil / Spiral)
             const rollSvg = document.getElementById('rollSvg');
-            const rScale = 80 / rollD;
-            const rVis = (rollD / 2) * rScale;
-            rollSvg.innerHTML = `
-                <circle cx="60" cy="60" r="${rVis}" stroke="#94a3b8" stroke-width="3" fill="#1e293b" />
-                <line x1="60" y1="60" x2="${60 + rVis}" y2="60" stroke="#ef4444" />
+            rollSvg.innerHTML = '';
+
+            const r0 = rollD / 2;
+            const a = h / (2 * Math.PI);
+            // L = r0*theta + a*theta^2 / 2
+            // Solve for theta: a/2 * theta^2 + r0 * theta - L = 0
+            const thetaMax = (-r0 + Math.sqrt(r0 * r0 + 2 * (h / (2 * Math.PI)) * L)) / (h / (2 * Math.PI));
+            const turns = thetaMax / (2 * Math.PI);
+
+            // Scale spiral to fit 120x120
+            const outerR = r0 + a * thetaMax;
+            const rollScale = 50 / outerR; // max radius 50px
+            const cxRoll = 60, cyRoll = 60;
+
+            // Mandrel circle
+            rollSvg.innerHTML += `<circle cx="${cxRoll}" cy="${cyRoll}" r="${r0 * rollScale}" stroke="#475569" fill="#1e293b" stroke-width="1" />`;
+
+            // Draw spiral path (High Resolution)
+            let d = "";
+            const steps = Math.max(500, Math.ceil(turns * 200)); // Increase resolution for smooth spiral
+            for (let i = 0; i <= steps; i++) {
+                const t = (thetaMax * i) / steps;
+                const r = (r0 + a * t) * rollScale;
+                const sx = cxRoll + r * Math.sin(t);
+                const sy = cyRoll - r * Math.cos(t);
+                d += (i === 0 ? "M" : "L") + ` ${sx.toFixed(2)} ${sy.toFixed(2)}`;
+            }
+            rollSvg.innerHTML += `<path d="${d}" stroke="#38bdf8" stroke-width="2" fill="none" stroke-linecap="round" />`;
+
+            // Add Dimension info
+            rollSvg.innerHTML += `
+                <line x1="${cxRoll}" y1="${cyRoll}" x2="${cxRoll + outerR * rollScale}" y2="${cyRoll}" stroke="#ef4444" stroke-opacity="0.5" />
+                <text x="60" y="115" font-size="10" fill="#94a3b8" text-anchor="middle">Turns: ${turns.toFixed(1)}</text>
                 <text x="60" y="55" font-size="10" fill="#ef4444" text-anchor="middle">D=${rollD}</text>
             `;
+
+            document.getElementById('rollInfo').innerHTML = `Thickness: ${h}mm <br> Length: ${(L / 1000).toFixed(2)}m`;
 
             drawStack();
 
@@ -853,7 +1072,7 @@
             const totalW = layers.reduce((acc, l) => acc + l.t, 0);
 
             // Center the stack
-            let currentX = (svg.clientWidth - (totalW * 50)) / 2; // Rough scale
+            let currentX = (svg.clientWidth - (totalW * 100)) / 2; // Rough scale
             if (currentX < 10) currentX = 10;
 
             layers.forEach(l => {
@@ -872,14 +1091,42 @@
         // --- LOGIC ---
         function loadPreset(name) {
             layers = [];
-            if (name === 'yours') {
-                layers.push({ angle: 45, type: 'PW', t: 0.1 });
-                layers.push({ angle: 0, type: 'UD', t: 0.17 });
-                layers.push({ angle: -45, type: 'PW', t: 0.1 });
-            } else if (name === 'yao') {
-                layers.push({ angle: 45, type: 'PW', t: 0.08 });
-                layers.push({ angle: 0, type: 'UD', t: 0.08 });
-                layers.push({ angle: 45, type: 'PW', t: 0.08 });
+            if (name === 'standard_flight') {
+                const t = 0.030; // 30um
+                layers.push({ angle: 45, type: 'UD', t: t, Ef: 294 }); // T800H Approx
+                layers.push({ angle: -45, type: 'UD', t: t, Ef: 294 });
+                layers.push({ angle: 0, type: 'UD', t: t, Ef: 294 });
+                layers.push({ angle: 45, type: 'UD', t: t, Ef: 294 });
+                layers.push({ angle: -45, type: 'UD', t: t, Ef: 294 });
+            } else if (name === 'nasa_hybrid') {
+                layers.push({ angle: 45, type: 'PW', t: 0.055, Ef: 230 });
+                layers.push({ angle: 0, type: 'UD', t: 0.055, Ef: 290 }); // MR60H
+                layers.push({ angle: 45, type: 'PW', t: 0.055, Ef: 230 });
+            } else if (name === 'optical_glass') {
+                layers.push({ angle: 45, type: 'PW', t: 0.102, Ef: 72 }); // Astroquartz
+                layers.push({ angle: 0, type: 'UD', t: 0.076, Ef: 86 }); // S2 Glass
+                layers.push({ angle: 45, type: 'PW', t: 0.102, Ef: 72 });
+            } else if (name === 'high_force') {
+                const t = 0.125;
+                layers.push({ angle: 0, type: 'UD', t: t, Ef: 276 }); // IM7
+                layers.push({ angle: 45, type: 'UD', t: t, Ef: 276 });
+                layers.push({ angle: -45, type: 'UD', t: t, Ef: 276 });
+                layers.push({ angle: 0, type: 'UD', t: t, Ef: 276 });
+            } else if (name === 'woven_model') {
+                const t = 0.040; // ~240um total
+                layers.push({ angle: 0, type: 'PW', t: t, Ef: 230 });
+                layers.push({ angle: 45, type: 'PW', t: t, Ef: 230 });
+                layers.push({ angle: -45, type: 'PW', t: t, Ef: 230 });
+                layers.push({ angle: 45, type: 'PW', t: t, Ef: 230 });
+                layers.push({ angle: -45, type: 'PW', t: t, Ef: 230 });
+                layers.push({ angle: 0, type: 'PW', t: t, Ef: 230 });
+            } else if (name === 'pp_glass') {
+                const t = 0.150;
+                layers.push({ angle: 45, type: 'UD', t: t, Ef: 72 });
+                layers.push({ angle: -45, type: 'UD', t: t, Ef: 72 });
+                layers.push({ angle: 0, type: 'UD', t: t, Ef: 72 });
+                layers.push({ angle: 45, type: 'UD', t: t, Ef: 72 });
+                layers.push({ angle: -45, type: 'UD', t: t, Ef: 72 });
             }
             renderLayers();
             drawDiagrams();
@@ -983,7 +1230,7 @@
             const rollDia = parseFloat(document.getElementById('rollDia').value) / 1000;
 
             // 2. BUILD LAMINATE STIFFNESS (CLT)
-            let D11 = 0, D22 = 0, D12 = 0;
+            let D11 = 0, D22 = 0, D12 = 0, D66 = 0;
             let totalMassPerArea = 0;
             const h = layers.reduce((sum, l) => sum + l.t, 0) / 1000;
             let z = -h / 2;
@@ -994,15 +1241,20 @@
                 const Vf = (l.type === 'UD') ? 0.60 : 0.50;
                 const rho_ply = (Vf * rho_f) + ((1 - Vf) * rho_m);
 
-                // Stiffness (Rule of Mixtures)
-                // E1 = Vf*Ef + Vm*Em
-                const E1 = Vf * Ef + (1 - Vf) * Em;
+                // Stiffness (Rule of Mixtures or overrides)
+                const ply_Ef = (l.Ef !== undefined) ? l.Ef * 1e9 : Ef;
+                const ply_Em = (l.Em !== undefined) ? l.Em * 1e9 : Em;
+
+                const E1 = Vf * ply_Ef + (1 - Vf) * ply_Em;
                 let E2, G12, nu12;
 
                 if (l.type === 'UD') {
-                    // Halpin-Tsai approx for E2 in UD
-                    E2 = Em * (1 + 2 * Vf) / (1 - Vf);
-                    G12 = Em * (1 + Vf) / (1 - Vf); // Approx
+                    // Halpin-Tsai for E2 and G12 (Transverse/Shear)
+                    // HSC literature (Murphey/Brinkmeyer) assumes G12/E1 ratio ~0.02-0.03
+                    // A more realistic G12 for space-grade UD is 4-5 GPa
+                    E2 = ply_Em * (1 + 2 * Vf) / (1 - Vf);
+                    G12 = ply_Em / (2 * (1 + 0.3) * (1 - Math.sqrt(Vf))); // Improved shear model
+                    G12 = Math.max(G12, 3e9); // Floor at 3 GPa for UD
                     nu12 = 0.3;
                 } else {
                     // Woven (Naik Model approx) - Reduced stiffness due to crimp
@@ -1030,6 +1282,7 @@
                 const Qb11 = Q11 * c4 + 2 * (Q12 + 2 * Q66) * s2 * c2 + Q22 * s4;
                 const Qb22 = Q11 * s4 + 2 * (Q12 + 2 * Q66) * s2 * c2 + Q22 * c4;
                 const Qb12 = (Q11 + Q22 - 4 * Q66) * s2 * c2 + Q12 * (s2 * s2 + c2 * c2);
+                const Qb66 = (Q11 + Q22 - 2 * Q12 - 2 * Q66) * s2 * c2 + Q66 * (s4 + c4);
 
                 const t_m = l.t / 1000;
                 const z_next = z + t_m;
@@ -1039,6 +1292,7 @@
                 D11 += Qb11 * geom;
                 D22 += Qb22 * geom;
                 D12 += Qb12 * geom;
+                D66 += Qb66 * geom;
 
                 // Mass accumulation
                 totalMassPerArea += rho_ply * t_m;
@@ -1047,10 +1301,19 @@
             });
 
             // Standard Results
+            const beta = width / R_trans;
+            const M_eq = (D11 + D22 + 2 * D12) * beta;
+            const M_opp = (D11 + D22 - 2 * D12) * beta;
+
             const r_roll = rollDia / 2;
             const strain = (h / 2) * (1 / r_roll) * 100;
-            const M = (D11 * (1 / r_roll) + D12 * (-1 / R_trans)) * width;
             const r_nat = R_trans * (D11 / D22);
+
+            // --- Murphey Stability Criterion (S) ---
+            // S = 4D66 + 2D12 - 2(D22^2 / D12)
+            // S > 0 indicates bistability
+            const S_crit = 4 * D66 + 2 * D12 - 2 * (Math.pow(D22, 2) / D12);
+            const isBistableByMurphey = S_crit > 0;
 
             // --- ADVANCED DYNAMICS ---
 
@@ -1113,17 +1376,8 @@
             const y_max = R_trans;
             const sigma_root = (M_root * y_max) / I_global; // Pascals
 
-            // 5. Snap-Through Moment (Opposite Sense Bending)
-            // Source: Murphey et al. Eq 17 (corrected for opposite sense)
-            // M_snap approx D22 * Width? No, Eq 17 is M = D11*k + 2D12*k + D22*k
-            // This represents the moment required to flatten the cross-section (brazier moment).
-            // Simplified approximation for slit tube snap-through:
-            // M_snap approx (D22 / R) * Width_factor 
-            // Actually, Murphey Eq 17 gives the moment to roll "opposite sense" (against curvature).
-            // k_snap = 1/R (flattening curvature).
-            // M_snap_unit = D22 * (1/R) (dominated by transverse stiffness D22)
-            // Total Snap Moment = M_snap_unit * width_m
-            const M_snap = (D22 * (1 / R_trans)) * width; // N*m
+            // 5. Comparison Moments (High Strain Composite steady-state)
+            // Removed old M_snap. Now using CLT-derived M_eq and M_opp.
 
             // 6. Critical Axial Buckling Load (Euler)
             // Source: Murphey et al. Eq 5: P = (pi^2 * EI) / L^2
@@ -1135,21 +1389,47 @@
             document.getElementById('resDeflect').innerText = deflect_mm.toFixed(1) + " mm";
             document.getElementById('resStress').innerText = (sigma_root / 1e6).toFixed(1) + " MPa";
 
-            // Display Moments in N*cm for readability
-            document.getElementById('resSnap').innerText = (M_snap * 100).toFixed(1) + " N·cm";
-            document.getElementById('resBuckle').innerText = P_buckle.toFixed(2) + " N";
+            // Bending Sense Detection:
+            // Downward (P_tip > 0) = Opposite Sense (Flattening)
+            // Upward (P_tip < 0) = Equal Sense (Deepening)
+            const isOppositeSense = P_tip > 0;
+            const senseLabel = isOppositeSense ? "(Opposite Sense)" : "(Equal Sense)";
 
-            // Safety Color Coding
-            const snapElem = document.getElementById('resSnap');
-            if (M_root > M_snap) {
-                snapElem.style.color = "red";
-                snapElem.innerText += " (FAIL)";
+            // Display Moments in N*cm for readability
+            const oppElem = document.getElementById('resMopper');
+            const eqElem = document.getElementById('resMequil');
+            const stabElem = document.getElementById('resStability');
+
+            oppElem.innerText = (M_opp * 100).toFixed(2);
+            eqElem.innerText = (M_eq * 100).toFixed(2);
+
+            const ratio = (M_opp / M_eq) * 100;
+            const isBistableStr = isBistableByMurphey ? "YES" : "NO";
+            const isStronglyBistable = ratio < 4;
+
+            let stabText = "Stability: " + ratio.toFixed(1) + "% ";
+            if (isBistableByMurphey) {
+                stabText += isStronglyBistable ? "(Strongly Bistable)" : "(Bistable)";
             } else {
-                snapElem.style.color = "green";
+                stabText += "(Monostable)";
             }
 
+            stabElem.innerText = stabText;
+            stabElem.style.color = isBistableByMurphey ? "#22c55e" : "#f97316";
+
+            if (isOppositeSense) {
+                oppElem.style.color = (Math.abs(M_root) > M_opp) ? "#ef4444" : "#22c55e";
+                eqElem.style.color = "var(--text-muted)";
+            } else {
+                eqElem.style.color = (Math.abs(M_root) > M_eq) ? "#ef4444" : "#38bdf8";
+                oppElem.style.color = "var(--text-muted)";
+            }
+
+            document.getElementById('resBuckle').innerText = P_buckle.toFixed(2) + " N";
+
             // 8. Draw Visualizer
-            drawBeam(L, deflect_m * 100, M_root / M_snap); // Scale deflection for visibility
+            const currentLimitMoment = isOppositeSense ? M_opp : M_eq;
+            drawBeam(L, deflect_m * 100, Math.abs(M_root) / currentLimitMoment);
 
             // --- NEW: SOLAR BLANKET AREA & POWER ---
 
@@ -1205,16 +1485,21 @@
             document.getElementById('resMass').innerText = (w_linear * 1000).toFixed(1) + " g/m";
             document.getElementById('resEI').innerText = Global_EI.toFixed(4);
 
+            // Fiber limit check
+            const fiberGrade = document.getElementById('fiberSelect').value;
+            const e_limit = fiberPresets[fiberGrade] ? fiberPresets[fiberGrade].e_comp : 1.5;
+
             // Display Standard Results
             document.getElementById('resStrain').innerText = strain.toFixed(2) + "%";
             const stat = document.getElementById('resStatus');
-            if (strain > 1.5) stat.innerHTML = "<span class='status-danger'>Risk (>1.5%)</span>";
+            if (strain > e_limit) stat.innerHTML = `<span class='status-danger' style='background:#ef4444; color:white; padding:2px 4px; border-radius:3px;'>FRACTURE RISK (> ${e_limit}%)</span>`;
+            else if (strain > e_limit * 0.7) stat.innerHTML = "<span class='status-warning' style='background:#f59e0b; color:white; padding:2px 4px; border-radius:3px;'>High Strain</span>";
             else stat.innerHTML = "<span class='status-safe'>Safe</span>";
 
-            document.getElementById('resTorque').innerText = (M * 1000).toFixed(1);
+            document.getElementById('resTorque').innerText = (M_opp * 1000).toFixed(1);
 
-            let natText = (r_nat * 1000 * 2).toFixed(0) + " mm";
-            if (D11 > D22 * 1.5) natText = "None (Self-Deploying)";
+            let natText = (r_nat * 1000 * 2).toFixed(1) + " mm";
+            if (M_opp < 0.01 * M_eq) natText = "None (Self-Deploying)";
             document.getElementById('resNatRad').innerText = natText;
 
             // Plots
@@ -1369,38 +1654,119 @@
             });
         }
 
+        function getPronyStiffness(t_sec, shift_factor) {
+            // Brinkmeyer et al. Prony Series (Source 367)
+            // Precision constants for T800H/Epoxy
+            const prony_weights = [0.013, 0.062, 0.094, 0.219]; // Weightings
+            const prony_taus = [2.64, 16.3, 266, 4790];         // s
+
+            const t_red = t_sec / shift_factor;
+            let decay = 0;
+            for (let i = 0; i < prony_weights.length; i++) {
+                decay += prony_weights[i] * (1 - Math.exp(-t_red / prony_taus[i]));
+            }
+            return 1.0 - decay;
+        }
+
         function plotAdvancedGraphs(D11, D22, R_trans, width, layers, t_ply, Ef_input) {
-            const timeLabels = ['1 Hour', '1 Day', '1 Week', '1 Month', '6 Months'];
+            // --- 1. PRECISION STOWAGE LIFE (BRINKMEYER TTS) ---
+            const T_stow = parseFloat(document.getElementById('stowageTemp').value);
+            const T_g = parseFloat(document.getElementById('temp_tg').value);
+            const margin = parseFloat(document.getElementById('torqueMargin').value);
+            const missionDays = parseFloat(document.getElementById('missionDays').value);
+            const T_ref = 60.0;
+
+            // Shift Factor (Arrhenius rule of thumb: rate doubles every 10C)
+            const shift = Math.pow(2.0, -(T_stow - T_ref) / 10.0);
+
+            // Failure Condition
+            const fail_ratio = 1.0 / margin;
+
+            // Check for Safe by Design (Max relaxation ~39%)
+            const max_relaxation = 0.013 + 0.062 + 0.094 + 0.219; // 0.388
+            const isSafeByDesign = (1.0 - fail_ratio) > max_relaxation;
+
+            const labels = ['1h', '1d', '1w', '1mo', '6mo', '1y', '5y', '10y'];
+            const seconds = [3600, 86400, 604800, 2592000, 15552000, 31104000, 155520000, 311040000];
+
             const torqueData = [];
-            const relaxFactors = [0.95, 0.88, 0.82, 0.75, 0.65];
+            const failData = [];
+            let predictedLife = isSafeByDesign ? "Indefinite (Safe)" : "> 10 Years";
+            let lifeInSeconds = 311040000; // default 10y
+            let foundFail = false;
 
-            const r_roll = parseFloat(document.getElementById('rollDia').value) / 2000;
-            const kx = 1 / r_roll;
+            seconds.forEach((s, idx) => {
+                const stiff_ratio = getPronyStiffness(s, shift);
+                torqueData.push(stiff_ratio * 100);
+                failData.push(fail_ratio * 100);
 
-            relaxFactors.forEach(factor => {
-                const D11_relaxed = D11 * (0.9 + (0.1 * factor));
-                const M_t = (D11_relaxed * kx) * width;
-                torqueData.push(M_t * 1000);
+                if (!isSafeByDesign && stiff_ratio <= fail_ratio && !foundFail) {
+                    predictedLife = "~ " + labels[idx];
+                    lifeInSeconds = s;
+                    foundFail = true;
+                }
             });
+
+            // Update UI Results
+            document.getElementById('resRelaxLimit').innerText = (fail_ratio * 100).toFixed(1) + "%";
+            document.getElementById('resStowageLife').innerText = predictedLife;
+
+            const mStatus = document.getElementById('missionStatus');
+            const missionSec = missionDays * 86400;
+
+            if (isSafeByDesign || lifeInSeconds > missionSec) {
+                mStatus.innerText = "SAFE";
+                mStatus.style.background = "#22c55e";
+                mStatus.style.color = "white";
+            } else {
+                mStatus.innerText = "DANGER";
+                mStatus.style.background = "#ef4444";
+                mStatus.style.color = "white";
+            }
+
+            const warn = document.getElementById('brinkmeyerWarning');
+            if (T_g - T_stow < 20) {
+                warn.style.display = "block";
+            } else {
+                warn.style.display = "none";
+            }
 
             const ctxR = document.getElementById('relaxChart').getContext('2d');
             if (window.relaxChartInst) window.relaxChartInst.destroy();
             window.relaxChartInst = new Chart(ctxR, {
                 type: 'line',
                 data: {
-                    labels: timeLabels,
-                    datasets: [{
-                        label: 'Deployment Torque (Nmm)',
-                        data: torqueData,
-                        borderColor: '#ec4899', // Pink
-                        backgroundColor: 'rgba(236, 72, 153, 0.1)',
-                        fill: true
-                    }]
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Torque Remaining (%)',
+                            data: torqueData,
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            borderWidth: 2,
+                            pointRadius: 4,
+                            fill: true
+                        },
+                        {
+                            label: 'Stall Limit',
+                            data: failData,
+                            borderColor: '#ef4444',
+                            borderDash: [5, 5],
+                            borderWidth: 1,
+                            pointRadius: 0
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Torque (Nmm)' } } }
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+                            title: { display: true, text: 'Torque (%)' }
+                        }
+                    }
                 }
             });
 
@@ -1488,21 +1854,22 @@
 
             // Setup
             const startX = 40;
-            const startY = h - 20; // Root position
-            const beamLenPx = w - 60;
+            const startY = h / 2; // Center root vertically to allow ± deflection
+            const beamLenPx = w - 80;
             const endX = startX + beamLenPx;
 
             // Scale deflection (exaggerated for visuals)
-            // Map deflection input (which is abstract scaled) to pixels
-            // Let's cap max visual deflection at 80px
+            // Clamp visual deflection to fit within canvas height (± from center)
+            const maxDefPx = (h / 2) - 20;
             let defPx = deflection * 200; // Arbitrary scale factor
-            if (defPx > 80) defPx = 80;
+            if (defPx > maxDefPx) defPx = maxDefPx;
+            if (defPx < -maxDefPx) defPx = -maxDefPx;
             const endY = startY + defPx;
 
             // Draw Wall (Root)
             ctx.beginPath();
-            ctx.moveTo(startX, startY - 40);
-            ctx.lineTo(startX, startY + 40);
+            ctx.moveTo(startX, startY - 30);
+            ctx.lineTo(startX, startY + 30);
             ctx.lineWidth = 5;
             ctx.strokeStyle = "#555";
             ctx.stroke();
