@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSC Design Suite - Unified Tool</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --bg: #f4f7f6;
+            --panel: #ffffff;
+            --warn: #c0392b;
+            --viz-accent: #3498db;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 320px;
+            max-width: 400px;
+        }
+
+        .card {
+            background: var(--panel);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.25em;
+        }
+
+        /* Form Elements */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .unit {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            float: right;
+        }
+
+        .calc-val {
+            background: #eee;
+            border: none;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* Stack Visualizer */
+        .stack-container {
+            background: #e0e0e0;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            padding: 10px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .ply-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 2px 0;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .ply-item:hover {
+            transform: scale(1.01);
+        }
+
+        .ply-ud {
+            background: linear-gradient(90deg, #2c3e50, #34495e);
+            border-left: 5px solid #f1c40f;
+        }
+
+        .ply-pw {
+            background: linear-gradient(90deg, #2980b9, #3498db);
+            border-left: 5px solid #ecf0f1;
+        }
+
+        .ply-custom {
+            background: linear-gradient(90deg, #16a085, #1abc9c);
+            border-left: 5px solid #2ecc71;
+        }
+
+        .ply-remove {
+            color: #ffadad;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-left: 10px;
+        }
+
+        /* Controls */
+        .control-panel {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .add-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        /* Custom Material Form */
+        .custom-mat-form {
+            display: none;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .toggle-custom {
+            font-size: 0.8em;
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        button.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        button.success {
+            background: var(--safe);
+            color: white;
+        }
+
+        /* Controls */
+        .control-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #34495e;
+        }
+
+        /* Visualization Canvas */
+        #vizCanvas {
+            width: 100%;
+            height: 250px;
+            background: #fafafa;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+        }
+
+        /* Stats & Chart */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            color: #95a5a6;
+        }
+
+        .stat-val {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .relax-chart {
+            background: #ecf0f1;
+            height: 120px;
+            border-radius: 4px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+            gap: 4px;
+            margin: 15px 0;
+        }
+
+        .relax-bar {
+            flex: 1;
+            background: var(--safe);
+            border-radius: 2px 2px 0 0;
+            transition: 0.5s;
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .check-fail {
+            color: var(--warn);
+        }
+
+        /* Dynamics Visualizer */
+        .beam-container {
+            height: 150px;
+            background: #34495e;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .root-clamp {
+            width: 15px;
+            height: 60px;
+            background: #95a5a6;
+            position: absolute;
+            left: 20px;
+            z-index: 2;
+            border-radius: 2px;
+        }
+
+        #beamCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Frequency Vibration Viz (restored) */
+        .vib-container {
+            height: 60px;
+            background: #2c3e50;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .vib-beam {
+            width: 70%;
+            height: 6px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            transform-origin: left center;
+            border-radius: 3px;
+            margin-left: 20px;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Energy Chart */
+        #energyCanvas {
+            width: 100%;
+            height: 150px;
+            background: #fafafa;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Gauges */
+        .gauge-container {
+            margin: 15px 0;
+        }
+
+        .gauge-bar {
+            height: 20px;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+
+        .gauge-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease-out;
+        }
+
+        .gauge-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #333;
+            z-index: 2;
+        }
+
+        .gauge-label {
+            font-size: 0.75em;
+            position: absolute;
+            top: -18px;
+            color: #555;
+        }
+
+        /* Solar Viz */
+        .solar-viz {
+            height: 180px;
+            background: #2c3e50;
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .solar-wing {
+            background: linear-gradient(45deg, #2980b9 25%, #3498db 25%, #3498db 50%, #2980b9 50%, #2980b9 75%, #3498db 75%, #3498db 100%);
+            background-size: 20px 20px;
+            border: 1px solid #fff;
+            opacity: 0.9;
+            transition: width 0.5s, height 0.5s;
+            position: relative;
+        }
+
+        .boom-line {
+            position: absolute;
+            height: 100%;
+            width: 4px;
+            background: #f1c40f;
+            top: 0;
+            transition: left 0.5s;
+        }
+
+        h2.solar {
+            border-bottom-color: #f39c12;
+            color: #e67e22;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- COLUMN 1: MATERIAL & GEOMETRY -->
+    <div class="column">
+
+
+        <div class="card">
+            <h2>2. Geometry Definition</h2>
+            <div class="input-group">
+                <label>Boom Radius (mm) <span class="unit">R (Transverse)</span></label>
+                <input type="number" id="boomRadius" value="11" oninput="updateSystem()">
+            </div>
+            <div class="input-group">
+                <label>Flattened Width (mm) <span class="unit">W_flat</span></label>
+                <input type="number" id="flatWidth" value="35" oninput="updateSystem()">
+            </div>
+            <div class="input-group">
+                <label>Calculated Angle <span class="unit">β (deg)</span></label>
+                <input type="text" id="calcAngle" class="calc-val" readonly>
+            </div>
+            <div class="input-group">
+                <label>Boom Length (mm) <span class="unit">L</span></label>
+                <input type="number" id="boomLength" value="500" oninput="updateSystem()">
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUMN 2: LAMINATE DESIGN -->
+    <div class="column">
+        <!-- BLOCK 3: LAMINATE BUILDER -->
+        <div class="card">
+            <h2>3. Laminate Design</h2>
+            <p style="font-size:0.85em; color:#666;">
+                Construct your boom laminate. Verify twist ($D_{16}$) and stability ($D_{12}$).
+            </p>
+
+            <!-- Visualizer -->
+            <div class="stack-container" id="stackContainer"></div>
+            <div style="text-align:right; font-size:0.85em; margin-top:5px; color:#666;">
+                Total Thickness: <span id="totalH" style="font-weight:bold; color:#333">0.00</span> mm
+            </div>
+
+            <!-- PLY CONTROLS -->
+            <div class="control-panel">
+                <div class="add-row">
+                    <div>
+                        <label>Material</label>
+                        <select id="plyType">
+                            <!-- Presets injected by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label>Angle (°)</label>
+                        <input type="number" id="plyAngle" value="45">
+                    </div>
+                    <div>
+                        <label>t (mm)</label>
+                        <input type="number" id="plyThick" value="0.17" step="0.01">
+                    </div>
+                    <button class="primary" onclick="addPly()">+ Add</button>
+                </div>
+
+                <!-- Custom Material Toggle -->
+                <span class="toggle-custom" onclick="toggleCustomForm()">+ Create New Material Preset</span>
+
+                <!-- Custom Material Inputs -->
+                <div class="custom-mat-form" id="customForm">
+                    <div style="grid-column: span 3;">
+                        <label>New Material Name</label>
+                        <input type="text" id="custName" placeholder="e.g. M55J High Mod">
+                    </div>
+                    <div>
+                        <label>E1 (Axial GPa)</label>
+                        <input type="number" id="custE1" placeholder="135">
+                    </div>
+                    <div>
+                        <label>E2 (Trans GPa)</label>
+                        <input type="number" id="custE2" placeholder="8">
+                    </div>
+                    <div>
+                        <label>G12 (Shear GPa)</label>
+                        <input type="number" id="custG12" placeholder="4.5">
+                    </div>
+                    <div>
+                        <label>Nu12 (Poisson)</label>
+                        <input type="number" id="custNu" value="0.3" step="0.05">
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <button class="success" style="width:100%" onclick="saveCustomMaterial()">Save to
+                            Library</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRESETS -->
+            <div style="margin-top:10px; display:flex; gap:10px;">
+                <button style="flex:1; background:#ecf0f1; color:#333;" onclick="setPreset('zenith')">Load Zenith
+                    (BhorForce)</button>
+                <button style="flex:1; background:#ecf0f1; color:#333;" onclick="setPreset('antisymmetric')">Load
+                    [±45/0/±45]</button>
+                <button style="flex:1; background:#fab1a0; color:#c0392b;" onclick="clearStack()">Clear</button>
+            </div>
+
+            <!-- RESULTS -->
+            <div class="matrix-grid">
+                <div class="stat-box" style="border-color: var(--accent);">
+                    <div class="stat-label">Axial Stiffness (Ex)</div>
+                    <div class="stat-val" id="valEx">-- GPa</div>
+                </div>
+                <div class="stat-box" style="border-color: #3498db;">
+                    <div class="stat-label">Coupling (D12)</div>
+                    <div class="stat-val" id="valD12">-- N·mm</div>
+                </div>
+            </div>
+            <div id="designChecks" style="margin-top:15px; font-size:0.9em;"></div>
+        </div>
+    </div>
+
+    <!-- COLUMN 3: STOWAGE -->
+    <div class="column">
+        <div class="card">
+            <h2>Real-Time Visualizer</h2>
+            <canvas id="vizCanvas"></canvas>
+
+            <div class="stat-row" style="margin-top:10px;">
+                <span>Stowed Diameter (Est):</span>
+                <span class="stat-val" id="stowDia">-- mm</span>
+            </div>
+            <div class="stat-row">
+                <span>Packaging Strain:</span>
+                <span class="stat-val" id="strainVal" style="color:#e67e22;">-- %</span>
+            </div>
+            <div id="warnings" style="color: #e74c3c; font-size: 0.85em; margin-top: 10px; font-weight: 600;"></div>
+        </div>
+
+        <div class="card">
+            <h2>4. Stowage Life Prediction</h2>
+            <div class="input-group">
+                <label>Resin System (for Tg)</label>
+                <select id="resinType" onchange="updateSystem()">
+                    <option value="LY556" selected>Araldite LY 556 (Flight Tg 180°C, E 2.8 GPa)</option>
+                    <option value="HY951">Aradur HY 951 (Proto Tg 67°C, E 2.8 GPa)</option>
+                    <option value="Elastomer">Elastomeric / FLASH (Low E, High Strain)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Temp (°C) / Duration (Days)</label>
+                <div class="control-row">
+                    <input type="number" id="stowTemp" value="25" oninput="updateSystem()">
+                    <input type="number" id="stowTime" value="30" oninput="updateSystem()">
+                </div>
+            </div>
+
+            <div id="tempWarn" style="font-size:0.8em; color:var(--warn); margin-bottom:10px; font-weight:600;"></div>
+
+            <div class="relax-chart" id="relaxChart">
+                <!-- Bars generated by JS -->
+            </div>
+
+            <div class="stat-row">Retained Deployment Torque: <span class="stat-val" id="retainPct">100%</span></div>
+
+            <div class="result-box" id="riskBox" style="display:none;">
+                <strong>Warning:</strong> <span id="riskMsg">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUMN 4: PERFORMANCE ANALYSIS -->
+    <div class="column">
+        <div class="card">
+            <h2>5. Dynamics & Deflection</h2>
+            <p style="font-size:0.85em; color:#666; margin-bottom:10px;">
+                Predicts droop and vibration. (Ref: Yao et al. Source 224).
+            </p>
+
+            <!-- Deflection Visualizer -->
+            <div class="beam-container">
+                <div class="root-clamp"></div>
+                <canvas id="beamCanvas"></canvas>
+                <div style="position:absolute; bottom:10px; right:10px; color:rgba(255,255,255,0.5); font-size:0.8em;">
+                    Static Droop (1G)
+                </div>
+            </div>
+
+            <!-- Vibration Visualizer (Restored) -->
+            <div style="font-size:0.8em; color:#7f8c8d; margin-top:5px;">Mode 1 Vibration (Visualized speed):</div>
+            <div class="vib-container">
+                <div class="root-clamp" style="height:40px; width:10px; left:10px;"></div>
+                <div id="vibBeam" class="vib-beam"></div>
+            </div>
+
+            <div class="stat-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                <div class="stat-box">
+                    <span class="stat-label">Tip Deflection</span>
+                    <span class="stat-val" id="valDeflection">-- mm</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">1st Nat. Freq</span>
+                    <span class="stat-val" id="valFreq">-- Hz</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Boom Mass</span>
+                    <span class="stat-val" id="boomMass">-- g</span>
+                </div>
+            </div>
+
+            <div style="margin-top:15px; display: grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div>
+                    <label>Tip Mass (g)</label>
+                    <input type="number" id="tipMass" value="0" oninput="updateSystem()">
+                </div>
+                <div>
+                    <label>Gravity (G)</label>
+                    <input type="number" id="gForce" value="1.0" step="0.1" oninput="updateSystem()">
+                </div>
+            </div>
+
+            <div id="freqWarn" style="margin-top:10px; font-size:0.85em; color:#e67e22; display:none;">
+                ⚠️ <strong>Low Frequency:</strong> &lt;1 Hz. Boom is extremely floppy.
+            </div>
+        </div>
+
+        <!-- BLOCK 6: DIGITAL TWIN (CALIBRATION) -->
+        <div class="card" style="border: 2px solid #16a085;">
+            <h2 style="border-bottom-color: #16a085; color: #16a085;">6. Digital Twin Calibration</h2>
+            <p style="font-size:0.85em; color:#666;">
+                <strong>Theory is often wrong.</strong> Woven composites show CLT errors of 2-4x (Source 454).
+                Input your lab test results below to tune the physics engine.
+            </p>
+
+            <div style="background: #e8f8f5; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                <h4 style="margin:0 0 10px 0; color:#16a085;">Experimental Inputs</h4>
+
+                <div style="margin-bottom:10px;">
+                    <label>Test Load Applied (g)</label>
+                    <input type="number" style="border: 2px solid #16a085;" id="calLoad" placeholder="e.g. 20"
+                        oninput="runCalibration()">
+                </div>
+
+                <div style="margin-bottom:10px;">
+                    <label>Measured Deflection (mm)</label>
+                    <input type="number" style="border: 2px solid #16a085;" id="calDeflect" placeholder="e.g. 25"
+                        oninput="runCalibration()">
+                </div>
+
+                <div style="font-size:0.8em; color:#16a085;">
+                    * Perform test on Cup-Down (Strong) axis.
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-box" style="border-color:#16a085;">
+                    <span class="stat-label">Correction Factor</span>
+                    <span class="stat-val" id="calFactor">1.00x</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Calibrated Stiffness</span>
+                    <span class="stat-val" id="calEI">-- N·m²</span>
+                </div>
+            </div>
+
+            <div id="calMessage" style="margin-top:10px; font-size:0.9em; font-style:italic;">
+                Using Theoretical Model (Uncalibrated)
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>6. Energy & Force</h2>
+            <p style="font-size:0.85em; color:#666; margin-bottom:10px;">
+                Energy Well & Deployment Force (Murphey 454).
+            </p>
+
+            <canvas id="energyCanvas"></canvas>
+
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Stored Energy</div>
+                    <div class="stat-val" id="energy_val">-- mJ</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Tip Force</div>
+                    <div class="stat-val" id="force_val">-- N</div>
+                </div>
+            </div>
+
+            <div id="stabilityWarn" style="margin-top:10px; font-size:0.85em;"></div>
+        </div>
+
+        <!-- BLOCK 7: STRUCTURAL SAFETY -->
+        <div class="card">
+            <h2>7. Structural Safety Limits</h2>
+            <p style="font-size:0.85em; color:#666;">
+                Failure analysis based on Snap-Through (Murphey Eq 17) and Euler Buckling (Footdale Source 331).
+            </p>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
+                <div>
+                    <label style="font-size:0.8em; font-weight:bold;">Tip Load (g)</label>
+                    <input type="number" id="loadMass" value="50" oninput="updateSystem()">
+                </div>
+                <div>
+                    <label style="font-size:0.8em; font-weight:bold;">Design G-Load</label>
+                    <input type="number" id="loadG" value="1.0" step="0.1" oninput="updateSystem()">
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Snap Moment ($M_{opp}$)</span>
+                    <span class="stat-val" id="resSnap">-- Nm</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Buckling Load ($P_{crit}$)</span>
+                    <span class="stat-val" id="resBuckle">-- N</span>
+                </div>
+            </div>
+
+            <div class="gauge-container">
+                <div class="gauge-label" style="left:0">Moment Safety Factor (Target > 1.5)</div>
+                <div class="gauge-bar">
+                    <div id="barMoment" class="gauge-fill" style="background:var(--safe);"></div>
+                    <div class="gauge-line" style="left: 33%" title="SF=1.0 Limit"></div>
+                </div>
+                <div id="textMoment" style="text-align:right; font-size:0.8em; font-weight:bold;">SF: --</div>
+            </div>
+
+            <div class="gauge-container">
+                <div class="gauge-label" style="left:0">Buckling Safety Factor (Target > 3.0)</div>
+                <div class="gauge-bar">
+                    <div id="barBuckle" class="gauge-fill" style="background:var(--safe);"></div>
+                    <div class="gauge-line" style="left: 20%" title="SF=1.0 Limit"></div>
+                </div>
+                <div id="textBuckle" style="text-align:right; font-size:0.8em; font-weight:bold;">SF: --</div>
+            </div>
+
+            <div id="failMsg"
+                style="background:#fadbd8; color:#78281f; padding:10px; border-radius:4px; margin-top:10px; font-size:0.9em; display:none;">
+            </div>
+        </div>
+
+        <!-- BLOCK 8: SOLAR ARRAY SIZER -->
+        <div class="card">
+            <h2 class="solar">8. Solar Array Sizer</h2>
+            <p style="font-size:0.85em; color:#666;">
+                Sizes a ROSA-style array (Source 452) using your boom definition.
+                <br><em>Ref Mass: 16.7 g/m (Yao Source 189).</em>
+            </p>
+
+            <div class="solar-viz">
+                <div class="solar-wing" id="vizWing">
+                    <div class="boom-line" style="left:0;"></div>
+                    <div class="boom-line" style="right:0; left:auto;"></div>
+                </div>
+                <div style="position:absolute; color:white; font-weight:bold; text-shadow:0 1px 2px black;">
+                    <span id="vizPower">-- W</span>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:15px;">
+                <div>
+                    <label style="font-size:0.8em; font-weight:bold;">Target Power (W)</label>
+                    <input type="number" id="targetP" value="150" oninput="updateSystem()">
+                </div>
+                <div>
+                    <label style="font-size:0.8em; font-weight:bold;">Cell Efficiency (%)</label>
+                    <input type="number" id="cellEff" value="29.5" oninput="updateSystem()">
+                </div>
+                <div>
+                    <label style="font-size:0.8em; font-weight:bold;">Areal Density (g/m²)</label>
+                    <input type="number" id="blanketDensity" value="1200" oninput="updateSystem()">
+                </div>
+                <div>
+                    <label style="font-size:0.8em; font-weight:bold;">Blanket Width (m)</label>
+                    <input type="number" id="blanketWidth" value="0.5" step="0.1" oninput="updateSystem()">
+                </div>
+            </div>
+
+            <div class="stat-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="stat-box">
+                    <span class="stat-label">Req. Length</span>
+                    <span class="stat-val" id="solLen">-- m</span>
+                </div>
+                <!-- Width is now an input, so we output Droop instead of Width here, or maybe just output calculated area/mass -->
+                <div class="stat-box">
+                    <span class="stat-label">Array Droop (1G)</span>
+                    <span class="stat-val" id="valArrayDroop">-- mm</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">System Mass (Est)</span>
+                    <span class="stat-val" id="solMass">-- g</span>
+                </div>
+            </div>
+
+            <div style="margin-top:10px; font-size:0.8em; color:#666;">
+                *Assumes 2 booms + blanket (1200 g/m²).
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('vizCanvas');
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+
+        // --- LAMINATE STATE ---
+        // Global State for Digital Twin
+        var calibrationFactor = 1.0;
+        var designState = {};
+
+        function initCanvas() {
+            canvas.width = canvas.offsetWidth * dpr;
+            canvas.height = canvas.offsetHeight * dpr;
+            ctx.scale(dpr, dpr);
+        }
+
+        // Material Properties (Source 443, 481, 264)
+        const MATERIALS = {
+            "BhorForce-160": {
+                name: "BhorForce® UC160C",
+                E1: 135.0, E2: 9.0, G12: 4.8, nu12: 0.3, type: "ply-ud"
+            },
+            "PW-Carbon": {
+                name: "Carbon Plain Weave",
+                E1: 60.0, E2: 60.0, G12: 25.0, nu12: 0.05, type: "ply-pw"
+            },
+            "UD-Glass": {
+                name: "S2-Glass UD",
+                E1: 48.0, E2: 12.0, G12: 5.0, nu12: 0.28, type: "ply-custom"
+            },
+            "Copper-44AWG": {
+                name: "Embedded Wires (44AWG)",
+                E1: 110.0, E2: 0.1, G12: 0.1, nu12: 0.3, type: "ply-custom"
+            },
+            // Legacy mapping for old presets if needed, or just standard types
+            "UD-Carbon": { name: "UD Carbon (Std)", E1: 135, E2: 10, G12: 5, nu12: 0.3, type: "ply-ud" }
+        };
+
+        let stack = [];
+
+        // --- HELPER FUNCTIONS ---
+        function populateDropdown() {
+            const sel = document.getElementById('plyType');
+            sel.innerHTML = "";
+            for (let key in MATERIALS) {
+                let opt = document.createElement('option');
+                opt.value = key;
+                opt.innerText = MATERIALS[key].name;
+                sel.appendChild(opt);
+            }
+        }
+
+        function toggleCustomForm() {
+            const form = document.getElementById('customForm');
+            form.style.display = form.style.display === 'grid' ? 'none' : 'grid';
+        }
+
+        function saveCustomMaterial() {
+            const name = document.getElementById('custName').value;
+            const E1 = parseFloat(document.getElementById('custE1').value);
+            const E2 = parseFloat(document.getElementById('custE2').value);
+            const G12 = parseFloat(document.getElementById('custG12').value);
+            const nu = parseFloat(document.getElementById('custNu').value);
+
+            if (!name || isNaN(E1)) { alert("Please enter valid properties."); return; }
+
+            const key = "Custom-" + Date.now();
+            MATERIALS[key] = { name: name, E1: E1, E2: E2, G12: G12, nu12: nu, type: "ply-custom" };
+
+            populateDropdown();
+            document.getElementById('plyType').value = key;
+            toggleCustomForm();
+        }
+
+        function setPreset(type) {
+            stack = [];
+            if (type === 'zenith') {
+                stack.push({ ...MATERIALS["BhorForce-160"], angle: 45, t: 0.16 });
+                stack.push({ ...MATERIALS["BhorForce-160"], angle: -45, t: 0.16 });
+            } else if (type === 'antisymmetric') {
+                const mat = MATERIALS["BhorForce-160"];
+                stack.push({ ...mat, angle: 45, t: 0.08 });
+                stack.push({ ...mat, angle: -45, t: 0.08 });
+                stack.push({ ...MATERIALS["UD-Glass"], angle: 0, t: 0.05 });
+                stack.push({ ...mat, angle: 45, t: 0.08 });
+                stack.push({ ...mat, angle: -45, t: 0.08 });
+            }
+            updateSystem();
+        }
+
+        function addPly() {
+            const key = document.getElementById('plyType').value;
+            const angle = parseFloat(document.getElementById('plyAngle').value);
+            const t = parseFloat(document.getElementById('plyThick').value);
+
+            stack.push({ ...MATERIALS[key], angle: angle, t: t });
+            updateSystem();
+        }
+
+        function removePly(index) {
+            stack.splice(index, 1);
+            updateSystem();
+        }
+
+        function clearStack() {
+            stack = [];
+            updateSystem();
+        }
+
+        function updateSystem() {
+            // 1. Classical Lamination Theory (CLT) Math
+            const stackContainer = document.getElementById('stackContainer');
+            stackContainer.innerHTML = '';
+            let totalH = 0;
+            let A11 = 0;
+            let D11 = 0, D12 = 0, D16 = 0, D22 = 0;
+
+            stack.forEach((ply, idx) => {
+                // Render UI (Part 2 Style)
+                let div = document.createElement('div');
+                div.className = `ply-item ${ply.type}`;
+                div.innerHTML = `<span>${idx + 1}. ${ply.name}</span> <span>${ply.angle}°</span> <span>${ply.t}mm</span> <span class="ply-remove" onclick="removePly(${idx})">x</span>`;
+                stackContainer.appendChild(div);
+                totalH += ply.t;
+            });
+
+            document.getElementById('totalH').innerText = totalH.toFixed(3);
+
+            // Loop again for integration
+            let z_curr = -totalH / 2;
+            stack.forEach(ply => {
+                const z_next = z_curr + ply.t;
+                const rad = ply.angle * Math.PI / 180;
+                const c = Math.cos(rad); const s = Math.sin(rad);
+                const c2 = c * c; const s2 = s * s; const c4 = c2 * c2; const s4 = s2 * s2;
+
+                // Flattened Props (No more .props accessor)
+                const E1 = ply.E1 * 1e9; const E2 = ply.E2 * 1e9;
+                const nu12 = ply.nu12; const G12 = ply.G12 * 1e9;
+                const nu21 = nu12 * E2 / E1;
+                const Q11 = E1 / (1 - nu12 * nu21);
+                const Q22 = E2 / (1 - nu12 * nu21);
+                const Q12 = (nu12 * E2) / (1 - nu12 * nu21);
+                const Q66 = G12;
+
+                const Q_xx = c4 * Q11 + s4 * Q22 + 2 * c2 * s2 * (Q12 + 2 * Q66);
+                const Q_yy = s4 * Q11 + c4 * Q22 + 2 * c2 * s2 * (Q12 + 2 * Q66);
+                const Q_xy = c2 * s2 * (Q11 + Q22 - 4 * Q66) + (c4 + s4) * Q12;
+                const Q_xs = c * s * (c2 * Q11 - s2 * Q22 - (c2 - s2) * (Q12 + 2 * Q66));
+
+                A11 += Q_xx * ply.t / 1000;
+                const geomTerm = (Math.pow(z_next / 1000, 3) - Math.pow(z_curr / 1000, 3)) / 3;
+                D11 += Q_xx * geomTerm;
+                D22 += Q_yy * geomTerm;
+                D12 += Q_xy * geomTerm;
+                D16 += Q_xs * geomTerm;
+
+                z_curr = z_next;
+            });
+
+            const Ex_GPa = totalH > 0 ? (A11 / (totalH / 1000)) / 1e9 : 0;
+            document.getElementById('valEx').innerText = Math.round(Ex_GPa) + " GPa";
+            document.getElementById('valD12').innerText = D12.toFixed(3) + " Nm";
+
+            // 2. Design Checks
+            const checks = document.getElementById('designChecks');
+            let checkHtml = "";
+            if (totalH > 0 && Math.abs(D16) > 0.1 * D11) {
+                checkHtml += `<div class="check-fail">⚠️ <strong>High Twist (D16):</strong> Unbalanced stack! Boom will corkscrew when rolled (Source 56).</div>`;
+            } else if (totalH > 0) {
+                checkHtml += `<div class="check-pass">✅ <strong>Stable Roll:</strong> Twist coupling is negligible.</div>`;
+            }
+
+            if (totalH > 0 && D12 > 0.4 * D11) {
+                checkHtml += `<div class="check-pass">✅ <strong>Bistable:</strong> Strong snap-through potential (Source 464).</div>`;
+            } else if (totalH > 0) {
+                checkHtml += `<div style="color:#f39c12">ℹ️ <strong>Monostable:</strong> Weak snap. Add bias plies (±45°) to increase D12.</div>`;
+            }
+            checks.innerHTML = checkHtml;
+
+            // 3. Geometry & Strain
+            const R = parseFloat(document.getElementById('boomRadius').value);
+            const W_flat = parseFloat(document.getElementById('flatWidth').value);
+
+            let beta_rad = W_flat / R;
+            let beta_deg = beta_rad * (180 / Math.PI);
+            document.getElementById('calcAngle').value = beta_deg.toFixed(1) + "°";
+
+            const strain_pct = (totalH / (2 * R)) * 100;
+            const stow_dia = (R * 2) + 2;
+
+            document.getElementById('stowDia').innerText = "~" + stow_dia.toFixed(1) + " mm";
+            document.getElementById('strainVal').innerText = strain_pct.toFixed(2) + "%";
+
+            const warningDiv = document.getElementById('warnings');
+            warningDiv.innerHTML = "";
+            if (strain_pct > 1.4) {
+                warningDiv.innerHTML += "⚠️ Warning: Strain > 1.4% may cause delamination (Source 277).<br>";
+            }
+            if (beta_deg > 360) {
+                warningDiv.innerHTML += "⚠️ Overlap Warning: Width > 2πR (Boom overlaps).<br>";
+            }
+
+            // 4. Draw & Stowage
+            calcStowage();
+            calcPerformance(Ex_GPa, D11, D22, D12, totalH);
+            drawVisualizer(R, beta_deg, totalH);
+        }
+
+        function calcStowage() {
+            const chart = document.getElementById('relaxChart');
+            const temp = parseFloat(document.getElementById('stowTemp').value);
+            const days = parseFloat(document.getElementById('stowTime').value);
+            const resin = document.getElementById('resinType').value;
+
+            let Tg = 180;
+            if (resin === 'HY951') Tg = 67;
+            if (resin === 'Elastomer') Tg = -20;
+
+            const shift = Math.pow(2.1, (temp - 25) / 10);
+            chart.innerHTML = "";
+            let finalVal = 100;
+
+            for (let i = 0; i < 12; i++) {
+                let t_eff = ((days / 12) * (i + 1) * 24) * shift;
+                let decay = 0.07 * Math.log10(t_eff + 1);
+                if (decay > 0.6) decay = 0.6;
+                if (temp > Tg) decay = 0.95;
+
+                let retained = 100 * (1 - decay);
+                finalVal = retained;
+
+                const bar = document.createElement('div');
+                bar.className = 'relax-bar';
+                bar.style.height = retained + "%";
+                bar.style.background = retained > 80 ? "#27ae60" : (retained > 55 ? "#f39c12" : "#c0392b");
+                chart.appendChild(bar);
+            }
+
+            document.getElementById('retainPct').innerText = finalVal.toFixed(1) + "%";
+
+            const rBox = document.getElementById('riskBox');
+            const rMsg = document.getElementById('riskMsg');
+            if (finalVal < 55) {
+                rBox.style.display = 'block';
+                rMsg.innerText = "High relaxation detected! Deployment stall risk (Source 351).";
+            } else if (temp > (Tg - 10)) {
+                rBox.style.display = 'block';
+                rMsg.innerText = `Temp (${temp}°C) too close to Tg (${Tg}°C). High creep risk!`;
+            } else {
+                rBox.style.display = 'none';
+            }
+        }
+
+        // --- BLOCK 5 & 6 PHYSICS ---
+        function calcPerformance(Ex_GPa, D11_Nm, D22_Nm, D12_Nm, totalH_mm) {
+            const L_mm = parseFloat(document.getElementById('boomLength').value);
+            const R_mm = parseFloat(document.getElementById('boomRadius').value);
+            const W_flat = parseFloat(document.getElementById('flatWidth').value);
+            const payload_g = parseFloat(document.getElementById('tipMass').value) || 0;
+
+            // 1. Mass Calculation
+            const density = 1.6; // g/cm3 for generic composite
+            const boomMass_g = (W_flat / 10) * (totalH_mm / 10) * (L_mm / 10) * density;
+            document.getElementById('boomMass').innerText = boomMass_g.toFixed(1) + " g";
+
+            // 2. Dynamics & Deflection (Updated)
+            const R_m = R_mm / 1000;
+            const t_m = totalH_mm / 1000;
+            const L_m = L_mm / 1000;
+            const I_x = 0.14 * Math.pow(R_m, 3) * t_m;
+            const E_Pa = Ex_GPa * 1e9;
+            const EI_theoretical = E_Pa * I_x;
+
+            // Store state for calibration
+            designState = { L_m: L_m, EI_theoretical: EI_theoretical };
+
+            // Apply Calibration Factor
+            const EI_actual = EI_theoretical * calibrationFactor;
+
+            // Static Deflection
+            const g_load = parseFloat(document.getElementById('gForce').value) || 1.0;
+            const linearDensity = (boomMass_g / 1000) / L_m; // kg/m
+            const w = linearDensity * 9.81 * g_load; // N/m
+            const P = (payload_g / 1000) * 9.81 * g_load; // N (Tip Load)
+
+            // Safety check for zero stiffness
+            let total_deflection = 0;
+            if (EI_actual > 1e-6) {
+                const defl_tip_load = (P * Math.pow(L_m, 3)) / (3 * EI_actual);
+                const defl_self_weight = (w * Math.pow(L_m, 4)) / (8 * EI_actual);
+                total_deflection = defl_tip_load + defl_self_weight;
+            }
+
+            document.getElementById('valDeflection').innerText = (total_deflection * 1000).toFixed(1) + " mm";
+            drawBeam(total_deflection);
+
+            // Natural Frequency
+            let f1 = 0;
+            if (EI_actual > 1e-6 && boomMass_g > 0) {
+                const K_eq = 3 * EI_actual / Math.pow(L_m, 3);
+                const M_eq = (0.24 * (boomMass_g / 1000) + (payload_g / 1000)); // Equivalent kg
+                f1 = (1 / (2 * Math.PI)) * Math.sqrt(K_eq / M_eq);
+            }
+
+            document.getElementById('valFreq').innerText = f1.toFixed(1) + " Hz";
+            document.getElementById('freqWarn').style.display = f1 < 1.0 ? 'block' : 'none';
+
+            // Animation Control
+            const beam = document.getElementById('vibBeam');
+            const visual_dur = Math.max(0.1, Math.min(2.0, (1 / f1) * 5));
+            beam.style.animation = f1 > 0 ? `vibrate ${visual_dur}s infinite ease-in-out alternate` : "none";
+
+            // 3. Strain Energy & Force (Murphey)
+            const canvas = document.getElementById('energyCanvas');
+            const eCtx = canvas.getContext('2d');
+            const W = canvas.width, H = canvas.height;
+            eCtx.clearRect(0, 0, W, H);
+
+            // Auto-scale logic
+            const r_min = R_mm * 0.5;
+            const r_max = R_mm * 3.0;
+            let dataPoints = [];
+            let max_U = 0;
+
+            for (let x = 0; x <= W; x += 2) {
+                let r_curr = r_min + (x / W) * (r_max - r_min);
+                // U = 0.5 * D11 * (1/r^2) * Area
+                let k = 1 / (r_curr / 1000);
+                let U = 0.5 * D11_Nm * Math.pow(k, 2) * (L_m * W_flat / 1000);
+                let U_mJ = U * 1000;
+                if (U_mJ > max_U) max_U = U_mJ;
+                dataPoints.push({ x: x, y: U_mJ, r: r_curr });
+            }
+
+            // Draw Axes
+            eCtx.font = "10px sans-serif";
+            eCtx.fillStyle = "#666";
+            eCtx.strokeStyle = "#ddd";
+            eCtx.beginPath();
+            eCtx.moveTo(30, 20); eCtx.lineTo(30, H - 20); eCtx.lineTo(W - 10, H - 20);
+            eCtx.stroke();
+
+            // Labels
+            eCtx.fillText("Energy (mJ)", 5, 15);
+            eCtx.fillText("Radius (mm)", W - 60, H - 5);
+            eCtx.fillText(max_U.toFixed(1), 0, 30);
+            eCtx.fillText("0", 15, H - 20);
+            eCtx.fillText(r_min.toFixed(0), 30, H - 5);
+            eCtx.fillText(r_max.toFixed(0), W - 20, H - 5);
+
+            // Plot Curve
+            eCtx.beginPath();
+            eCtx.strokeStyle = "#8e44ad";
+            eCtx.lineWidth = 2;
+            dataPoints.forEach((pt, i) => {
+                let py = (H - 20) - (pt.y / max_U) * (H - 40);
+                let px = 30 + (pt.x / W) * (W - 40);
+                if (i === 0) eCtx.moveTo(px, py); else eCtx.lineTo(px, py);
+            });
+            eCtx.stroke();
+
+            // Highlight Current Point
+            let curr_U_total = 0.5 * D11_Nm * Math.pow(1 / R_m, 2) * (L_m * W_flat / 1000);
+            let curr_U_mJ = curr_U_total * 1000;
+            let cx = 30 + ((R_mm - r_min) / (r_max - r_min)) * (W - 40);
+            let cy = (H - 20) - (curr_U_mJ / max_U) * (H - 40);
+
+            eCtx.fillStyle = "#e74c3c";
+            eCtx.beginPath(); eCtx.arc(cx, cy, 4, 0, Math.PI * 2); eCtx.fill();
+            eCtx.fillText(`R=${R_mm}mm`, cx + 5, cy - 5);
+
+            let F_deploy = curr_U_total / L_m; // Simplified derivative approx
+
+            document.getElementById('energy_val').innerText = curr_U_mJ.toFixed(1) + " mJ";
+            document.getElementById('force_val').innerText = F_deploy.toFixed(2) + " N";
+
+            const sWarn = document.getElementById('stabilityWarn');
+            if (R_mm < 5) {
+                sWarn.innerHTML = "<span style='color:#c0392b;'>⚠️ <strong>Stability Risk:</strong> R too small for coiling without kinking.</span>";
+            } else {
+                sWarn.innerHTML = "<span style='color:#27ae60;'>✅ <strong>Stable Coiling:</strong> Curvature limits in safe zone.</span>";
+            }
+
+            // --- BLOCK 7 & 8 INTEGRATION ---
+            const stateForSafety = {
+                D11: D11_Nm,
+                D22: D22_Nm,
+                D12: D12_Nm,
+                L: L_m,
+                R: R_m,
+                angle_rad: R_m > 0 ? (W_flat / 1000) / R_m : Math.PI,
+                linear_density: (boomMass_g / 1000) / L_m || 0.0167
+            };
+            calcSafety(stateForSafety);
+            calcSolar(stateForSafety);
+        }
+
+        function calcSafety(state) {
+            const mass_g = parseFloat(document.getElementById('loadMass').value) || 0;
+            const g_load = parseFloat(document.getElementById('loadG').value) || 1.0;
+            const Load_N = (mass_g / 1000) * 9.81 * g_load;
+
+            const M_crit = state.angle_rad * (state.D11 + state.D22 + state.D12);
+            const M_applied = Load_N * state.L;
+            const SF_mom = M_crit / (M_applied + 0.0001);
+
+            const EI = state.D11; // Conservative
+            const P_crit = (Math.PI ** 2 * EI) / (4 * Math.pow(state.L, 2));
+            const SF_buck = P_crit / (Load_N + 0.0001);
+
+            document.getElementById('resSnap').innerText = M_crit.toFixed(3) + " Nm";
+            document.getElementById('resBuckle').innerText = P_crit.toFixed(2) + " N";
+            document.getElementById('textMoment').innerText = "SF: " + SF_mom.toFixed(2);
+            document.getElementById('textBuckle').innerText = "SF: " + SF_buck.toFixed(2);
+
+            const bMom = document.getElementById('barMoment');
+            const wMom = Math.min(100, SF_mom * 20);
+            bMom.style.width = wMom + "%";
+            bMom.style.background = SF_mom < 1.5 ? "var(--warn)" : "var(--safe)";
+
+            const bBuck = document.getElementById('barBuckle');
+            const wBuck = Math.min(100, SF_buck * 10);
+            bBuck.style.width = wBuck + "%";
+            bBuck.style.background = SF_buck < 3.0 ? "var(--accent)" : "var(--safe)";
+
+            const msg = document.getElementById('failMsg');
+            if (SF_mom < 1.0) {
+                msg.style.display = 'block';
+                msg.innerHTML = "<strong>FAILURE:</strong> Applied moment exceeds snap-through limit.";
+            } else if (SF_buck < 1.0) {
+                msg.style.display = 'block';
+                msg.innerHTML = "<strong>FAILURE:</strong> Load exceeds Euler buckling limit.";
+            } else {
+                msg.style.display = 'none';
+            }
+        }
+
+        function calcSolar(state) {
+            const P_target = parseFloat(document.getElementById('targetP').value) || 0;
+            const eff = (parseFloat(document.getElementById('cellEff').value) || 29.5) / 100;
+            const Sigma = parseFloat(document.getElementById('blanketDensity').value) || 1200;
+
+            const PowerDensity = 1360 * eff * 0.85;
+            const Area = P_target / PowerDensity;
+            const width_m = parseFloat(document.getElementById('blanketWidth').value) || 0.5;
+
+            // Length = Area / Width (Fixed Width Logic)
+            const Len = Area / width_m;
+            const Wid = width_m;
+
+            const m_blanket = (Area * Sigma) / 1000; // kg
+            const Yao_linear_density = state.linear_density || 0.0167; // kg/m
+            const m_booms = 2 * Yao_linear_density * Len;
+            const m_total_g = (m_blanket + m_booms) * 1000;
+
+            // Droop Calculation (Source 291)
+            // delta = (w * L^4) / (8 * EI_sys)
+            const w_load = (m_blanket * 9.81) / Len; // N/m
+            const EI_sys = 2 * state.D11; // 2 booms supporting blanket
+            let defl_mm = 0;
+            if (EI_sys > 1e-6) {
+                defl_mm = (w_load * Math.pow(Len, 4)) / (8 * EI_sys) * 1000;
+            }
+
+            document.getElementById('solLen').innerText = Len.toFixed(2) + " m";
+            // document.getElementById('solWidth').innerText = Wid.toFixed(2) + " m"; // Width is input now
+            document.getElementById('solMass').innerText = m_total_g.toFixed(0) + " g";
+            document.getElementById('vizPower').innerText = P_target + " W";
+            document.getElementById('valArrayDroop').innerText = defl_mm.toFixed(1) + " mm";
+
+            const viz = document.getElementById('vizWing');
+            let h_pct = Math.min(90, (Len / 3.0) * 100);
+            let w_pct = Math.min(90, (Wid / 1.0) * 100);
+            viz.style.height = h_pct + "%";
+            viz.style.width = w_pct + "%";
+
+            // Visual Droop
+            const skew = Math.min(10, defl_mm / 20);
+            viz.style.transform = `skewY(${skew}deg)`;
+        }
+
+        // --- BLOCK 6: DIGITAL TWIN LOGIC ---
+        // (Variables moved to top of script)
+
+        function runCalibration() {
+            const load_g = parseFloat(document.getElementById('calLoad').value);
+            const defl_mm = parseFloat(document.getElementById('calDeflect').value);
+
+            if (load_g > 0 && defl_mm > 0 && designState.L_m && designState.EI_theoretical) {
+                const L = designState.L_m;
+                const P = (load_g / 1000) * 9.81;
+                const delta = defl_mm / 1000;
+
+                // Reverse Solve: EI = (P * L^3) / (3 * delta)
+                const EI_experimental = (P * Math.pow(L, 3)) / (3 * delta);
+
+                // Calculate Factor
+                calibrationFactor = EI_experimental / designState.EI_theoretical;
+
+                // Update UI
+                document.getElementById('calFactor').innerText = calibrationFactor.toFixed(2) + "x";
+                document.getElementById('calEI').innerText = EI_experimental.toFixed(4) + " N·m²";
+
+                const msg = document.getElementById('calMessage');
+                if (calibrationFactor < 0.5) {
+                    msg.innerHTML = "<span style='color:#c0392b'>⚠️ Boom is much softer than theory. Possible matrix degradation (Source 335).</span>";
+                } else if (calibrationFactor > 1.5) {
+                    msg.innerHTML = "<span style='color:#f39c12'>⚠️ Boom is stiffer than theory. Check ply thickness.</span>";
+                } else {
+                    msg.innerHTML = "<span style='color:#27ae60'>✅ Calibrated. Model aligned with reality.</span>";
+                }
+            } else {
+                calibrationFactor = 1.0;
+                document.getElementById('calFactor').innerText = "1.00x";
+                document.getElementById('calEI').innerText = "--";
+                document.getElementById('calMessage').innerText = "Using Theoretical Model (Uncalibrated)";
+            }
+
+            // Trigger re-calc with new factor
+            updateSystem();
+        }
+
+        // --- VISUALIZER ---
+        function drawBeam(tipDeflectionM) {
+            const cvs = document.getElementById('beamCanvas');
+            const ctx = cvs.getContext('2d');
+            const W = cvs.width = cvs.offsetWidth;
+            const H = cvs.height = cvs.offsetHeight;
+
+            ctx.clearRect(0, 0, W, H);
+
+            const startX = 30;
+            const startY = H / 2;
+            const lengthPx = W - 60;
+
+            // Normalize deflection for vis (max visual droop 80px)
+            // If deflection is huge, clamp it visually but show value
+            const scale = 500; // visual scale factor
+            const endY = startY + (tipDeflectionM * scale);
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+
+            // Quadratic curve approx for beam bending
+            ctx.quadraticCurveTo(startX + lengthPx * 0.5, startY, startX + lengthPx, endY);
+
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = "#3498db";
+            ctx.stroke();
+
+            // Draw Tip Mass
+            ctx.fillStyle = "#e74c3c";
+            ctx.beginPath();
+            ctx.arc(startX + lengthPx, endY, 8, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawVisualizer(R, angle, thickness) {
+            ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+            const w = canvas.width / dpr, h = canvas.height / dpr;
+            const cx = w / 2, cy = h / 2;
+
+            // Auto-scale: Fit (R*2) into 60% of min dimension
+            const scale = (Math.min(w, h) * 0.6) / (R || 1);
+
+            const stow_dia = (R * 2) + 2;
+            const strain_pct = (thickness / (2 * R)) * 100;
+            document.getElementById('stowDia').innerText = "~" + stow_dia.toFixed(1) + " mm";
+            document.getElementById('strainVal').innerText = strain_pct.toFixed(2) + "%";
+
+            const warningDiv = document.getElementById('warnings');
+            warningDiv.innerHTML = "";
+            if (strain_pct > 1.4) warningDiv.innerHTML += "⚠️ High Strain (>1.4% delam risk).<br>";
+            if (angle > 360) warningDiv.innerHTML += "⚠️ Overlap Detected.<br>";
+
+            // Draw Background Arc
+            ctx.beginPath();
+            ctx.lineWidth = Math.max(3, thickness * scale * 2);
+            ctx.strokeStyle = "#2c3e50";
+            const startRad = (Math.PI / 180) * (-90 - (angle / 2));
+            const endRad = (Math.PI / 180) * (-90 + (angle / 2));
+            ctx.arc(cx, cy + (R * scale / 2), R * scale, startRad, endRad);
+            ctx.stroke();
+
+            // Fill
+            ctx.fillStyle = "rgba(52, 152, 219, 0.1)";
+            ctx.fill();
+
+            // Dimensions
+            ctx.beginPath();
+            ctx.strokeStyle = "#7f8c8d";
+            ctx.lineWidth = 1;
+            // Radius Line
+            ctx.moveTo(cx, cy + (R * scale / 2));
+            ctx.lineTo(cx + (R * scale), cy + (R * scale / 2));
+            ctx.stroke();
+
+            ctx.fillStyle = "#2c3e50";
+            ctx.font = "bold 12px sans-serif";
+            ctx.fillText(`R = ${R}mm`, cx + 10, cy + (R * scale / 2) - 5);
+
+            ctx.fillStyle = "#7f8c8d";
+            ctx.font = "italic 11px sans-serif";
+            ctx.fillText("Deployed Profile (Cup Down)", 10, 20);
+        }
+
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `@keyframes vibrate { 0% { transform: rotate(0deg); } 100% { transform: rotate(3deg); } }`;
+        document.head.appendChild(styleSheet);
+
+        window.onload = () => {
+            initCanvas();
+            const eCanvas = document.getElementById('energyCanvas');
+            eCanvas.width = eCanvas.offsetWidth;
+            eCanvas.height = eCanvas.offsetHeight;
+
+            // Init Part 2 Logic
+            populateDropdown();
+            setPreset('zenith'); // Trigger updateSystem
+        };
+    </script>
+
+</body>
+
+</html>

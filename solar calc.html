@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSC Single Boom Tip Load Calculator</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --primary: #2c3e50;
+            --accent: #2980b9;
+            --highlight: #e67e22;
+            --text: #333;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 25px;
+            border-left: 4px solid var(--highlight);
+            padding-left: 10px;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .note {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-top: 2px;
+        }
+
+        /* Calibration Section */
+        .calibration-box {
+            background-color: #fff8e1;
+            border: 1px solid #ffe0b2;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        /* Buttons */
+        .btn-group {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--accent);
+        }
+
+        /* Results */
+        #results {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .result-card {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .res-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 4px;
+        }
+
+        .res-val {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #fad390;
+        }
+
+        .warning-box {
+            background-color: #ffdddd;
+            color: #c0392b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+            border: 1px solid #e57373;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Single Boom Tip Load Calculator</h1>
+        <p style="text-align:center; font-size:0.9rem;">Physics based on Murphey et al. 2015 (Source 516) Corrected Sign
+            Convention</p>
+
+        <!-- SECTION 1: BOOM CONFIG -->
+        <div class="section">
+            <h2>1. Boom Configuration</h2>
+            <div class="row">
+                <div class="col">
+                    <label>Radius (mm)</label>
+                    <input type="number" id="radius" value="11">
+                    <div class="note">Transverse radius</div>
+                </div>
+                <div class="col">
+                    <label>Ply Thickness (mm)</label>
+                    <input type="number" id="ply_t" value="0.17">
+                    <div class="note">Per single ply</div>
+                </div>
+                <div class="col">
+                    <label>Ply Count</label>
+                    <input type="number" id="n_plies" value="2">
+                    <div class="note">Total layers</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Subtended Angle (deg)</label>
+                    <input type="number" id="angle" value="180">
+                </div>
+                <div class="col">
+                    <label>Resin System</label>
+                    <select id="resin">
+                        <option value="LY556">Araldite LY 556 (Flight / High Tg)</option>
+                        <option value="HY951">Aradur HY 951 (Proto / Low Tg)</option>
+                    </select>
+                    <div class="note">See Source 282 & 288</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: CALIBRATION -->
+        <div class="section calibration-box">
+            <h2>2. Experimental Calibration (Digital Twin)</h2>
+            <p style="font-size:0.85rem; margin-bottom:15px;">Input your lab test results here to reverse-engineer the
+                exact D-Matrix of your manufactured boom. Leave as 0 to use theoretical estimates.</p>
+
+            <div class="row">
+                <div class="col">
+                    <label>Test Boom Length (mm)</label>
+                    <input type="number" id="cal_len" value="500">
+                </div>
+                <div class="col">
+                    <label>Strong Axis Max Mass (g)</label>
+                    <input type="number" id="cal_strong" value="60" placeholder="e.g. 60">
+                    <div class="note">Held in "Cup Down" / Opposite Sense</div>
+                </div>
+                <div class="col">
+                    <label>Weak Axis Max Mass (g)</label>
+                    <input type="number" id="cal_weak" value="35" placeholder="e.g. 35">
+                    <div class="note">Snapped in "Cup Up" / Equal Sense</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: DESIGN GOALS -->
+        <div class="section">
+            <h2>3. Target Design</h2>
+            <div class="row">
+                <div class="col">
+                    <label>Target Boom Length (mm)</label>
+                    <input type="number" id="target_len" value="700">
+                    <div class="note">The length you want to build</div>
+                </div>
+                <div class="col">
+                    <label>Safety Factor</label>
+                    <input type="number" id="sf" value="1.5">
+                    <div class="note">Standard is 1.5 - 2.0</div>
+                </div>
+                <div class="col">
+                    <label>Design Load (G)</label>
+                    <input type="number" id="g_load" value="1.0">
+                    <div class="note">1.0 for Earth ground test</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button onclick="calculateBoom()">Calculate Tip Load</button>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="results">
+            <h2>Analysis Results</h2>
+
+            <div class="result-card">
+                <div class="res-row">
+                    <span>Max Safe Tip Mass (Strong Axis):</span>
+                    <span class="res-val" id="res_mass">-- g</span>
+                </div>
+                <div class="res-row">
+                    <span>Safe Payload Force:</span>
+                    <span class="res-val" id="res_force">-- N</span>
+                </div>
+                <div class="res-row">
+                    <span>Snap-Through Moment (M<sub>opp</sub>):</span>
+                    <span class="res-val" id="res_moment">-- Nm</span>
+                </div>
+                <div class="res-row">
+                    <span>Est. Deflection @ Max Load:</span>
+                    <span class="res-val" id="res_defl">-- mm</span>
+                </div>
+                <div class="res-row"
+                    style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.3); padding-top:10px;">
+                    <span>Required Orientation:</span>
+                    <span class="res-val" style="color:#fff;">CUP DOWN (Convex Up)</span>
+                </div>
+            </div>
+
+            <div class="result-card" style="background:#34495e;">
+                <div class="res-row">
+                    <span>Calibration Status:</span>
+                    <span class="res-val" id="res_status" style="font-size:1rem;">--</span>
+                </div>
+                <div class="res-row">
+                    <span>Calibrated Coupling (D<sub>12</sub>):</span>
+                    <span class="res-val" id="res_d12" style="font-size:1rem;">--</span>
+                </div>
+                <div class="res-row">
+                    <span>Deployment Torque (Kick):</span>
+                    <span class="res-val" id="res_torque" style="font-size:1rem;">-- mNm</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="warnings" class="warning-box"></div>
+
+    </div>
+
+    <script>
+        function calculateBoom() {
+            // --- 1. GET INPUTS ---
+            const R_mm = parseFloat(document.getElementById('radius').value);
+            const ply_t = parseFloat(document.getElementById('ply_t').value);
+            const n_plies = parseFloat(document.getElementById('n_plies').value);
+            const angle_deg = parseFloat(document.getElementById('angle').value);
+            const resin = document.getElementById('resin').value;
+
+            const cal_L_mm = parseFloat(document.getElementById('cal_len').value);
+            const cal_strong_g = parseFloat(document.getElementById('cal_strong').value);
+            const cal_weak_g = parseFloat(document.getElementById('cal_weak').value);
+
+            const target_L_mm = parseFloat(document.getElementById('target_len').value);
+            const SF = parseFloat(document.getElementById('sf').value);
+            const G_load = parseFloat(document.getElementById('g_load').value);
+
+            // Constants
+            const g = 9.81;
+            const beta = (angle_deg * Math.PI) / 180;
+            const R = R_mm / 1000;
+            const h = (ply_t * n_plies) / 1000; // Total thickness (m)
+
+            // --- 2. DETERMINE D-MATRIX (Calibration vs Theory) ---
+            let D11, D22, D12;
+            let isCalibrated = false;
+
+            if (cal_strong_g > 0 && cal_weak_g > 0) {
+                // --- CALIBRATION LOGIC (Murphey 2015 Reverse Solve) ---
+                isCalibrated = true;
+                const L_cal = cal_L_mm / 1000;
+
+                // Experimental Moments
+                const M_strong = (cal_strong_g / 1000) * g * L_cal;
+                const M_weak = (cal_weak_g / 1000) * g * L_cal;
+
+                // Solve System: 
+                // M_opp = beta(D_bend + D12)
+                // M_eq = beta(D_bend - D12)
+
+                const D_bend = (M_strong + M_weak) / (2 * beta); // D11 + D22
+                const D_couple = (M_strong - M_weak) / (2 * beta); // D12
+
+                // Assign (Assuming balanced D11 ~ D22)
+                D11 = D_bend / 2;
+                D22 = D_bend / 2;
+                D12 = D_couple;
+            } else {
+                // --- THEORETICAL FALLBACK (Approx for +/- 45 Carbon) ---
+                const E_axial = 15e9; // Reduced effective E for +/- 45
+                const I_wall = Math.pow(h, 3) / 12;
+
+                D11 = E_axial * I_wall;
+                D22 = D11;
+                D12 = 0.65 * D11; // Typical high coupling ratio for 45 deg
+            }
+
+            // --- 3. CALCULATE TARGET PERFORMANCE ---
+            const L_target = target_L_mm / 1000;
+
+            // Critical Moment (Opposite Sense / Strong Axis)
+            // M_opp = beta * (D11 + D22 + D12)
+            const M_snap_opp = beta * (D11 + D22 + D12);
+
+            // Max Safe Load
+            // F * L * SF = M_snap
+            const F_max_N = M_snap_opp / (L_target * SF * G_load);
+            const Mass_max_kg = F_max_N / g;
+            const Mass_max_g = Mass_max_kg * 1000;
+
+            // Deflection Estimation
+            // EI effective approx D11 * Geometrical Factor
+            // For open section, rough geometric stiffness:
+            const EI_eff = D11 * Math.pow((R / h), 2) * 0.15;
+            let deflection_m = 0;
+            if (EI_eff > 0) {
+                deflection_m = (F_max_N * Math.pow(L_target, 3)) / (3 * EI_eff);
+            }
+
+            // --- 4. UPDATE UI ---
+            document.getElementById('results').style.display = "block";
+
+            document.getElementById('res_mass').innerText = Mass_max_g.toFixed(1) + " g";
+            document.getElementById('res_force').innerText = F_max_N.toFixed(3) + " N";
+            document.getElementById('res_moment').innerText = M_snap_opp.toFixed(4) + " Nm";
+            document.getElementById('res_defl').innerText = (deflection_m * 1000).toFixed(1) + " mm";
+            document.getElementById('res_torque').innerText = (M_snap_opp * 1000).toFixed(1) + " mNm";
+
+            const statusText = isCalibrated ? "Experimental Data (High Accuracy)" : "Theoretical Model (Approx)";
+            document.getElementById('res_status').innerText = statusText;
+            document.getElementById('res_d12').innerText = (D12 * 1000).toFixed(3) + " mNm";
+
+            // --- 5. WARNINGS ---
+            const warningsDiv = document.getElementById('warnings');
+            warningsDiv.style.display = "none";
+            warningsDiv.innerHTML = "";
+            let hasWarnings = false;
+
+            // Strain Check (Source 471)
+            const strain_pct = (h / (2 * R)) * 100;
+            if (strain_pct > 1.5) {
+                hasWarnings = true;
+                warningsDiv.innerHTML += `<strong>⚠️ High Strain Warning:</strong> Packaging strain is ${strain_pct.toFixed(2)}%. Standard carbon fiber may crack (Limit ~1.5%). Use Thin-Ply or Glass.<br>`;
+            }
+
+            // Resin Check (Source 282)
+            if (resin === "HY951") {
+                hasWarnings = true;
+                warningsDiv.innerHTML += `<strong>⚠️ Thermal Warning:</strong> HY951 has a low Tg (~67°C). Do not use for flight or high-temp deployment.<br>`;
+            }
+
+            // Deflection Warning
+            if ((deflection_m * 1000) > (L_target * 1000 * 0.15)) {
+                hasWarnings = true;
+                warningsDiv.innerHTML += `<strong>⚠️ Stiffness Warning:</strong> Predicted deflection is >15% of length. Boom is very floppy. Consider adding a 0° ply.<br>`;
+            }
+
+            if (hasWarnings) warningsDiv.style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>

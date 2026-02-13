@@ -29,6 +29,7 @@
         .masonry-wrapper {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-auto-flow: dense;
             gap: 20px;
             margin-top: 20px;
             width: 100%;
@@ -644,75 +645,76 @@
                         Load Custom Config (LY556 30mm)
                     </button>
                 </div>
-
-                <!-- 4. DYNAMICS (INPUT) -->
-                <div id="panel-dynamics" class="panel panel-input">
-                    <div class="panel-header" onclick="togglePanel('panel-dynamics')">
-                        <span class="drag-handle">⠿</span>
-                        <h2>Deployment Force</h2>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="panel-body">
-
-                        <div class="row">
-                            <div style="flex:1">
-                                <label>Boom Length (L) [m]</label>
-                                <input type="number" id="boomLength" value="1.2" oninput="calculate()">
-                            </div>
-                            <div style="flex:1">
-                                <h2>Cross-Section Properties</h2>
-                                <select id="geoShape" onchange="calculate()">
-                                    <option value="circular">Circular Arc</option>
-                                    <option value="parabolic">Parabolic (NASA/Yao)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Embedded Wires Option -->
-                        <div
-                            style="margin-top:10px; background:rgba(168, 85, 247, 0.1); padding:8px; border-radius:4px;">
-                            <label style="display:flex; align-items:center; cursor:pointer;">
-                                <input type="checkbox" id="embedWires" onchange="calculate()"
-                                    style="width: auto; margin-right: 8px;">
-                                <span>Embed 44-AWG Copper Wires (x4)</span>
-                            </label>
-                            <div style="font-size:0.8em; color:#a855f7; margin-left:24px;">
-                                Ref: Yao et al. (Adds ~0.05mm thickness)
-                            </div>
-                        </div>
-
-                        <div style="margin-top:15px;">
-                            <label>Vibration Analysis</label>
-                            <div class="row" style="margin-top:5px; align-items:flex-start;">
-                                <div style="flex:1">
-                                    <span style="font-size:0.85em; display:block; color:var(--text-muted);">1st
-                                        Natural
-                                        Frequency</span>
-                                    <div class="res-val" id="resFreq" style="color:#a855f7; font-size:1.6em;">--
-                                        Hz</div>
-                                </div>
-                                <div style="flex:1">
-                                    <span style="font-size:0.85em; display:block; color:var(--text-muted);">Linear
-                                        Density</span>
-                                    <div class="res-val" id="resMass" style="font-size:1.1em; color:var(--text-main);">
-                                        --
-                                        g/m</div>
-                                </div>
-                            </div>
-                            <div style="margin-top:5px;">
-                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">Bending
-                                    Stiffness
-                                    (EI)</span>
-                                <div class="res-val" id="resEI" style="font-size:1.1em; color:var(--text-main);">--
-                                </div>
-                                <div style="font-size:0.75em; color:var(--text-muted);">N·m² (Global)</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- STRUCTURAL PERFORMANCE PANEL -->
-                </div>
             </div>
+
+            <!-- 4. DYNAMICS (INPUT) -->
+            <div id="panel-dynamics" class="panel panel-input">
+                <div class="panel-header" onclick="togglePanel('panel-dynamics')">
+                    <span class="drag-handle">⠿</span>
+                    <h2>Deployment Force</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Boom Length (L) [m]</label>
+                            <input type="number" id="boomLength" value="1.2" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
+                            <h2>Cross-Section Properties</h2>
+                            <select id="geoShape" onchange="calculate()">
+                                <option value="circular">Circular Arc</option>
+                                <option value="parabolic">Parabolic (NASA/Yao)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Embedded Wires Option -->
+                    <div style="margin-top:10px; background:rgba(168, 85, 247, 0.1); padding:8px; border-radius:4px;">
+                        <label style="display:flex; align-items:center; cursor:pointer;">
+                            <input type="checkbox" id="embedWires" onchange="calculate()"
+                                style="width: auto; margin-right: 8px;">
+                            <span>Embed 44-AWG Copper Wires (x4)</span>
+                        </label>
+                        <div style="font-size:0.8em; color:#a855f7; margin-left:24px;">
+                            Ref: Yao et al. (Adds ~0.05mm thickness)
+                        </div>
+                    </div>
+
+                    <div style="margin-top:15px;">
+                        <label>Vibration Analysis</label>
+                        <div class="row" style="margin-top:5px; align-items:flex-start;">
+                            <div style="flex:1">
+                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">1st
+                                    Natural
+                                    Frequency</span>
+                                <div class="res-val" id="resFreq" style="color:#a855f7; font-size:1.6em;">--
+                                    Hz</div>
+                            </div>
+                            <div style="flex:1">
+                                <span style="font-size:0.85em; display:block; color:var(--text-muted);">Linear
+                                    Density</span>
+                                <div class="res-val" id="resMass" style="font-size:1.1em; color:var(--text-main);">
+                                    --
+                                    g/m</div>
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <span style="font-size:0.85em; display:block; color:var(--text-muted);">Bending
+                                Stiffness
+                                (EI)</span>
+                            <div class="res-val" id="resEI" style="font-size:1.1em; color:var(--text-main);">--
+                            </div>
+                            <div style="font-size:0.75em; color:var(--text-muted);">N·m² (Global)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STRUCTURAL PERFORMANCE PANEL -->
+            </div>
+
+
 
             <!-- 5. STRUCTURAL PERFORMANCE (ANALYSIS) -->
             <div id="panel-structural" class="panel panel-analysis">
@@ -722,6 +724,35 @@
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="panel-body">
+                    <!-- DIGITAL TWIN CALIBRATION INPUTS -->
+                    <div
+                        style="border-left: 3px solid #eab308; background: rgba(234, 179, 8, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+                        <h3
+                            style="color: #eab308; margin-top:0; font-size:1em; display:flex; align-items:center; gap:8px;">
+                            <span>⚡</span> Digital Twin Calibration
+                        </h3>
+                        <p style="font-size:0.8em; color:var(--text-muted); margin-bottom:10px;">
+                            Enter lab test data to override theoretical model with experimental stiffness.
+                        </p>
+                        <div class="row" style="margin-bottom:0;">
+                            <div style="flex:1">
+                                <label>Test Len (mm)</label>
+                                <input type="number" id="cal_len" value="500" oninput="calculate()"
+                                    style="font-size:0.9em;">
+                            </div>
+                            <div style="flex:1">
+                                <label>Strong (g)</label>
+                                <input type="number" id="cal_strong" value="0" placeholder="Max" oninput="calculate()"
+                                    style="font-size:0.9em;">
+                            </div>
+                            <div style="flex:1">
+                                <label>Weak (g)</label>
+                                <input type="number" id="cal_weak" value="0" placeholder="Max" oninput="calculate()"
+                                    style="font-size:0.9em;">
+                            </div>
+                        </div>
+                    </div>
+
                     <p style="font-size:0.85em; color:#666;">
                         Load bearing analysis for deployed cantilever state.<br>
                         Ref: Murphey et al. Eq. 5 (Buckling) & Yao et al. (Stiffness).
@@ -785,6 +816,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div style="border-top:1px solid rgba(211, 47, 47, 0.2); margin:5px 0;"></div>
+                        <div class="row">
+                            <div style="flex:1">
+                                <label>Model Status</label>
+                                <div class="res-val" id="res_status" style="font-size:1em; color:var(--text-main);">
+                                    Theoretical</div>
+                            </div>
+                            <div style="flex:1">
+                                <label>Calib. Coupling (D12)</label>
+                                <div class="res-val" id="res_d12" style="font-size:1em; color:var(--text-muted);">--
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tip-box">
                         <strong>Design Tip:</strong> A Stability Ratio of <strong>6-10%</strong> is the
@@ -804,17 +848,18 @@
                 </div>
             </div>
 
-            <!-- 6. SOLAR BLANKET SIZING (ANALYSIS) -->
+            <!-- 6. SOLAR BLANKET SIZING (ANALYSIS) - SMART VERSION -->
             <div id="panel-solar" class="panel panel-analysis">
                 <div class="panel-header" onclick="togglePanel('panel-solar')">
                     <span class="drag-handle">⠿</span>
-                    <h2>Solar Blanket Sizing</h2>
+                    <h2>Smart Solar Blanket Sizing</h2>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="panel-body">
                     <p style="font-size:0.85em; color:#666;">
-                        Calculates max area based on boom buckling limit (ROSA Style).<br>
-                        Ref: Source 609 (ROSA) & Murphey et al.
+                        Dual-limit analysis: Checks <strong>Deflection</strong> (droop) and <strong>Buckling</strong>
+                        (M<sub>opp</sub> snap-through).<br>
+                        Ref: Murphey et al. (Source 509) & Footdale (Source 437).
                     </p>
 
                     <!-- VISUALIZER -->
@@ -824,89 +869,162 @@
 
                     <div class="row">
                         <div style="flex:1">
-                            <label>Req. Tension (N/m)</label>
-                            <input type="number" id="reqTension" value="20" oninput="calculate()">
-                            <span style="font-size:0.75em; color:var(--text-muted);">Typ. 15-40 N/m</span>
+                            <label>Array Length (m)</label>
+                            <input type="number" id="arrayLength" value="1.0" step="0.1" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">Boom Length</span>
                         </div>
                         <div style="flex:1">
-                            <label>Blanket Mass (gsm)</label>
-                            <input type="number" id="blanketRho" value="700" oninput="calculate()">
+                            <label>Blanket Density (gsm)</label>
+                            <input type="number" id="blanketRho" value="1200" oninput="calculate()">
                             <span style="font-size:0.75em; color:var(--text-muted);">PV + Kapton</span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div style="flex:1">
+                            <label>Max Deflection (mm)</label>
+                            <input type="number" id="maxDeflection" value="10" step="1" oninput="calculate()">
+                        </div>
+                        <div style="flex:1">
                             <label>Cell Efficiency (%)</label>
                             <input type="number" id="cellEff" value="28" step="1" oninput="calculate()">
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div style="flex:1">
                             <label>Solar Flux (W/m²)</label>
                             <input type="number" id="solarFlux" value="1366" oninput="calculate()">
                             <span style="font-size:0.75em; color:var(--text-muted);">LEO/GEO Avg</span>
                         </div>
+                        <div style="flex:1">
+                            <label>Packing Factor</label>
+                            <input type="number" id="packingFactor" value="0.85" step="0.01" min="0" max="1"
+                                oninput="calculate()">
+                        </div>
                     </div>
 
+                    <!-- RESULTS -->
                     <div
                         style="background: rgba(255, 87, 34, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
                         <div class="row">
                             <div style="flex:1">
-                                <label style="color:#bf360c;">Max Blanket Width</label>
+                                <label style="color:#bf360c;">Max Safe Width</label>
                                 <div class="res-val" id="resMaxWidth" style="color:#bf360c;">--</div>
                             </div>
                             <div style="flex:1">
-                                <label style="color:#bf360c;">Max Blanket Area</label>
+                                <label style="color:#bf360c;">Max Area</label>
                                 <div class="res-val" id="resMaxArea">--</div>
                             </div>
                         </div>
                         <div style="border-top:1px solid #ffccbc; margin:5px 0;"></div>
                         <div class="row">
                             <div style="flex:1">
-                                <label>Total Mass (Blanket)</label>
-                                <div class="res-val" id="resMaxMass" style="font-size:1.0em;">--</div>
-                            </div>
-                            <div style="flex:1">
                                 <label>Power Output</label>
                                 <div class="res-val" id="resPower" style="font-size:1.0em; color:#2e7d32;">--</div>
+                            </div>
+                            <div style="flex:1">
+                                <label>M<sub>opp</sub> (Snap Limit)</label>
+                                <div class="res-val" id="resMopp" style="font-size:0.9em;">--</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 6b. DEFLECTION CHECK (NEW) -->
-                    <div style="margin-top: 15px; border-top: 1px dashed var(--border-light); padding-top: 10px;">
-                        <h4 style="margin: 0 0 10px 0; color: var(--text-main); font-size: 0.95em;">Deflection Check
-                            (Deployed)</h4>
-                        <div class="row">
-                            <div style="flex:1">
-                                <label>Blanket Mass (kg)</label>
-                                <input type="number" id="blanketMass" value="0.2" step="0.01" oninput="calculate()">
-                                <span style="font-size:0.75em; color:var(--text-muted);">Total Payload</span>
-                            </div>
-                            <div style="flex:1">
-                                <label>Max Deflection (mm)</label>
-                                <input type="number" id="maxDeflection" value="10" step="1" oninput="calculate()">
+                    <!-- LIMITING FACTOR WARNING -->
+                    <div id="limitingFactorBox"
+                        style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span id="limitingIcon" style="font-size: 1.2em;"></span>
+                            <div style="flex: 1;">
+                                <div id="limitingFactor" style="font-weight: bold; margin-bottom: 3px;"></div>
+                                <div id="designAdvice" style="font-size: 0.85em; font-style: italic;"></div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. SINGLE BOOM TIP MASS CALCULATOR (ANALYSIS) -->
+            <div id="panel-tipmass" class="panel panel-analysis">
+                <div class="panel-header" onclick="togglePanel('panel-tipmass')">
+                    <span class="drag-handle">⠿</span>
+                    <h2>Single Boom Tip Mass</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="panel-body">
+                    <p style="font-size:0.85em; color:#666;">
+                        Maximum payload before <strong>Snap-Through Buckling</strong> (M<sub>opp</sub> failure).<br>
+                        Ref: Murphey et al. (Source 509) & Scout Boom (Source 437).
+                    </p>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Boom Length (mm)</label>
+                            <input type="number" id="tipMassBoomLength" value="700" step="10" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">Deployed Length</span>
+                        </div>
+                        <div style="flex:1">
+                            <label>Design Load (G)</label>
+                            <input type="number" id="designLoadG" value="1.0" step="0.1" min="0" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">1G=Ground, 3G=Launch</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style="flex:1">
+                            <label>Safety Factor</label>
+                            <input type="number" id="tipMassSF" value="2.0" step="0.1" min="1" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">Recommended: 2.0</span>
+                        </div>
+                        <div style="flex:1">
+                            <label>Required Mass (g)</label>
+                            <input type="number" id="requiredMass" value="50" step="1" oninput="calculate()">
+                            <span style="font-size:0.75em; color:var(--text-muted);">Your Sensor Mass</span>
+                        </div>
+                    </div>
+
+                    <!-- RESULTS -->
+                    <div
+                        style="background: rgba(139, 92, 246, 0.1); padding: 10px; border-radius: 4px; margin-top: 10px;">
+                        <div class="row">
                             <div style="flex:1">
-                                <label>Predicted Tip Deflection</label>
-                                <div class="res-val" id="resDeflection">--</div>
+                                <label style="color:#7c3aed;">Max Tip Mass</label>
+                                <div class="res-val" id="resMaxTipMass" style="color:#7c3aed; font-size:1.3em;">--</div>
                             </div>
                             <div style="flex:1">
                                 <label>Status</label>
-                                <div class="res-val" id="resDeflectionStatus">--</div>
+                                <div class="res-val" id="resTipMassStatus">--</div>
                             </div>
                         </div>
-                        <div id="deflectionAdvice"
-                            style="font-size: 0.8em; margin-top: 5px; color: var(--text-muted); font-style: italic;">
+                        <div style="border-top:1px solid #ddd6fe; margin:5px 0;"></div>
+                        <div class="row">
+                            <div style="flex:1">
+                                <label>Failure Mode</label>
+                                <div style="font-size:0.85em; color:var(--text-main);" id="resFailureMode">Snap-Through
+                                    (M<sub>opp</sub>)</div>
+                            </div>
+                            <div style="flex:1">
+                                <label>M<sub>opp</sub> / SF</label>
+                                <div style="font-size:0.85em; color:var(--text-main);" id="resSafeMoment">--</div>
+                            </div>
                         </div>
                     </div>
-                    --
+
+                    <!-- VALIDATION NOTE -->
+                    <div
+                        style="background: rgba(59, 130, 246, 0.1); padding: 8px; border-radius: 4px; margin-top: 10px; font-size: 0.8em;">
+                        <strong>📌 Validation:</strong> Scout Boom (70cm, CF/Epoxy) rated at ~40g payload.
+                    </div>
+
+                    <!-- WARNING BOX -->
+                    <div id="tipMassWarning"
+                        style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;">
+                        <div style="font-weight: bold; margin-bottom: 3px;" id="tipMassWarningTitle"></div>
+                        <div style="font-size: 0.85em; font-style: italic;" id="tipMassWarningText"></div>
+                    </div>
                 </div>
-                <div style="font-size:0.7em;">(Peak Watts)</div>
             </div>
-        </div>
-        </div>
+
         </div>
         </div>
 
@@ -1185,8 +1303,12 @@
 
         // Initialize on DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('[INIT] DOMContentLoaded fired');
             loadPanelStates();
             initSortable();
+            console.log('[INIT] Calling loadPreset');
+            loadPreset('standard_flight');
+            console.log('[INIT] loadPreset completed');
         });
 
         // Set Chart.js Defaults for Dark Theme
@@ -1417,6 +1539,7 @@
 
         // --- LOGIC ---
         function loadPreset(name) {
+            console.log('[loadPreset] Called with name:', name);
             layers = [];
             if (name === 'standard_flight') {
                 const t = 0.030; // 30um
@@ -1455,9 +1578,11 @@
                 layers.push({ angle: 45, type: 'UD', t: t, Ef: 72 });
                 layers.push({ angle: -45, type: 'UD', t: t, Ef: 72 });
             }
+            console.log('[loadPreset] Layers populated:', layers.length);
             renderLayers();
             drawDiagrams();
             calculate();
+            console.log('[loadPreset] Complete');
         }
 
         function addLayer() {
@@ -1497,7 +1622,11 @@
         }
 
         function calculate() {
-            if (layers.length === 0) return;
+            console.log('[calculate] Called, layers.length:', layers.length);
+            if (layers.length === 0) {
+                console.warn('[calculate] No layers, exiting');
+                return;
+            }
 
             // 1. GET MATERIAL PROPERTIES (Resin & Fiber)
             const rho_m_g = parseFloat(document.getElementById('rho_m').value); // g/cm3
@@ -1629,6 +1758,37 @@
 
             // Standard Results
             const beta = width / R_trans;
+
+            // --- DIGITAL TWIN CALIBRATION OVERRIDE ---
+            const cal_strong_g = parseFloat(document.getElementById('cal_strong').value);
+            const cal_weak_g = parseFloat(document.getElementById('cal_weak').value);
+            const cal_len_mm = parseFloat(document.getElementById('cal_len').value);
+
+            let isCalibrated = false;
+
+            if (cal_strong_g > 0 && cal_weak_g > 0 && cal_len_mm > 0) {
+                // Determine Experimental D-Matrix
+                const L_cal = cal_len_mm / 1000;
+                const g_cal = 9.81;
+
+                // Moments from Test
+                const M_strong = (cal_strong_g / 1000) * g_cal * L_cal;
+                const M_weak = (cal_weak_g / 1000) * g_cal * L_cal;
+
+                // Reverse Solve assuming digital twin logic:
+                // D_bend = (M_strong + M_weak) / (2 * beta)
+                // D_couple = (M_strong - M_weak) / (2 * beta)
+
+                const D_bend = (M_strong + M_weak) / (2 * beta);
+                const D_couple = (M_strong - M_weak) / (2 * beta);
+
+                D11 = D_bend / 2;
+                D22 = D_bend / 2;
+                D12 = D_couple;
+                D66 = D11 * 0.35; // Estimate shear if needed
+
+                isCalibrated = true;
+            }
             const M_eq = (D11 + D22 + 2 * D12) * beta;
             const M_opp = (D11 + D22 - 2 * D12) * beta;
 
@@ -1754,99 +1914,184 @@
 
             document.getElementById('resBuckle').innerText = P_buckle.toFixed(2) + " N";
 
+            // Update Calibration Status UI
+            const statusText = isCalibrated ? "Experimental (Calibrated)" : "Theoretical Model";
+            const statusEl = document.getElementById('res_status');
+            if (statusEl) {
+                statusEl.innerText = statusText;
+                statusEl.style.color = isCalibrated ? "#eab308" : "var(--text-main)";
+            }
+            const d12El = document.getElementById('res_d12');
+            if (d12El) d12El.innerText = (D12 * 1000).toFixed(3) + " mNm";
+
             // 8. Draw Visualizer
             const currentLimitMoment = isOppositeSense ? M_opp : M_eq;
             drawBeam(L, deflect_m * 100, Math.abs(M_root) / currentLimitMoment);
 
-            // --- NEW: SOLAR BLANKET AREA & POWER ---
+            // === SMART SOLAR BLANKET SIZING ===
+            // Ref: Murphey et al. (Source 509) for M_opp
+            // Ref: Footdale (Source 437) for Load Margins
 
-            // 1. Get Inputs
+            // Calculate boom angle in radians (assuming 180-degree boom as standard)
+            const angle_rad = Math.PI; // 180 degrees in radians for standard HSC boom
+
+            const arrayLength = parseFloat(document.getElementById('arrayLength').value);
             const blanket_gsm = parseFloat(document.getElementById('blanketRho').value);
-            const tension_per_m = parseFloat(document.getElementById('reqTension').value);
-            const cell_eff = parseFloat(document.getElementById('cellEff').value) / 100.0;
+            const max_def_mm = parseFloat(document.getElementById('maxDeflection').value);
+            const cell_eff = parseFloat(document.getElementById('cellEff').value) / 100;
             const flux = parseFloat(document.getElementById('solarFlux').value);
+            const packing_factor = parseFloat(document.getElementById('packingFactor').value);
 
-            // 2. Calculate Boom Buckling Capacity (Compression)
-            // Ref: Murphey et al. Eq 5. P_crit = (pi^2 * EI) / (Leff)^2
-            // ROSA booms are cantilevered from root, but the blanket tension acts like a distributed load 
-            // or a tip load depending on cross-strapping. 
-            // Conservative Euler Column approach: K=2 (Cantilever) is safe. 
-            // However, ROSA uses a spreader bar, creating a "guided cantilever" or Fixed-Free condition.
-            // We stick with K=1.2 as a realistic flight hardware estimate (imperfect fixity).
-            const K_factor = 1.2;
-            const P_crit_one_boom = (Math.pow(Math.PI, 2) * Global_EI) / Math.pow(K_factor * L, 2);
+            // Constants
+            const g = 9.81;
+            const sigma_kg = blanket_gsm / 1000.0; // kg/m²
 
-            // Safety Factor (Standard NASA SF for Stability is 1.4 - 2.0 for stability)
-            const SF_buckle = 1.5;
-            const P_safe_one_boom = P_crit_one_boom / SF_buckle;
+            // 1. Calculate Moment Capacities (Corrected per Murphey et al. 2015)
+            // Ref: Murphey Eq 16 & 17 (Source 516)
 
-            // 3. Solve for Max Geometry
-            // The tension creates compression in the booms. 
-            // Total Tension Supported = 2 booms * P_safe
-            // Width = Total Tension / Tension_per_meter
-            const total_tension_capacity = 2 * P_safe_one_boom;
-            let max_width_m = total_tension_capacity / tension_per_m;
+            // M_opp (Flattening/Snap-Through) - THE STRONGER LIMIT
+            // This is the max moment before the boom collapses flat
+            const M_opp_Nmm = (D11 + D22 + D12) * angle_rad;
+            const M_opp_Nm = M_opp_Nmm / 1000.0;
 
-            // Cap width at something reasonable (e.g., 10m) to prevent infinity if tension is 0
-            if (max_width_m > 20) max_width_m = 20;
+            // M_eq (Curling) - THE WEAKER LIMIT  
+            // This is the moment resisting curling tighter
+            const M_eq_Nmm = (D11 + D22 - D12) * angle_rad;
+            const M_eq_Nm = M_eq_Nmm / 1000.0;
 
-            // 4. Calculate Area and Mass
-            const max_area_m2 = max_width_m * L;
-            const total_blanket_mass_kg = max_area_m2 * (blanket_gsm / 1000);
+            // 2. Calculate Effective Bending Stiffness (EI)
+            // Simplified correlation for deployed boom
+            const EI_effective_Nm2 = (D11 * (R_trans * 1000) * (R_trans * 1000)) / 1000.0;
 
-            // 5. Calculate Power
-            // Power = Area * Flux * Efficiency * Packing_Factor (assume 0.9 active area)
-            const packing_factor = 0.90;
+            // 3. Check Buckling Limit (Strength)
+            // Max Moment at Root (Cantilever) = (q * L^2) / 2
+            // M_root = (W * sigma * g * L^2) / 4  (assuming 2 booms)
+            // Condition: M_root < M_opp (with Safety Factor 1.5)
+            const SF_buckling = 1.5;
+            const W_buckling_m = (M_opp_Nm * 4) / (sigma_kg * g * (arrayLength ** 2) * SF_buckling);
+
+            // 4. Check Deflection Limit (Stiffness)
+            // Delta = (q * L^4) / (8 * EI)
+            // W * sigma * g / 2 = (8 * EI * delta) / L^4
+            const delta_m = max_def_mm / 1000.0;
+            const W_deflection_m = (16 * EI_effective_Nm2 * delta_m) / (sigma_kg * g * (arrayLength ** 4));
+
+            // 5. Determine Limiting Factor
+            let max_width_m, limiting_factor, advice, limitColor, limitIcon;
+            if (W_buckling_m < W_deflection_m) {
+                max_width_m = W_buckling_m;
+                limiting_factor = "BUCKLING (Snap-Through Risk)";
+                advice = "⚠️ Increase D22 (Transverse Stiffness) or Boom Radius.";
+                limitColor = "rgba(239, 68, 68, 0.1)"; // Red
+                limitIcon = "⚠️";
+            } else {
+                max_width_m = W_deflection_m;
+                limiting_factor = "DEFLECTION (Droop Limit)";
+                advice = "ℹ️ Increase D11 (Longitudinal Stiffness) or check Ply Angle. This is normal for long booms.";
+                limitColor = "rgba(59, 130, 246, 0.1)"; // Blue
+                limitIcon = "ℹ️";
+            }
+
+            // 6. Calculate Power Output
+            const max_area_m2 = max_width_m * arrayLength;
             const total_power_watts = max_area_m2 * flux * cell_eff * packing_factor;
 
-            // 6. Update UI
+            // 7. Update UI
             document.getElementById('resMaxWidth').innerText = (max_width_m * 1000).toFixed(0) + " mm";
             document.getElementById('resMaxArea').innerText = max_area_m2.toFixed(2) + " m²";
-            document.getElementById('resMaxMass').innerText = total_blanket_mass_kg.toFixed(2) + " kg";
             document.getElementById('resPower').innerText = total_power_watts.toFixed(0) + " W";
+            document.getElementById('resMopp').innerText = M_opp_Nm.toFixed(2) + " Nm";
 
-            // 7. Update Diagram (Pass Power to visualize it)
-            drawArray(max_width_m, L, total_power_watts);
+            // 8. Show Limiting Factor Box
+            const limitBox = document.getElementById('limitingFactorBox');
+            const limitFactorEl = document.getElementById('limitingFactor');
+            const designAdviceEl = document.getElementById('designAdvice');
+            const limitIconEl = document.getElementById('limitingIcon');
 
-            // 8. Solar Blanket Deflection Check
-            const blanket_mass_kg = parseFloat(document.getElementById('blanketMass').value);
-            const max_def_mm = parseFloat(document.getElementById('maxDeflection').value);
-
-            // Ex_eff is in Pa. Convert to GPa.
-            const E_axial_GPa = Ex_eff / 1e9;
-
-            // L is in meters. R_trans is in meters. h is in meters.
-            // Function expects: L_m, R_mm, t_mm, E_GPa, mass_kg
-            const check = check_solar_blanket_deflection(
-                L,
-                R_trans * 1000,
-                h * 1000,
-                E_axial_GPa,
-                blanket_mass_kg
-            );
-
-            // Update UI
-            const resDef = document.getElementById('resDeflection');
-            const resStat = document.getElementById('resDeflectionStatus');
-            const resAdv = document.getElementById('deflectionAdvice');
-
-            if (resDef && resStat) {
-                resDef.innerText = check.deflection_mm.toFixed(1) + " mm";
-
-                if (check.deflection_mm > max_def_mm) {
-                    resStat.innerHTML = "<span style='color:#ef4444; font-weight:bold;'>FAIL</span>";
-                    resAdv.innerHTML = "<span style='color:#ef4444;'>⚠ Too flexible! Increase Radius (R).</span>";
-                    // Highlight Geometry Panel
-                    const panelGeo = document.getElementById('panel-geometry');
-                    if (panelGeo) panelGeo.style.borderLeft = "5px solid #ef4444";
-                } else {
-                    resStat.innerHTML = "<span style='color:#22c55e; font-weight:bold;'>PASS</span>";
-                    resAdv.innerHTML = "<span style='color:#22c55e;'>✓ Stiffness is adequate.</span>";
-                    // Reset Geometry Panel
-                    const panelGeo = document.getElementById('panel-geometry');
-                    if (panelGeo) panelGeo.style.borderLeft = "";
-                }
+            if (limitBox && limitFactorEl && designAdviceEl && limitIconEl) {
+                limitBox.style.display = 'block';
+                limitBox.style.background = limitColor;
+                limitIconEl.innerText = limitIcon;
+                limitFactorEl.innerText = "Limited by: " + limiting_factor;
+                designAdviceEl.innerText = advice;
             }
+
+            // 9. Update Diagram
+            drawArray(max_width_m, arrayLength, total_power_watts);
+
+            // === END SOLAR BLANKET SIZING ===
+
+            // === SINGLE BOOM TIP MASS CALCULATOR ===
+            // Ref: Murphey et al. 2015 (Source 515, 516) - Corrected Sign Convention
+            // Ref: Scout Boom (Source 437) for validation
+
+            const tipMassBoomLength_mm = parseFloat(document.getElementById('tipMassBoomLength').value);
+            const designLoadG = parseFloat(document.getElementById('designLoadG').value);
+            const tipMassSF = parseFloat(document.getElementById('tipMassSF').value);
+            const requiredMass_g = parseFloat(document.getElementById('requiredMass').value);
+
+            // Constants
+            const GRAVITY = 9.81; // m/s²
+
+            // 1. Calculate M_opp (already calculated above for solar blanket)
+            // M_opp_Nm is available from solar blanket section
+
+            // 2. Apply Safety Factor
+            const M_safe_Nmm = (M_opp_Nm * 1000) / tipMassSF;
+
+            // 3. Calculate Max Tip Mass
+            // M_safe = (Mass * G-load * 9.81) * Length
+            // Mass = M_safe / (Length * G * 9.81)
+            const effective_acceleration = designLoadG * GRAVITY;
+
+            let max_tip_mass_g = 0;
+            if (tipMassBoomLength_mm > 0 && effective_acceleration > 0) {
+                const max_tip_mass_kg = M_safe_Nmm / (tipMassBoomLength_mm * effective_acceleration);
+                max_tip_mass_g = max_tip_mass_kg * 1000.0;
+            }
+
+            // 4. Update UI
+            document.getElementById('resMaxTipMass').innerText = max_tip_mass_g.toFixed(1) + " g";
+            document.getElementById('resSafeMoment').innerText = (M_safe_Nmm / 1000).toFixed(3) + " Nm";
+
+            // Show weak axis reference if element exists
+            const weakAxisEl = document.getElementById('resWeakAxisMass');
+            if (weakAxisEl) {
+                weakAxisEl.innerText = weak_axis_mass_g.toFixed(1) + " g";
+            }
+
+            // Update Failure Mode with Orientation Advice
+            const failureModeEl = document.getElementById('resFailureMode');
+            if (failureModeEl) {
+                failureModeEl.innerHTML = "Snap-Through (Flattening)<br><span style='font-size:0.75em; color:#7c3aed;'>Orient CUP DOWN (Convex Up)</span>";
+            }
+
+            // 5. Check Status
+            const tipMassStatus = document.getElementById('resTipMassStatus');
+            const tipMassWarning = document.getElementById('tipMassWarning');
+            const tipMassWarningTitle = document.getElementById('tipMassWarningTitle');
+            const tipMassWarningText = document.getElementById('tipMassWarningText');
+
+            if (max_tip_mass_g >= requiredMass_g) {
+                tipMassStatus.innerHTML = "<span style='color:#22c55e; font-weight:bold;'>✓ SAFE</span>";
+                tipMassWarning.style.display = 'block';
+                tipMassWarning.style.background = 'rgba(34, 197, 94, 0.1)';
+                tipMassWarningTitle.innerHTML = "✓ Design is Safe";
+                tipMassWarningText.innerHTML = "Orient boom <strong>CUP DOWN</strong> (convex side up) to achieve this capacity. If mounted Cup Up, capacity drops to " + weak_axis_mass_g.toFixed(1) + "g.";
+            } else {
+                tipMassStatus.innerHTML = "<span style='color:#ef4444; font-weight:bold;'>⚠ RISK</span>";
+                tipMassWarning.style.display = 'block';
+                tipMassWarning.style.background = 'rgba(239, 68, 68, 0.1)';
+                tipMassWarningTitle.innerHTML = "⚠️ BUCKLING RISK: Boom will kink!";
+                tipMassWarningText.innerHTML = "Increase D<sub>22</sub> (Transverse Stiffness), shorten boom, or reduce payload mass.";
+            }
+
+            // === END TIP MASS CALCULATOR ===
+            const panelGeo = document.getElementById('panel-geometry');
+            if (panelGeo) panelGeo.style.borderLeft = "";
+
+            // === END SOLAR BLANKET SIZING ===
+
 
             document.getElementById('resFreq').innerText = freq.toFixed(2) + " Hz";
             document.getElementById('resMass').innerText = (w_linear * 1000).toFixed(1) + " g/m";
@@ -1870,14 +2115,22 @@
             document.getElementById('resNatRad').innerText = natText;
 
             // Plots
+            console.log('[calculate] Calling plot functions');
             plotEnergy(D11, D12, D22, R_trans);
             const expPoint = calculateValidation(D11, h * 1000, width);
             plotStrainValidation(D11, h * 1000, expPoint);
             plotAdvancedGraphs(D11, D22, R_trans, width, layers, parseFloat(document.getElementById('addThick').value), Ef);
+            console.log('[calculate] Plot functions complete');
         }
 
         function plotEnergy(D11, D12, D22, R_trans) {
-            const ctx = document.getElementById('energyChart').getContext('2d');
+            console.log('[plotEnergy] Called');
+            const canvas = document.getElementById('energyChart');
+            if (!canvas) {
+                console.error('[plotEnergy] Canvas element not found!');
+                return;
+            }
+            const ctx = canvas.getContext('2d');
             const data = [], labels = [];
             for (let d = 20; d <= 300; d += 5) {
                 const r = d / 1000 / 2;
@@ -1983,8 +2236,8 @@
                 });
             }
 
-            if (window.strainChart) window.strainChart.destroy();
-            window.strainChart = new Chart(ctx, {
+            if (strainChart) strainChart.destroy();
+            strainChart = new Chart(ctx, {
                 type: 'line',
                 data: { labels: labels, datasets: datasets },
                 options: {
@@ -2324,8 +2577,7 @@
             ctx.fillText(Math.round(power) + " W", centerX, h / 2);
         }
 
-        // Init
-        loadPreset('yours');
+        // Init moved to DOMContentLoaded above
     </script>
     <script src="../js/logging.js"></script>
 </body>
