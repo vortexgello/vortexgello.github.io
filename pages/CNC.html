@@ -140,16 +140,168 @@
   <footer class="site-footer">
     <div class="container footer-content">
       <div class="footer-links">
-        <a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a>
-      </div>
-      <div>&copy; 2024 Vortex</div>
-    </div>
-  </footer>
+        <!doctype html>
+        <html lang="en">
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
-    <script src="../js/logging.js"></script>
-</body>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Mini 3 axis CNC mill build log - Vortex">
+          <title>Mini 3 Axis CNC Mill - Vortex</title>
 
-</html>
+          <!-- Styles -->
+          <link rel="stylesheet" href="../styles.css">
+
+          <link rel="icon" type="image/png" href="../images/favicon.png">
+        </head>
+
+        <body>
+
+          <header class="site-header">
+            <div class="container header-content">
+              <a href="../index.html" class="site-title">Vortex</a>
+              <nav class="site-nav">
+                <ul>
+                  <li><a href="../index.html">Projects</a></li>
+                  <li><a
+                      href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </header>
+
+          <main class="container content-wrapper">
+            <article>
+              <header style="margin-bottom: 2rem;">
+                <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem;">Mini 3 axis CNC mill</h1>
+              </header>
+
+              <p> Like all my other projects I try to minimize the cost this following plotter costed ~16000 rupees of
+                which
+                spindle was
+                nearly 9000 rupees, NEMA 23 motors costed around 3500 rupees in total. As you can see and probably tell
+                this
+                machine looks
+                very similar to OpenBuilds Mini mill. I had 8 meters of aluminum extrusion lying around that I had
+                bought for
+                something else
+                but couldn't use these extrusion for that project and also participated in tworks hackathon during the
+                same
+                time.
+                I decided to build a cnc mill and then laser-cut the required parts for carriage, bed, etc.</p>
+
+              <p>I can call this design a bit rushed as the rigidity of this machine is very bad and worse than i
+                expected. My
+                initial
+                plan was to be able to cut aluminum on this. Woods and plastics is what this cuts the best.
+              </p>
+
+              <p><strong>Here's the video of laser cutting of the parts</strong></p>
+              <p>I went to visit the Tworks facility, they let us inside despite COVID restrictions.</p>
+
+              <div style="margin: 2rem 0; text-align: center;">
+                <div
+                  style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 600px; margin: 0 auto; border-radius: var(--radius-md);">
+                  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                    src="https://www.youtube.com/embed/4Q-_jfQDacQ" title="Laser cutting video" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                </div>
+              </div>
+
+              <h3>Assembly</h3>
+              <p>Like with all my other projects, I try to minimise the cost. This following plotter cost 16000 rupees,
+                of which
+                the spindle was nearly 9000 rupees, and the NEMA 23 motors cost around 3500 rupees in total. As you can
+                see and
+                probably tell, this machine looks very similar to the OpenBuilds Mini mill. I had 8 metres of aluminium
+                extrusion lying around that I had bought for something else but couldn't use these extrusions for that
+                project
+                and also participated in the Tworks hackathon during the same time. I decided to build a CNC mill and
+                then
+                laser-cut the required parts for the carriage, bed, etc.</p>
+
+              <p>I can call this design a bit rushed as the rigidity of this machine is very bad and worse than I
+                expected. My
+                initial plan was to be able to cut aluminium on this. Woods and plastics are what this cuts the best.
+              </p>
+
+              <div style="display: grid; gap: 2rem; margin: 2rem 0;">
+                <figure style="text-align: center;">
+                  <img src="CNC/laserparts.jpg" alt="Laser cut parts" style="border-radius: var(--radius-md);">
+                  <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Laser cut parts
+                  </figcaption>
+                </figure>
+
+                <figure style="text-align: center;">
+                  <img src="CNC/build.jpg" alt="Assembly test" style="border-radius: var(--radius-md);">
+                  <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Testing the fit
+                    of the
+                    my assembly to check if all fits right.</figcaption>
+                </figure>
+              </div>
+
+              <h3>Design problems</h3>
+              <p>Just like that pen plotter V2, the only problem with this build is probably the linear bearing, as I
+                have
+                standard ball bearings rolling on an aluminium extrusion. This causes the X-axis to flex when using the
+                mill
+                under load. The dimensional accuracy of milled parts is around +/-0.5mm. Although I haven't used this
+                CNC to
+                make lots of parts for this mill.
+              </p>
+              <p>In the future, I plan to add an enclosure so that the sound will be reduced. The frame materials can
+                also be
+                made using mild steel as I have access to a stick welding machineÂ now. This can be coupled with better
+                linear
+                motion bearings.</p>
+
+              <div style="display: grid; gap: 2rem; margin: 2rem 0;">
+                <figure style="text-align: center;">
+                  <img src="CNC/tiger.jpg" alt="Tiger keychain" style="border-radius: var(--radius-md);">
+                  <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">A tiger keychain
+                    cut
+                    using this mill</figcaption>
+                </figure>
+
+                <figure style="text-align: center;">
+                  <img src="CNC/trollface.jpg" alt="Trollface" style="border-radius: var(--radius-md);">
+                </figure>
+
+                <figure style="text-align: center;">
+                  <img src="CNC/final.jpeg" alt="Final build" style="border-radius: var(--radius-md);">
+                  <figcaption style="font-style: italic; color: var(--text-muted); margin-top: 0.5rem;">Final build
+                  </figcaption>
+                </figure>
+
+                <figure style="text-align: center;">
+                  <img src="CNC/endmill.jpg" alt="Endmill" style="border-radius: var(--radius-md);">
+                </figure>
+              </div>
+
+              <h3>Things learnt</h3>
+              <p>Over the design and build process, I learnt that although it is easy to build machines, finding their
+                use is a
+                task. I don't find lots of reasons to use this as I already have a 3D printer which is a lot easier to
+                use and
+                operate. The setup time for 3D printers is much faster. I hope I'll find more uses for him in the
+                future.
+              </p>
+
+            </article>
+          </main>
+
+          <footer class="site-footer">
+            <div class="container footer-content">
+              <div class="footer-links">
+                <a href="https://github.com/vortexgello/triangle.pages.dev">Webpage source</a>
+              </div>
+              <div>&copy; 2024 Vortex</div>
+            </div>
+          </footer>
+
+
+        </body>
+
+        </html>
