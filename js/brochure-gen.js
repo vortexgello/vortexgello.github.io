@@ -1,5 +1,5 @@
 /**
- * Quad Dimensions - Rich Brochure Image Generator
+ * Vortextriangle - Rich Brochure Image Generator
  * Uses html2canvas to render a high-fidelity, dark-themed PNG.
  * 
  * HYBRID MODE:

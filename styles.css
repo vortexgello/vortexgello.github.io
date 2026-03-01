@@ -1336,7 +1336,7 @@ p {
     height: 60px;
     border-bottom: 2px solid #020617;
     margin-bottom: 2rem;
-    background-image: url('images/quad_dimensions_logo.png');
+    background-image: url('images/vortextriangle_logo.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: left center;
@@ -1470,7 +1470,7 @@ p {
 
   /* Footer Branding */
   body::after {
-    content: "© 2026 Quad Dimensions | Precision Space Mechanisms & Systems | store.quadd.in | Contact: rahul.yadgirkar@gmail.com";
+    content: "© 2026 Vortextriangle | Precision Space Mechanisms & Systems | store.vortextriangle.com | Contact: rahul.yadgirkar@gmail.com";
     display: block;
     position: fixed;
     bottom: 0;
