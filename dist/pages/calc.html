@@ -5,14 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSC Boom Calculator | Vortex</title>
-    <!-- Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-QJ8M5F06YR');
-    </script>
+
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0"></script>
@@ -714,6 +707,8 @@
                 <!-- STRUCTURAL PERFORMANCE PANEL -->
             </div>
 
+
+
             <!-- 5. STRUCTURAL PERFORMANCE (ANALYSIS) -->
             <div id="panel-structural" class="panel panel-analysis">
                 <div class="panel-header" onclick="togglePanel('panel-structural')">
@@ -722,6 +717,35 @@
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="panel-body">
+                    <!-- DIGITAL TWIN CALIBRATION INPUTS -->
+                    <div
+                        style="border-left: 3px solid #eab308; background: rgba(234, 179, 8, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+                        <h3
+                            style="color: #eab308; margin-top:0; font-size:1em; display:flex; align-items:center; gap:8px;">
+                            <span>⚡</span> Digital Twin Calibration
+                        </h3>
+                        <p style="font-size:0.8em; color:var(--text-muted); margin-bottom:10px;">
+                            Enter lab test data to override theoretical model with experimental stiffness.
+                        </p>
+                        <div class="row" style="margin-bottom:0;">
+                            <div style="flex:1">
+                                <label>Test Len (mm)</label>
+                                <input type="number" id="cal_len" value="500" oninput="calculate()"
+                                    style="font-size:0.9em;">
+                            </div>
+                            <div style="flex:1">
+                                <label>Strong (g)</label>
+                                <input type="number" id="cal_strong" value="0" placeholder="Max" oninput="calculate()"
+                                    style="font-size:0.9em;">
+                            </div>
+                            <div style="flex:1">
+                                <label>Weak (g)</label>
+                                <input type="number" id="cal_weak" value="0" placeholder="Max" oninput="calculate()"
+                                    style="font-size:0.9em;">
+                            </div>
+                        </div>
+                    </div>
+
                     <p style="font-size:0.85em; color:#666;">
                         Load bearing analysis for deployed cantilever state.<br>
                         Ref: Murphey et al. Eq. 5 (Buckling) & Yao et al. (Stiffness).
@@ -782,6 +806,19 @@
                                 <div class="res-val" id="resBuckle" style="font-size:1.1em; color:var(--text-main);">--
                                 </div>
                                 <div style="font-size:0.75em; color:var(--text-muted);">(Axial Load [N])
+                                </div>
+                            </div>
+                        </div>
+                        <div style="border-top:1px solid rgba(211, 47, 47, 0.2); margin:5px 0;"></div>
+                        <div class="row">
+                            <div style="flex:1">
+                                <label>Model Status</label>
+                                <div class="res-val" id="res_status" style="font-size:1em; color:var(--text-main);">
+                                    Theoretical</div>
+                            </div>
+                            <div style="flex:1">
+                                <label>Calib. Coupling (D12)</label>
+                                <div class="res-val" id="res_d12" style="font-size:1em; color:var(--text-muted);">--
                                 </div>
                             </div>
                         </div>
@@ -1714,6 +1751,37 @@
 
             // Standard Results
             const beta = width / R_trans;
+
+            // --- DIGITAL TWIN CALIBRATION OVERRIDE ---
+            const cal_strong_g = parseFloat(document.getElementById('cal_strong').value);
+            const cal_weak_g = parseFloat(document.getElementById('cal_weak').value);
+            const cal_len_mm = parseFloat(document.getElementById('cal_len').value);
+
+            let isCalibrated = false;
+
+            if (cal_strong_g > 0 && cal_weak_g > 0 && cal_len_mm > 0) {
+                // Determine Experimental D-Matrix
+                const L_cal = cal_len_mm / 1000;
+                const g_cal = 9.81;
+
+                // Moments from Test
+                const M_strong = (cal_strong_g / 1000) * g_cal * L_cal;
+                const M_weak = (cal_weak_g / 1000) * g_cal * L_cal;
+
+                // Reverse Solve assuming digital twin logic:
+                // D_bend = (M_strong + M_weak) / (2 * beta)
+                // D_couple = (M_strong - M_weak) / (2 * beta)
+
+                const D_bend = (M_strong + M_weak) / (2 * beta);
+                const D_couple = (M_strong - M_weak) / (2 * beta);
+
+                D11 = D_bend / 2;
+                D22 = D_bend / 2;
+                D12 = D_couple;
+                D66 = D11 * 0.35; // Estimate shear if needed
+
+                isCalibrated = true;
+            }
             const M_eq = (D11 + D22 + 2 * D12) * beta;
             const M_opp = (D11 + D22 - 2 * D12) * beta;
 
@@ -1838,6 +1906,16 @@
             }
 
             document.getElementById('resBuckle').innerText = P_buckle.toFixed(2) + " N";
+
+            // Update Calibration Status UI
+            const statusText = isCalibrated ? "Experimental (Calibrated)" : "Theoretical Model";
+            const statusEl = document.getElementById('res_status');
+            if (statusEl) {
+                statusEl.innerText = statusText;
+                statusEl.style.color = isCalibrated ? "#eab308" : "var(--text-main)";
+            }
+            const d12El = document.getElementById('res_d12');
+            if (d12El) d12El.innerText = (D12 * 1000).toFixed(3) + " mNm";
 
             // 8. Draw Visualizer
             const currentLimitMoment = isOppositeSense ? M_opp : M_eq;
@@ -2494,7 +2572,7 @@
 
         // Init moved to DOMContentLoaded above
     </script>
-    <script src="../js/logging.js"></script>
+
 </body>
 
 </html>

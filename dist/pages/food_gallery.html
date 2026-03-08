@@ -2,21 +2,6 @@
 <html lang="en">
 
 <head>
-<script>
-(function() {
-  const p = "testman12";
-  if (sessionStorage.getItem('v_auth') === 'true') return;
-  const input = prompt("Access Restricted. Enter Password:");
-  if (input === p) {
-    sessionStorage.setItem('v_auth', 'true');
-  } else {
-    document.documentElement.innerHTML = "<html><body style='background:#0f172a;color:#ef4444;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;flex-direction:column;'><h1>403 Forbidden</h1><p>Incorrect credentials.</p><a href='/index.html' style='color:#38bdf8;margin-top:20px;text-decoration:none;'>&larr; Return Home</a></body></html>";
-    window.stop();
-    throw new Error('Unauthorized access');
-  }
-})();
-</script>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Food Gallery - Vortex">
@@ -25,14 +10,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="../styles.css">
 
-  <!-- Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8M5F06YR"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-QJ8M5F06YR');
-  </script>
+
   <link rel="icon" type="image/png" href="../images/favicon.png">
 </head>
 
@@ -144,16 +122,147 @@
     </article>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <div>&copy; 2024 Vortex</div>
-    </div>
-  </footer>
+  <!doctype html>
+  <html lang="en">
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-    data-cf-beacon='{"token": "63decb8a56714b5b828066cbbeb6cc36"}'></script>
-    <script src="../js/logging.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Food Gallery - Vortex">
+    <title>Food Gallery - Vortex</title>
 
-</html>
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles.css">
+
+
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+  </head>
+
+  <body>
+
+    <header class="site-header">
+      <div class="container header-content">
+        <a href="../index.html" class="site-title">Vortex</a>
+        <nav class="site-nav">
+          <ul>
+            <li><a href="../index.html">Projects</a></li>
+            <li><a
+                href="https://docs.google.com/document/d/1pNbCyCojhlhRUdK2Hb-kKeEv0ASDcxiroriHCrRUExU/edit?usp=sharing">Resume</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content-wrapper">
+      <article>
+        <header style="margin-bottom: 2rem;">
+          <h1 style="font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem;">Food Gallery</h1>
+          <p style="font-size: 1.1rem; color: var(--text-muted);">Just a gallery of the food I make haha. Mostly pizzas.
+          </p>
+        </header>
+
+        <p><a href="plotter_art.html" style="color: var(--accent); font-weight: 500;">Check out my Pen Plotter Art
+            Gallery
+            too!</a></p>
+
+        <div class="gallery-grid"
+          style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/20220514_200345031.jpg" alt="Pizza 1" style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20210627_204722.jpg" alt="Pizza 2" style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20210710_200801.jpg" alt="Pizza 3" style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20220808_224240137.jpg" alt="Pizza 4"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20220902_195230622.jpg" alt="Pizza 5"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20220916_201005682.jpg" alt="Pizza 6"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20220916_201919396.jpg" alt="Pizza 7"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20220925_140711589.jpg" alt="Pizza 8"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/IMG_20220925_201911083.jpg" alt="Pizza 9"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="pizza/PXL_20211001_171918929.jpg" alt="Pizza 10"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+
+        </div>
+
+        <h2 style="margin-top: 4rem; margin-bottom: 2rem;">Boom Gallery</h2>
+        <p>Here are some pictures and videos of my booms and the mechanisms for the deployment. More information about
+          the
+          design and construction of these booms can be found <a href="booms.html"
+            style="color: var(--accent); font-weight: 500;">here</a>.</p>
+
+        <div class="gallery-grid"
+          style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="boom2-img/65cm-mechanism.jpeg" alt="Boom Mechanism"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="boom2-img/bistable booms and mechanism.jpeg" alt="Boom Mechanism 2"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+          <div class="gallery-item"
+            style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-card);">
+            <img src="boom2-img/mechanism.jpeg" alt="Boom Mechanism 3"
+              style="width: 100%; height: auto; display: block;">
+          </div>
+        </div>
+
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div>&copy; 2024 Vortex</div>
+      </div>
+    </footer>
+
+
+  </body>
+
+  </html>

@@ -1,5 +1,5 @@
 /**
- * Quad Dimensions - Rich Brochure Image Generator
+ * Vortextriangle - Rich Brochure Image Generator
  * Uses html2canvas to render a high-fidelity, dark-themed PNG.
  * 
  * HYBRID MODE:
@@ -81,23 +81,25 @@ function setupBrochureButton(buttonId, productName, pdfPath) {
     const btn = document.getElementById(buttonId);
     if (!btn) return;
 
-    // Check hostname
+    // Check hostname and template presence
     const hostname = window.location.hostname;
+    const template = document.getElementById('pdf-template');
     const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
 
-    if (isLocal) {
-        // Development: Generate Image
+    if (isLocal && template) {
+        // Development: Generate Image (because template exists)
         btn.innerText = "Generate Brochure (Dev)";
-        btn.innerHTML = "Generate Brochure (Dev)"; // Ensure text updates
+        btn.innerHTML = "Generate Brochure (Dev)";
         btn.onclick = (e) => {
             e.preventDefault();
             generateBrochure(productName);
         };
-        console.log("Datasheet Mode: Generative (Local)");
+        console.log(`Datasheet Mode: Generative (Local) for ${productName}`);
     } else {
-        // Production: Link to Static PDF
-        btn.innerText = "Download Datasheet";
-        btn.innerHTML = "Download Datasheet";
+        // Production OR no template found (e.g. Full Lineup on Home Page)
+        btn.innerText = (productName === 'Full Lineup') ? "Download Solutions Portfolio" : "Download Datasheet";
+        btn.innerHTML = btn.innerText;
+
         // Remove previous onclick
         btn.onclick = null;
 
@@ -106,6 +108,6 @@ function setupBrochureButton(buttonId, productName, pdfPath) {
             e.preventDefault();
             window.open(pdfPath, '_blank');
         });
-        console.log("Datasheet Mode: Static PDF (Production)");
+        console.log(`Datasheet Mode: Static PDF (${isLocal ? 'Local Static' : 'Production'}) for ${productName}`);
     }
 }

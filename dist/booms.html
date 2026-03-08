@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zenith Boom | Quad Dimensions Store</title>
+  <title>Zenith Boom | Vortex Store</title>
   <meta name="description" content="Lightweight, bistable composite deployable boom for CubeSats.">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/png" href="images/quad_dimensions_logo.png">
+  <link rel="icon" type="image/png" href="images/vortex_logo.png">
 
 </head>
 
@@ -17,8 +17,8 @@
     <div class="pdf-page">
       <div class="pdf-header">
         <div class="header-logo">
-          <img src="images/quad_dimensions_logo.png" alt="QD">
-          QUAD DIMENSIONS
+          <img src="images/vortex_logo_header.png" alt="VT">
+          VORTEX
         </div>
         <div class="header-title">Engineering Datasheet</div>
       </div>
@@ -103,9 +103,9 @@
       </div>
 
       <div class="footer">
-        <div>© 2026 Quad Dimensions</div>
+        <div>© 2026 Vortex</div>
         <div>Precision Space Mechanisms & Systems</div>
-        <a href="https://store.quadd.in">store.quadd.in</a>
+        <a href="https://triangle-store.pages.dev">triangle-store.pages.dev</a>
       </div>
     </div>
   </div>
@@ -113,8 +113,8 @@
   <header class="site-header">
     <div class="container header-content">
       <a href="index.html" class="site-title has-logo">
-        <img src="images/quad_dimensions_logo.png" alt="QD">
-        Quad Dimensions
+        <img src="images/vortex_logo_header.png" alt="VT">
+        Vortex
       </a>
       <button class="menu-toggle" aria-label="Toggle Menu">
         <span></span>
@@ -123,8 +123,6 @@
       </button>
       <nav class="site-nav">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#projects">Projects</a></li>
           <li><a href="index.html" style="color: var(--accent);">Store</a></li>
           <li><a href="index.html#contact">Contact</a></li>
         </ul>
@@ -163,10 +161,11 @@
         </p>
 
         <div class="action-buttons">
-          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Zenith Boom" class="btn-primary">Request
+          <a href="boom-configurator.html" class="btn-primary"
+            style="background: var(--purple); border-color: var(--purple);">Configure Your Boom &rarr;</a>
+          <a href="mailto:rahulyadgirkar@gmail.com?subject=Inquiry: Zenith Boom" class="btn-outline">Request Standard
             Quote</a>
           <button id="btn-datasheet" class="btn-outline">Download Datasheet</button>
-          <a href="#specs" class="btn-outline">View Specs</a>
         </div>
 
         <div class="accordion">
@@ -257,6 +256,32 @@
 
 
           <div class="accordion-item">
+            <button class="accordion-header">Integrated Solutions</button>
+            <div class="accordion-content">
+              <p>
+                The Zenith platform is available in pre-integrated configurations to accelerate your mission timeline:
+              </p>
+              <div style="margin-top: 1rem;">
+                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">🔭 Scout Camera System</h4>
+                <p style="font-size: 0.95rem;">
+                  A turnkey "selfie stick" for CubeSats. Features a Zenith boom integrated with a 5MP Arducam/Spy
+                  camera
+                  at the tip. Ideal for deployment monitoring, visual inspection, and outreach imagery.
+                </p>
+              </div>
+              <div style="margin-top: 1rem;">
+                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">🧲 Magnetometer Boom</h4>
+                <p style="font-size: 0.95rem;">
+                  Optimized for magnetic cleanliness. We replace standard fittings with non-magnetic alternatives and
+                  can
+                  integrate your magnetometer sensor at the tip, providing critical standoff distance from spacecraft
+                  noise.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
             <button class="accordion-header">Analysis Services</button>
             <div class="accordion-content">
               <p>
@@ -304,7 +329,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; 2026 Quad Dimensions.</p>
+      <p>&copy; 2026 Vortex.</p>
     </div>
   </footer>
 
@@ -341,7 +366,7 @@
       });
     });
   </script>
-  <script src="js/logging.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="js/brochure-gen.js"></script>
   <script>
