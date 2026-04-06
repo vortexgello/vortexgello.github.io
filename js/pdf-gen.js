@@ -1,5 +1,5 @@
 /**
- * Quad Dimensions - Rich PDF Brochure Generator
+ * Vortextriangle - Rich PDF Brochure Generator
  * Uses html2pdf.js to render a high-fidelity, dark-themed PDF.
  */
 

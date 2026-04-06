@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boom Configurator | Quad Dimensions</title>
+    <title>Boom Configurator | Vortex</title>
     <meta name="description" content="Configure your custom deployable boom. Real-time mass and volume estimation.">
     <link rel="stylesheet" href="../styles.css">
-    <link rel="icon" type="image/png" href="../images/quad_dimensions_logo.png">
+    <link rel="icon" type="image/png" href="../images/vortex_logo.png">
     <style>
         /* Configurator Specific Styles */
         .configurator-layout {
@@ -370,8 +370,8 @@
     <header class="site-header">
         <div class="container header-content">
             <a href="../index.html" class="site-title has-logo">
-                <img src="../images/quad_dimensions_logo.png" alt="QD">
-                Quad Dimensions
+                <img src="../images/vortex_logo_header.png" alt="VT">
+                Vortex
             </a>
             <div style="display: flex; gap: 1rem; align-items: center;">
                 <a href="booms.html" style="font-size: 0.9rem; color: var(--text-muted);">Back to Products</a>
@@ -699,7 +699,7 @@
             // Use the first metric as primary data point for email
 
             const subject = `Quote Request: ${model} Boom (${length}m)`;
-            const body = `Hello Quad Dimensions,\n\nI would like to request a quote for the following configuration:\n\n` +
+            const body = `Hello Vortex,\n\nI would like to request a quote for the following configuration:\n\n` +
                 `Model: ${model}\n` +
                 `Length: ${length} m\n` +
                 `Material: ${material}\n` +
@@ -724,7 +724,7 @@
             const m4_lbl = document.getElementById('lblMetric4').innerText;
             const m4_val = document.getElementById('valMetric4').innerText + " " + document.getElementById('unitMetric4').innerText;
 
-            const text = `QUAD DIMENSIONS BOOM CONFIGURATION\n` +
+            const text = `VORTEX BOOM CONFIGURATION\n` +
                 `================================\n\n` +
                 `Model:       ${model}\n` +
                 `Length:      ${length} m\n` +
@@ -735,7 +735,7 @@
                 `${m2_lbl}: ${m2_val}\n` +
                 `${m4_lbl}: ${m4_val}\n\n` +
                 `Generated on: ${new Date().toLocaleString()}\n` +
-                `Visit us at: https://quaddimensions.com`; // Update with actual URL if known, or leave generic
+                `Visit us at: https://triangle-store.pages.dev`; // Update with actual URL if known, or leave generic
 
             const blob = new Blob([text], { type: 'text/plain' });
             const url = window.URL.createObjectURL(blob);
