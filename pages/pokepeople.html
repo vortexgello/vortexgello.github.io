@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokePeople | Vortex</title>
+    <meta name="description"
+        content="Generate stunning AI-powered trading cards for your friends. Capture their vibe, battle with stats, and build your ultimate social deck.">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Projects</a></li>
+                    <li><a href="../index.html#experience">Experience</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content-wrapper">
+        <article class="project-detail">
+            <header class="project-header">
+                <div style="margin-bottom: 1rem;">
+                    <a href="../index.html" class="icon-link">&larr; Back to Projects</a>
+                </div>
+                <h1 class="project-title-large">PokePeople</h1>
+                <div class="project-meta-large">
+                    <span>Web Application</span>
+                    <a href="https://pokemon-gules-sigma.vercel.app/" target="_blank" class="text-link" style="margin-left: 1rem;">Live Demo</a>
+                </div>
+            </header>
+
+            <section class="project-section">
+                <p class="lead-text">
+                    PokePeople is a fun, interactive web application that allows you to turn your friends into legendary trading cards.
+                </p>
+                <p>
+                    By harnessing AI-powered generation, PokePeople captures their unique vibe, assigns battle stats, and lets you build an ultimate social deck. It is designed to be a fun, shareable experience that blends nostalgia with modern generative AI technology.
+                </p>
+                
+                <h2>Screenshots</h2>
+                <div class="image-gallery"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <figure>
+                        <img src="pokepeople/landing.png" alt="PokePeople Landing Page"
+                            style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);">
+                        <figcaption style="text-align: center; color: #64748b; margin-top: 0.5rem; font-size: 0.9rem;">The primary application interface displaying cards.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="pokepeople/generate_form.png" alt="PokePeople Card Generation"
+                            style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);">
+                        <figcaption style="text-align: center; color: #64748b; margin-top: 0.5rem; font-size: 0.9rem;">The "New Encounter" form to generate custom cards.</figcaption>
+                    </figure>
+                </div>
+
+                <h2>Features</h2>
+                <ul>
+                    <li><strong>AI-Powered Cards:</strong> Generate custom trading cards with unique art and stats tailored by AI.</li>
+                    <li><strong>Capture the Vibe:</strong> Turn any friend's persona into a legendary creature or character.</li>
+                    <li><strong>Battle Stats:</strong> Each card comes with its own unique battle statistics, making them fun to compare.</li>
+                    <li><strong>Build a Deck:</strong> Create multiple cards and curate your own ultimate social deck.</li>
+                    <li><strong>100% Free:</strong> Generate cards seamlessly right from your browser.</li>
+                </ul>
+
+                <div class="btn-container" style="margin-top: 2rem;">
+                    <a href="https://pokemon-gules-sigma.vercel.app/" target="_blank" class="btn">Try PokePeople</a>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteHeader = document.querySelector('.site-header');
+        const navLinks = document.querySelectorAll('.site-nav a');
+
+        menuToggle.addEventListener('click', () => {
+            siteHeader.classList.toggle('nav-open');
+            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                siteHeader.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+
+</body>
+
+</html>
