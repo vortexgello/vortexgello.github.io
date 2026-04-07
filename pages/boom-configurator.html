@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOM Configurator | Vortex</title>
+    <meta name="description"
+        content="Interactive web-based design tool for aerospace deployable booms. Customize specs to estimate mass, volume, and performance.">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="../index.html" class="site-title">Vortex</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="../index.html">Projects</a></li>
+                    <li><a href="../index.html#experience">Experience</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content-wrapper">
+        <article class="project-detail">
+            <header class="project-header">
+                <div style="margin-bottom: 1rem;">
+                    <a href="../index.html" class="icon-link">&larr; Back to Projects</a>
+                </div>
+                <h1 class="project-title-large">BOOM Configurator</h1>
+                <div class="project-meta-large">
+                    <span>Web Application</span>
+                    <a href="https://triangle-store.pages.dev/boom-configurator" target="_blank" class="text-link" style="margin-left: 1rem;">Live Tool</a>
+                </div>
+            </header>
+
+            <section class="project-section">
+                <p class="lead-text">
+                    The BOOM Configurator is an interactive, web-based design tool built for aerospace engineers and payload designers to customize and simulate the performance of deployable booms.
+                </p>
+                <p>
+                    Deployable boom structures are critical components in modern satellite designs, enabling everything from massive roll-out solar arrays to extended sensor platforms. This configurator provides real-time data on mass, stowed volume, and structural integrity, allowing designers to make immediate trade-off analyses without launching a complex CAD or FEA simulation.
+                </p>
+                
+                <h2>Interface</h2>
+                <div class="image-gallery"
+                    style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin: 2rem 0;">
+                    <figure>
+                        <img src="boom-configurator/landing.png" alt="BOOM Configurator Interface"
+                            style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);">
+                        <figcaption style="text-align: center; color: #64748b; margin-top: 0.5rem; font-size: 0.9rem;">The primary dashboard displaying the HORIZON boom configuration and live metrics.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="boom-configurator/demo.gif" alt="BOOM Configurator Demo"
+                            style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);">
+                        <figcaption style="text-align: center; color: #64748b; margin-top: 0.5rem; font-size: 0.9rem;">Dynamic interactions update mass, volume, and performance metrics in real-time.</figcaption>
+                    </figure>
+                </div>
+
+                <h2>Key Features</h2>
+                <ul>
+                    <li><strong>Versatile Boom Types:</strong> Choose from <em>ZENITH (Bistable)</em> for general-purpose applications, <em>HORIZON (High Force)</em> for power-focused deployment (e.g., solar arrays), or <em>SCOUT (Camera)</em> for imaging sensor support.</li>
+                    <li><strong>Dynamic Scaling:</strong> A precision slider allows adjusting the deployed length from 0.5m to 5.0m, directly impacting the estimated mass, volume, and structural capability.</li>
+                    <li><strong>Material Trade-offs:</strong> Compare the performance of <em>Carbon Fiber</em> (high-stiffness, superior natural frequency) against <em>Glass Fiber</em> (flexible, lower natural frequency).</li>
+                    <li><strong>Live Metric Calculation:</strong> Receive instant feedback on expected metrics such as 1st Mode Natural Frequency (Hz), Stowed Volume (LxWxH or CubeSat U-units), and Reliability constraints.</li>
+                </ul>
+
+                <p>
+                    Whether you are an enthusiast exploring space systems or an engineer drafting preliminary architectures, the BOOM Configurator streamlines your hardware selection process by bringing actionable performance estimates into an accessible, reactive interface.
+                </p>
+
+                <div class="btn-container" style="margin-top: 2rem;">
+                    <a href="https://triangle-store.pages.dev/boom-configurator" target="_blank" class="btn">Configure Your Boom</a>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Vortex.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteHeader = document.querySelector('.site-header');
+        const navLinks = document.querySelectorAll('.site-nav a');
+
+        menuToggle.addEventListener('click', () => {
+            siteHeader.classList.toggle('nav-open');
+            document.body.style.overflow = siteHeader.classList.contains('nav-open') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                siteHeader.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+
+</body>
+
+</html>
