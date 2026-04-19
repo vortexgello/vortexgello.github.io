@@ -475,6 +475,46 @@
             border-bottom-color: #facc15;
             color: #facc15;
         }
+
+        /* Tabs */
+        .tab-container {
+            display: flex;
+            gap: 2px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid var(--panel-border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            color: var(--secondary);
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: none;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -821,12 +861,29 @@
         <!-- BLOCK 8: SOLAR ARRAY SIZER -->
         <div class="card">
             <h2 class="solar">8. Solar Array Sizer</h2>
-            <div style="display: flex; justify-content: space-between; align-items: start; gap:10px;">
-                <p style="font-size:0.85em; color:#666; margin:0 0 10px 0;">
-                    Sizes a ROSA-style array (Source 452) using your boom definition.
-                    <br><em>Ref Mass: 16.7 g/m (Yao Source 189).</em>
+            
+            <p style="font-size:0.85em; color:var(--secondary); margin-bottom:15px; line-height: 1.4;">
+                Analyze high-performance deployable flexible arrays versus traditional rigid panel configurations.
+            </p>
+
+            <div class="tab-container">
+                <button id="tabFlex" class="tab-btn active" onclick="setSolarTab('flexible')">Flexible (ROSA)</button>
+                <button id="tabRigid" class="tab-btn" onclick="setSolarTab('rigid')">Rigid Panel</button>
+            </div>
+
+            <div id="flexInfo" style="display: flex; justify-content: space-between; align-items: start; gap:10px;">
+                <p style="font-size:0.8em; color:var(--secondary); margin:0 0 10px 0; line-height: 1.4;">
+                    <strong style="color:var(--primary);">Flexible (ROSA) Mode:</strong> Sizes a deployable blanket assembly (Source 452) using your custom HSC boom stiffness and geometry.
+                    <br><em style="font-size: 0.9em; opacity: 0.8; color:var(--accent);">Mass derived from your custom boom profile.</em>
                 </p>
                 <button style="background:var(--accent); font-size:0.75em; white-space:nowrap;" onclick="optimizeWidth()">Optimize Width (Lowest Mass)</button>
+            </div>
+
+            <div id="rigidInfo" class="hidden" style="margin-bottom: 10px;">
+                <p style="font-size:0.8em; color:var(--secondary); margin:0; line-height: 1.4;">
+                    <strong style="color:var(--primary);">Rigid Panel Mode:</strong> Estimates system mass for a standard honeycomb or monolithic rigid panel.
+                    <br><em style="font-size: 0.9em; opacity: 0.8;">Formula: Mass = Watts × 0.04 (Industry rule-of-thumb).</em>
+                </p>
             </div>
 
             <div class="solar-viz">
@@ -844,35 +901,35 @@
                     <label style="font-size:0.8em; font-weight:bold;">Target Power (W)</label>
                     <input type="number" id="targetP" value="150" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Cell Efficiency (%)</label>
                     <input type="number" id="cellEff" value="29.5" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Blanket Width (m)</label>
                     <input type="number" id="blanketWidth" value="0.5" step="0.1" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Packing Factor (%)</label>
                     <input type="number" id="packingFactor" value="85" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Substrate Density (g/m²)</label>
                     <input type="number" id="substrateDensity" value="300" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Cell Mass (g)</label>
                     <input type="number" id="cellMass" value="1.0" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Cell Area (cm²)</label>
                     <input type="number" id="cellArea" value="32" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Mechanism Mass (g)</label>
                     <input type="number" id="mechMass" value="500" oninput="updateSystem()">
                 </div>
-                <div>
+                <div class="flex-input">
                     <label style="font-size:0.8em; font-weight:bold;">Aspect Ratio (L/W)</label>
                     <input type="number" id="aspectRatio" value="2.0" step="0.1" oninput="optimizeWidth()">
                 </div>
@@ -903,9 +960,17 @@
                     <span class="stat-label">Mechanism Mass</span>
                     <span class="stat-val" id="mechMassRef">-- g</span>
                 </div>
+                <div class="stat-box" id="refRigidBox" style="border-color: #666;">
+                    <span class="stat-label">Ref. Rigid Panel Mass</span>
+                    <span class="stat-val" id="refRigidMass">-- g</span>
+                </div>
                 <div class="stat-box" style="grid-column: span 2;">
                     <span class="stat-label">Total System Mass (Est)</span>
                     <span class="stat-val" id="solMass">-- g</span>
+                </div>
+                <div class="stat-box" style="grid-column: span 2; border-color: var(--safe);">
+                    <span class="stat-label">System Power Density</span>
+                    <span class="stat-val" id="valWkg">-- W/kg</span>
                 </div>
             </div>
 
@@ -924,6 +989,47 @@
         // Global State for Digital Twin
         var calibrationFactor = 1.0;
         var designState = {};
+        var currentSolarTab = 'flexible';
+
+        function setSolarTab(tab) {
+            currentSolarTab = tab;
+            
+            // UI Toggle with null checks
+            const btnFlex = document.getElementById('tabFlex');
+            const btnRigid = document.getElementById('tabRigid');
+            if (btnFlex) btnFlex.classList.toggle('active', tab === 'flexible');
+            if (btnRigid) btnRigid.classList.toggle('active', tab === 'rigid');
+            
+            const infoFlex = document.getElementById('flexInfo');
+            const infoRigid = document.getElementById('rigidInfo');
+            if (infoFlex) infoFlex.classList.toggle('hidden', tab !== 'flexible');
+            if (infoRigid) infoRigid.classList.toggle('hidden', tab !== 'rigid');
+            
+            // Hide flex inputs
+            const flexInputs = document.querySelectorAll('.flex-input');
+            flexInputs.forEach(el => el.classList.toggle('hidden', tab !== 'flexible'));
+            
+            // Hide/Show comparison box
+            const rigidBox = document.getElementById('refRigidBox');
+            if (rigidBox) rigidBox.classList.toggle('hidden', tab !== 'flexible');
+            
+            // Hide flex stats
+            const flexStats = ['solLen', 'valArrayDroop', 'numCells', 'cellWattage', 'boomMassRef', 'mechMassRef', 'derivedDensity'];
+            flexStats.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const parent = el.closest('.stat-box');
+                    if (parent) {
+                        parent.classList.toggle('hidden', tab !== 'flexible');
+                    } else if (id === 'derivedDensity') {
+                        // Handle the text line wrapper for derived density
+                        if (el.parentElement) el.parentElement.classList.toggle('hidden', tab !== 'flexible');
+                    }
+                }
+            });
+            
+            updateSystem();
+        }
 
         function initCanvas() {
             canvas.width = canvas.offsetWidth * dpr;
@@ -1372,70 +1478,100 @@
 
         function calcSolar(state) {
             const P_target = parseFloat(document.getElementById('targetP').value) || 0;
-            const eff = (parseFloat(document.getElementById('cellEff').value) || 29.5) / 100;
-            const pf = (parseFloat(document.getElementById('packingFactor').value) || 85) / 100;
-            const subDensity = parseFloat(document.getElementById('substrateDensity').value) || 300;
-            const cellMass_g = parseFloat(document.getElementById('cellMass').value) || 1.0;
-            const cellArea_cm2 = parseFloat(document.getElementById('cellArea').value) || 32;
-            const mechMass_g = parseFloat(document.getElementById('mechMass').value) || 500;
-            const width_m = parseFloat(document.getElementById('blanketWidth').value) || 0.5;
+            let m_total_g = 0;
 
-            // 1. Cell calculations
-            const cellArea_m2 = cellArea_cm2 / 10000;
-            const cellWattage = cellArea_m2 * 1360 * eff;
-            const numCells = P_target / (cellWattage || 1); // Avoid div by 0
+            if (currentSolarTab === 'flexible') {
+                const eff = (parseFloat(document.getElementById('cellEff').value) || 29.5) / 100;
+                const pf = (parseFloat(document.getElementById('packingFactor').value) || 85) / 100;
+                const subDensity = parseFloat(document.getElementById('substrateDensity').value) || 300;
+                const cellMass_g = parseFloat(document.getElementById('cellMass').value) || 1.0;
+                const cellArea_cm2 = parseFloat(document.getElementById('cellArea').value) || 32;
+                const mechMass_g = parseFloat(document.getElementById('mechMass').value) || 500;
+                const width_m = parseFloat(document.getElementById('blanketWidth').value) || 0.5;
 
-            // 2. Area and Density calculations
-            const PowerDensity = 1360 * eff * pf;
-            const Area = P_target / PowerDensity;
-            
-            // Blanket Density: Substrate + (total cell mass / total area)
-            const totalCellMass_g = numCells * cellMass_g;
-            const derivedBlanketDensity = subDensity + (totalCellMass_g / (Area || 1));
+                // 1. Cell calculations
+                const cellArea_m2 = cellArea_cm2 / 10000;
+                const cellWattage = cellArea_m2 * 1360 * eff;
+                const numCells = P_target / (cellWattage || 1); // Avoid div by 0
 
-            // Length = Area / Width (Fixed Width Logic)
-            const Len = Area / width_m;
-            const Wid = width_m;
+                // 2. Area and Density calculations
+                const PowerDensity = 1360 * eff * pf;
+                const Area = P_target / PowerDensity;
+                
+                // Blanket Density: Substrate + (total cell mass / total area)
+                const totalCellMass_g = numCells * cellMass_g;
+                const derivedBlanketDensity = subDensity + (totalCellMass_g / (Area || 1));
 
-            // 3. Mass breakdown
-            const m_blanket = (Area * derivedBlanketDensity) / 1000; // kg
-            const Yao_linear_density = state.linear_density || 0.0167; // kg/m
-            const m_booms = 2 * Yao_linear_density * Len;
-            const m_total_g = (m_blanket + m_booms) * 1000 + mechMass_g;
+                // Length = Area / Width (Fixed Width Logic)
+                const Len = Area / width_m;
+                const Wid = width_m;
 
-            // 4. Correct Droop Calculation
-            const w_load = (m_blanket * 9.81) / (Len || 1); // N/m
-            
-            // Re-calculate the global beam EI
-            const I_beam = 0.5 * Math.pow(state.R, 3) * state.h;
-            const EI_single_boom = (state.Ex * 1e9 * 0.4) * I_beam; 
-            const EI_sys = 2 * EI_single_boom; // 2 booms
+                // 3. Mass breakdown
+                const m_blanket = (Area * derivedBlanketDensity) / 1000; // kg
+                const active_linear_density = state.linear_density || 0.0167; // use calc mass if available
+                const m_booms = 2 * active_linear_density * Len;
+                m_total_g = (m_blanket + m_booms) * 1000 + mechMass_g;
 
-            let defl_mm = 0;
-            if (EI_sys > 1e-6) {
-                defl_mm = (w_load * Math.pow(Len, 4)) / (8 * EI_sys) * 1000;
+                // 4. Correct Droop Calculation
+                const w_load = (m_blanket * 9.81) / (Len || 1); // N/m
+                
+                // Re-calculate the global beam EI
+                const I_beam = 0.5 * Math.pow(state.R, 3) * state.h;
+                const EI_single_boom = (state.Ex * 1e9 * 0.4) * I_beam; 
+                const EI_sys = 2 * EI_single_boom; // 2 booms
+
+                let defl_mm = 0;
+                if (EI_sys > 1e-6) {
+                    defl_mm = (w_load * Math.pow(Len, 4)) / (8 * EI_sys) * 1000;
+                }
+
+                // Update UI Outputs
+                document.getElementById('solLen').innerText = Len.toFixed(2) + " m";
+                document.getElementById('valArrayDroop').innerText = defl_mm.toFixed(1) + " mm";
+                document.getElementById('numCells').innerText = Math.ceil(numCells).toString();
+                document.getElementById('cellWattage').innerText = cellWattage.toFixed(2) + " W";
+                document.getElementById('boomMassRef').innerText = (m_booms * 1000).toFixed(0) + " g";
+                document.getElementById('mechMassRef').innerText = mechMass_g.toFixed(0) + " g";
+                document.getElementById('derivedDensity').innerText = derivedBlanketDensity.toFixed(0);
+                
+                const viz = document.getElementById('vizWing');
+                let h_pct = Math.min(90, (Len / 3.0) * 100);
+                let w_pct = Math.min(90, (Wid / 1.0) * 100);
+                viz.style.height = h_pct + "%";
+                viz.style.width = w_pct + "%";
+
+                // Visual Droop
+                const skew = Math.min(10, defl_mm / 20);
+                viz.style.transform = `skewY(${skew}deg)`;
+            } else {
+                // RIGID PANEL MODE
+                m_total_g = P_target * 0.04 * 1000;
+                
+                // Visualization for Rigid Mode (Simple representation)
+                const viz = document.getElementById('vizWing');
+                viz.style.height = "70%";
+                viz.style.width = "70%";
+                viz.style.transform = "none";
+                viz.style.background = "linear-gradient(45deg, #2c3e50, #4ca1af)"; // Different color for rigid
             }
 
-            // Update UI Outputs
-            document.getElementById('solLen').innerText = Len.toFixed(2) + " m";
-            document.getElementById('valArrayDroop').innerText = defl_mm.toFixed(1) + " mm";
-            document.getElementById('numCells').innerText = Math.ceil(numCells).toString();
-            document.getElementById('cellWattage').innerText = cellWattage.toFixed(2) + " W";
-            document.getElementById('boomMassRef').innerText = (m_booms * 1000).toFixed(0) + " g";
-            document.getElementById('mechMassRef').innerText = mechMass_g.toFixed(0) + " g";
-            document.getElementById('solMass').innerText = m_total_g.toFixed(0) + " g";
-            document.getElementById('derivedDensity').innerText = derivedBlanketDensity.toFixed(0);
-            document.getElementById('vizPower').innerText = P_target + " W";
+            // Common Outputs with null checks
+            const massEl = document.getElementById('solMass');
+            if (massEl) massEl.innerText = m_total_g.toFixed(0) + " g";
+            
+            const powerEl = document.getElementById('vizPower');
+            if (powerEl) powerEl.innerText = P_target + " W";
+            
+            // Reference Rigid Mass (always calculate for comparison)
+            const rigidRef_g = P_target * 0.04 * 1000;
+            const refOutput = document.getElementById('refRigidMass');
+            if (refOutput) refOutput.innerText = rigidRef_g.toFixed(0) + " g";
 
-            const viz = document.getElementById('vizWing');
-            let h_pct = Math.min(90, (Len / 3.0) * 100);
-            let w_pct = Math.min(90, (Wid / 1.0) * 100);
-            viz.style.height = h_pct + "%";
-            viz.style.width = w_pct + "%";
-
-            // Visual Droop
-            const skew = Math.min(10, defl_mm / 20);
-            viz.style.transform = `skewY(${skew}deg)`;
+            const wkgEl = document.getElementById('valWkg');
+            if (wkgEl) {
+                const wkg = P_target / (m_total_g / 1000 || 1);
+                wkgEl.innerText = wkg.toFixed(1) + " W/kg";
+            }
         }
 
         // --- BLOCK 6: DIGITAL TWIN LOGIC ---

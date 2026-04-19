@@ -21,35 +21,8 @@ const items = [
     'store'
 ];
 
-// Whitelist of pages/directories that DO NOT need a password
-const PUBLIC_PAGES = [
-    'index.html',
-    'index_2.html',
-    'books.html',
-    'notes.html',
-    'styles.css',
-    'robots.txt',
-    'sitemap.xml',
-    'pages/solar-sail.html',
-    'pages/boom2.html',
-    'pages/hdrm.html',
-    'pages/maker_mission.html',
-    'pages/booms.html',
-    'pages/linkdump.html',
-    'pages/cubesat_selfie.html',
-    'pages/index_bistable.html',
-    'pages/flexure.html',
-    'pages/Lite3Dp.html',
-    'pages/PRINT_R.html',
-    'pages/plotter_v2.html',
-    'pages/CNC.html',
-    'pages/plotter_art.html',
-    'pages/covid-distance-alarm.html',
-    'pages/kart.html',
-    'pages/penplotter.html',
-    'pages/steps.html',
-    'pages/calc.html'
-];
+// We only want to protect calculator pages
+const isCalculatorPage = (path) => path.toLowerCase().includes('calc');
 
 const password = process.env.INTERNAL_PAGE_PASSWORD || 'Vortex2026!';
 
@@ -83,14 +56,10 @@ function copyRecursive(src, dest, relativePath = '') {
         // Normalize backslashes to forward slashes for cross-platform matching
         const normalizedPath = relativePath.split(path.sep).join('/');
 
-        // Determine if page should be public
-        const isWhitelisted = PUBLIC_PAGES.includes(normalizedPath);
+        // Determine if page should be protected
+        const isProtected = isCalculatorPage(normalizedPath);
 
-        // Check if it's in the store directory or any other explicitly public directory
-        const segments = normalizedPath.split('/');
-        const isStorePage = segments[0] === 'store';
-
-        if (ext === '.html' && !isWhitelisted && !isStorePage) {
+        if (ext === '.html' && isProtected) {
             console.log('Protecting: ' + normalizedPath);
             let content = fs.readFileSync(src, 'utf8');
             if (content.includes('<head>')) {
